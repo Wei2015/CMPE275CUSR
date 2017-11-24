@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red57\green51\blue255;\red0\green0\blue0;\red147\green26\blue104;
+\red3\green38\blue204;\red119\green119\blue119;\red57\green51\blue255;}
+{\*\expandedcolortbl;;\csgenericrgb\c22353\c20000\c100000;\cssrgb\c0\c0\c0;\csgenericrgb\c57647\c10196\c40784;
+\csgenericrgb\c1176\c14902\c80000;\csgenericrgb\c46667\c46667\c46667;\csgenericrgb\c22353\c20000\c100000;}
+\margl1440\margr1440\vieww18180\viewh8660\viewkind0
+\deftab720
+\pard\pardeftab720\ri0\partightenfactor0
+
+\f0\fs17 \cf0 Some thoughts on Train Schedule Table: \
+\
+Refer to the information from this webpage: http://www.java2s.com/Tutorials/Java/JPA/0330__JPA_ElementCollection_EnumMap.htm\
+\
+Station A-Z can be stored as enum type. And each train\'92s departure time at each station can be store as Map in java class and a separate table in MySQL DB. \
+\
+\pard\pardeftab720\ri-750\partightenfactor0
+\cf0 In the DB, the \cf2 TRAIN_SCHEDULE\cf3  table has three columns: TRAIN_ID, STATION, DEPART_TIME_AT_STATION\cf0 \
+\pard\pardeftab720\ri0\partightenfactor0
+\cf0 \
+Java Code:\
+\
+\
+\pard\pardeftab720\ri0\partightenfactor0
+\cf4 enum\cf0  Station \{\
+\'a0 \'a0 \cf5 A\cf0 ,\cf5 B\cf0 ,\cf5 C\cf0 ,\cf5 D\cf0 ,\cf5 E\cf0 ,\cf5 F\cf0 ,\cf5 G\cf0 ,\cf5 H\cf0 ,\cf5 I\cf0 ,\cf5 J\cf0 ,\cf5 K\cf0 ,\cf5 L\cf0 ,\cf5 M\cf0 ,\cf5 N\cf0 ,\cf5 O\cf0 ,\cf5 P\cf0 ,\cf5 Q\cf0 ,\cf5 R\cf0 ,\cf5 S\cf0 ,\cf5 T\cf0 ,\cf5 U\cf0 ,\cf5 V\cf0 ,\cf5 W\cf0 ,\cf5 X\cf0 ,\cf5 Y\cf0 ,\cf5 Z\cf0 \
+\}\
+\
+\
+\pard\pardeftab720\ri0\partightenfactor0
+\cf6 @Entity\
+@Table\cf0 (name=\cf7 "TRAIN"\cf0 )\
+\pard\pardeftab720\ri0\partightenfactor0
+\cf4 public\cf0  \cf4 class\cf0  Train \{\cf4 \
+\pard\pardeftab720\ri0\partightenfactor0
+\cf0 \
+	\cf6 @Id\
+\cf0 	\cf6 @GeneratedValue\cf0 (strategy=GenerationType.\cf5 AUTO\cf0 )\
+	\cf6 @Column\cf0 (name=\cf7 "TRAIN_ID"\cf0 )\cf7 \
+\cf0 	\cf4 private\cf0  \cf4 long\cf0  \cf5 trainId\cf0 ;\cf4 \
+\cf0 	\
+	\cf6 @Column\cf0 (name=\cf7 "BOUND"\cf0 , nullable=\cf4 false\cf0 )\
+	\cf4 private\cf0  String \cf5 bound\cf0 ;\
+	\
+	\cf6 @Column\cf0 (name=\cf7 "DEPARTURE_TIME"\cf0 , nullable=\cf4 false\cf0 )\
+	\cf4 private\cf0  LocalTime \cf5 departureTime\cf0 ;\
+	\
+	\cf6 @Column\cf0 (name=\cf7 "TYPE"\cf0 , nullable=\cf4 false\cf0 )\
+	\cf4 private\cf0  String \cf5 type\cf0 ;\
+	\
+	\cf6 @Column\cf0 (name=\cf7 "CAPACITY"\cf0 )\cf7 \
+\cf0 	\cf4 private\cf0  \cf4 int\cf0  \cf5 capacity\cf0 ;\cf4 \
+\cf0 	\
+	\cf6 @ElementCollection\
+\cf0 \'a0 \'a0 	\cf6 @CollectionTable\cf0 (name=\cf7 "TRAIN_SCHEDULE"\cf0 )\cf6 \
+\cf0 \'a0 \'a0 	\cf6 @MapKeyEnumerated\cf0 (EnumType.\cf5 STRING\cf0 )\cf6 \
+\cf0 \'a0 \'a0 	\cf6 @MapKeyColumn\cf0 (name=\cf7 "STATION"\cf0 )\cf6 \
+\cf0 \'a0 \'a0 	\cf6 @Column\cf0 (name=\cf7 "DEPART_TIME_AT_STATION"\cf0 )\cf7 \
+\cf0 \'a0 \'a0 	\cf4 private\cf0  Map<Station, LocalTime> \cf5 trainTimeTable\cf0 ;\
+\}\
+\pard\pardeftab720\ri0\partightenfactor0
+
+\f1\fs24 \cf0 \
+}
