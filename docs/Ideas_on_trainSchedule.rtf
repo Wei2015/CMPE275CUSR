@@ -1,0 +1,48 @@
+ Some thoughts on Train Schedule Table: 
+
+Refer to the information from this webpage: http://www.java2s.com/Tutorials/Java/JPA/0330__JPA_ElementCollection_EnumMap.htm
+
+Station A-Z can be stored as enum type. And each train\'92s departure time at each station can be store as Map in java class and a separate table in MySQL DB. 
+
+ In the DB, the TRAIN_SCHEDULE table has three columns: TRAIN_ID, STATION, DEPART_TIME_AT_STATION
+
+Java Code:
+enum Station {
+	A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+}
+
+
+@Entity
+@Table(name="TRAIN")
+public class Train{
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="TRAIN_ID")
+	private long trainId ; 
+	
+ 	@Column(name= "BOUND" , nullable= false ) 
+	private String bound;
+	
+	@Column (name= "DEPARTURE_TIME" , nullable= false )
+	private LocalTime  departureTime;
+	
+	@Column (name= "TYPE", nullable= false )
+	private String type;
+	
+	@Column (name= "CAPACITY" ) 
+	private int capacity;
+	
+	@ElementCollection
+	@CollectionTable (name= "TRAIN_SCHEDULE")
+	@MapKeyEnumerated (EnumType.STRING)
+	@MapKeyColumn(name="STATION")
+	@Column(name="DEPART_TIME_AT_STATION")
+	privateMap<Station, LocalTime>  trainTimeTable;
+	
+	@ElementCollection
+   	@CollectionTable(name="TRAIN_STATUS")
+    	@MapKeyColumn(name="AVAILABLE_DATE")
+    	@Column(name="AVAILABLE_SEATS")
+    	private Map<LocalDate, Integer> trainStatus;
+}
+
