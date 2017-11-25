@@ -58,7 +58,7 @@ public class Ticket {
 	private User user;
 	
 	@ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinTable(name="TRAIN_SELECTED", 
+	@JoinTable(name="TRAINS_SELECTED", 
 				joinColumns= {@JoinColumn(name="TICKET_ID", referencedColumnName="TICKET_ID")}, 
 				inverseJoinColumns= {@JoinColumn(name="SELECTED_TRAIN_ID",referencedColumnName="TRAIN_ID")}) 
 	private List<Train> trains;

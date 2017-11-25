@@ -47,7 +47,7 @@ public class Train {
 	private int capacity;
 	
 	@ElementCollection
-    @CollectionTable(name="TRAIN_SCHEDULE")
+	@CollectionTable(name="TRAIN_SCHEDULE")
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name="STATION")
     @Column(name="DEPART_TIME_AT_STATION")
