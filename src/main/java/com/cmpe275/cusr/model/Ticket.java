@@ -49,6 +49,9 @@ public class Ticket {
 	@Column(name="ARRIVAL_STATION", nullable=false)
 	private String arrivalStation;
 	
+	@Column(name="IS_CANCELLED", nullable=false)
+	private boolean isCancelled;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -108,6 +111,14 @@ public class Ticket {
 		this.arrivalStation = arrivalStation;
 	}
 	
+	public boolean getIsCancelled() {
+		return isCancelled;
+	}
+
+	public void setIsCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+
 	public User getUser() {
 		return user;
 	}
