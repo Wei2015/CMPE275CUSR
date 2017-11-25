@@ -22,10 +22,11 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
+
 @Entity
 @Table(name="TICKET")
 public class Ticket {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="TICKET_ID")

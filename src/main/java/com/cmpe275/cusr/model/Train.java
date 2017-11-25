@@ -115,5 +115,6 @@ public class Train {
 	public void setTrainStatus(Map<java.util.Calendar, Integer> trainStatus) {
 		this.trainStatus = trainStatus;
 	}
+
 }
 
