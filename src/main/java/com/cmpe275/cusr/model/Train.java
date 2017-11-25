@@ -48,17 +48,17 @@ public class Train {
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_SCHEDULE")
-    @MapKeyEnumerated(EnumType.STRING)
-    @MapKeyColumn(name="STATION")
-    @Column(name="DEPART_TIME_AT_STATION")
+	@MapKeyEnumerated(EnumType.STRING)
+	@MapKeyColumn(name="STATION")
+	@Column(name="DEPART_TIME_AT_STATION")
 	@Temporal(TemporalType.TIME)
-    private Map<Station, java.util.Date> trainTimeTable;
+	private Map<Station, java.util.Date> trainTimeTable;
 	
 	@ElementCollection
-    @CollectionTable(name="TRAIN_STATUS")
-    @MapKeyJoinColumn(name="AVAILABLE_DATE", nullable=false)
-    @Column(name="AVAILABLE_SEATS")
-    private Map<java.util.Calendar, Integer> trainStatus;
+	@CollectionTable(name="TRAIN_STATUS")
+	@MapKeyJoinColumn(name="AVAILABLE_DATE", nullable=false)
+	@Column(name="AVAILABLE_SEATS")
+	private Map<java.util.Calendar, Integer> trainStatus;
 	
 	public Train() {
 		super();
