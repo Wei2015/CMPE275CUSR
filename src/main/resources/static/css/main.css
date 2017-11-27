@@ -5,3 +5,9 @@ h1 {
 h2 {
 	color:#FF0000;
 }
+
+.login-logo {
+	border-radius: 15px;
+	width: 400px;
+	margin: 15px 35px 25px 0px; 
+}
