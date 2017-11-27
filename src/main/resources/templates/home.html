@@ -41,66 +41,81 @@
   <h3>Welcome to California Ultra-Speed Railway Ticket Booking System</h3>
   <br></br>
   <div class="row">
-			
-				<form role="form" class="form-dropdown">
-					<div class="col-md-3 col-sm-6">
-						<div class="form-group">
-							<p class = "fill-in box subtitle">Departure Station</p>
-							<select class="form-control border-radius" id="sel1">
-								<option>A</option>
-								<option>B</option>
-								<option>C</option>
-								<option>D</option>
-							</select>
-						</div>
-					</div>
+		<form role="form" class="form-dropdown">
+			<div class="col-md-3 col-sm-6">
+				<div class="form-group">
+						<p class = "fill-in box subtitle">Departure Station</p>
+						<select class="form-control border-radius" id="sel1">
+							<option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
+							<option>G</option><option>K</option><option>L</option><option>M</option><option>N</option>
+							<option>O</option><option>P</option><option>Q</option><option>R</option><option>S</option>
+							<option>T</option><option>U</option><option>V</option><option>W</option><option>X</option>
+							<option>Y</option><option>Z</option>
+						</select>
+				</div>
+			</div>
 
-					<div class="col-md-3 col-sm-6">
-						<div  class="form-group">
+			<div class="col-md-3 col-sm-6">
+					<div  class="form-group">
 							<p class = "fill-in box subtitle">Destination Station</p>
 							<select class="form-control border-radius" id="sel2">
-								<option>A</option>
-								<option>B</option>
-								<option>C</option>
-								<option>D</option>
+								<option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
+								<option>G</option><option>K</option><option>L</option><option>M</option><option>N</option>
+								<option>O</option><option>P</option><option>Q</option><option>R</option><option>S</option>
+								<option>T</option><option>U</option><option>V</option><option>W</option><option>X</option>
+								<option>Y</option><option>Z</option>
 							</select>
-						</div>
 					</div>
-				</form>
-					
+			</div>
+			</form>	
+			<form>
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 							<p class = "fill-in box subtitle">Departure Date</p>
-							<input type="text" class="form-control border-radius border-right" placeholder="MM-DD-YYYY"/>
+							<input type="text" class="form-control border-radius border-right" name = "departureDate" placeholder="MM-DD-YYYY"/>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 							<p class = "fill-in box subtitle">Departure Time</p>
-							<input type="text" class="form-control border-radius border-right" placeholder="HH:MM"/>
+							<input type="text" class="form-control border-radius border-right" name = "departureTime" placeholder="HH:MM"/>
 					</div>
 				</div>
-					
-				<div class="row">
-						<label class="container">Round Trip
-							<input type="radio" checked="checked" name="radio"/>
-						</label>
-						<label class="container">One Way Trip
-  							<input type="radio" name="radio"/>
-						</label>
-				</div>
-	</div>
-
-			<div class ="row">
+			</form>
+	</div>		
+  <div class="row">
+		<form>
+			<label class="container">
+				Round Trip  <input type="radio" checked="checked" name="tripSelection"/> 
+				One Way Trip  <input type="radio" name="tripSelection"/>
+			</label>
 				
-				<div class="col-md-4 col-sm-8">
-					<div class="btn btn-default border-radius custom-button">
-					Search
+				<div class="col-md-3 col-sm-6">
+					<div class="form-group">
+						<p class = "fill-in box subtitle">Return Date</p>
+						<input type="text" class="form-control border-radius border-right" placeholder="MM-DD-YYYY"/>
 					</div>
 				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="form-group">
+						<p class = "fill-in box subtitle">Return Time</p>
+						<input type="text" class="form-control border-radius border-right" placeholder="HH:MM"/>
+					</div>
+				</div>
+		</form>
+	</div>
+	
+	
+
+  <div class ="row">
+		<div class="col-md-4 col-sm-8">
+			<div class="btn btn-default border-radius custom-button">
+				Search
 			</div>
+		</div>
+ </div>
   
-</div>
+  </div>
 
 </body>
 </html>
