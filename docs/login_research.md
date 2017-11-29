@@ -1,5 +1,4 @@
 ### Firebase Integration
-<br>
 Reference: https://github.com/savicprvoslav/Spring-Boot-starter
 <br>
 * Firebase needs to be enabled in application.properties
@@ -28,3 +27,6 @@ FirebaseOptions options = new FirebaseOptions.Builder()
 FirebaseApp.initializeApp(options);
 ```
 * Filter checks request header for "X-Authorization-Firebase"
+
+### Facebook Login
+Reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
