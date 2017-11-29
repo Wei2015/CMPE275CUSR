@@ -1,12 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>California Ultra-Speed Rail</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
+	<title>California Ultra-Speed Rail</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -40,82 +37,70 @@
 <div class="container">
   <h3>Welcome to California Ultra-Speed Railway Ticket Booking System</h3>
   <br></br>
-  <div class="row">
-		<form role="form" class="form-dropdown">
-			<div class="col-md-3 col-sm-6">
-				<div class="form-group">
+ 
+		<form class="form-dropdown" action="#" th:action="@{/}" th:object="${searchContent}" method ="post">
+			 <div class="row">
+				<div class="col-md-3 col-sm-6 form-group">
 						<p class = "fill-in box subtitle">Departure Station</p>
-						<select class="form-control border-radius" id="sel1">
-							<option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
-							<option>G</option><option>K</option><option>L</option><option>M</option><option>N</option>
-							<option>O</option><option>P</option><option>Q</option><option>R</option><option>S</option>
-							<option>T</option><option>U</option><option>V</option><option>W</option><option>X</option>
-							<option>Y</option><option>Z</option>
+						<select class="form-control border-radius" id="sel1" th:field="*{departureStation}">
+							<option th:each="station : ${searchContent.ALL_STATIONS}"
+									th:value="${station}"
+									th:text="${station}">
+							</option>
 						</select>
 				</div>
-			</div>
 
-			<div class="col-md-3 col-sm-6">
-					<div  class="form-group">
-							<p class = "fill-in box subtitle">Destination Station</p>
-							<select class="form-control border-radius" id="sel2">
-								<option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
-								<option>G</option><option>K</option><option>L</option><option>M</option><option>N</option>
-								<option>O</option><option>P</option><option>Q</option><option>R</option><option>S</option>
-								<option>T</option><option>U</option><option>V</option><option>W</option><option>X</option>
-								<option>Y</option><option>Z</option>
-							</select>
-					</div>
-			</div>
-			</form>	
-			<form>
-				<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-							<p class = "fill-in box subtitle">Departure Date</p>
-							<input type="text" class="form-control border-radius border-right" name = "departureDate" placeholder="MM-DD-YYYY"/>
-					</div>
+				<div class="col-md-3 col-sm-6 form-group">
+					
+						<p class = "fill-in box subtitle">Destination Station</p>
+						<select class="form-control border-radius" id="sel2" th:field="*{destinationStation}">
+								<option th:each="station : ${searchContent.ALL_STATIONS}"
+									th:value="${station}"
+									th:text="${station}">
+								</option>
+						</select>
 				</div>
-				<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-							<p class = "fill-in box subtitle">Departure Time</p>
-							<input type="text" class="form-control border-radius border-right" name = "departureTime" placeholder="HH:MM"/>
-					</div>
-				</div>
-			</form>
-	</div>		
-  <div class="row">
-		<form>
-			<label class="container">
-				Round Trip  <input type="radio" checked="checked" name="tripSelection"/> 
-				One Way Trip  <input type="radio" name="tripSelection"/>
-			</label>
 				
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
+							<p class = "fill-in box subtitle">Departure Date</p>
+							<input type="text" class="form-control border-radius border-right" th:field="*{departureDate}" placeholder="MM-DD-YYYY"/>
+					</div>
+				</div>
+				
+				<div class="col-md-3 col-sm-6">
+					<div class="form-group">
+							<p class = "fill-in box subtitle">Departure Time</p>
+							<input type="text" class="form-control border-radius border-right" th:field="*{departureTime}" placeholder="HH:MM"/>
+					</div>
+				</div>
+			</div>
+			
+  			<div class="row">
+				<label class="container">
+					Round Trip  <input type="radio" name="radioButton" value="1" th:checked="*{roundTrip}"/> 
+					One Way Trip  <input type="radio" name="radioButton" value="0" th:checked="*{roundTrip}==false"/>
+				</label>
+
+				<div class="col-md-3 col-sm-6">
+					<div class="form-group">
 						<p class = "fill-in box subtitle">Return Date</p>
-						<input type="text" class="form-control border-radius border-right" placeholder="MM-DD-YYYY"/>
+						<input type="text" class="form-control border-radius border-right" th:field="*{returnDate}" placeholder="MM-DD-YYYY"/>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 						<p class = "fill-in box subtitle">Return Time</p>
-						<input type="text" class="form-control border-radius border-right" placeholder="HH:MM"/>
+						<input type="text" class="form-control border-radius border-right" th:field="*{returnTime}" placeholder="HH:MM"/>
 					</div>
 				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-8">
+					<p><input type="submit" value ="Search"/><input type="reset" value="Reset" /></p>
+				</div>
+ 		   </div>
 		</form>
 	</div>
-	
-	
-
-  <div class ="row">
-		<div class="col-md-4 col-sm-8">
-			<div class="btn btn-default border-radius custom-button">
-				Search
-			</div>
-		</div>
- </div>
-  
-  </div>
-
 </body>
 </html>
