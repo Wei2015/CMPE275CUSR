@@ -44,10 +44,10 @@ public class Ticket {
 	private java.util.Date arrivalTime;
 	
 	@Column(name="DEPARTURE_STATION", nullable=false)
-	private String departureStation;
+	private Station departureStation;
 	
 	@Column(name="ARRIVAL_STATION", nullable=false)
-	private String arrivalStation;
+	private Station arrivalStation;
 	
 	@Column(name="IS_CANCELLED", nullable=false)
 	private boolean isCancelled;
@@ -95,19 +95,19 @@ public class Ticket {
 		this.arrivalTime = arrivalTime;
 	}
 	
-	public String getDepartureStation() {
+	public Station getDepartureStation() {
 		return departureStation;
 	}
 	
-	public void setDepartureStation(String departureStation) {
+	public void setDepartureStation(Station departureStation) {
 		this.departureStation = departureStation;
 	}
 	
-	public String getArrivalStation() {
+	public Station getArrivalStation() {
 		return arrivalStation;
 	}
 	
-	public void setArrivalStation(String arrivalStation) {
+	public void setArrivalStation(Station arrivalStation) {
 		this.arrivalStation = arrivalStation;
 	}
 	
