@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FacebookController {
-	private final String REDIRECT_URI;
+	/*private final String REDIRECT_URI = "https://localhost:8080/";
 	private final String APP_ID;
 	private final String APP_SECRET;
 	
@@ -36,5 +36,5 @@ public class FacebookController {
 	            + "&state=" + CSRF;
 	        return uri;
 	}
-	
+*/
 }
