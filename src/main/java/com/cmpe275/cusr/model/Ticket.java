@@ -32,8 +32,14 @@ public class Ticket {
 	@Column(name="TICKET_ID")
 	private long ticketId;
 	
+	@Column(name="NUM_OF_SEATS", nullable=false)
+	private int numOfSeats;
+	
 	@Column(name="DATE", nullable=false)
 	private java.util.Calendar date;
+	
+	@Column(name="DATE", nullable=true)
+	private java.util.Calendar ReturnDate;
 	
 	@Column(name="DEPARTURE_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
@@ -43,11 +49,19 @@ public class Ticket {
 	@Temporal(TemporalType.TIME)
 	private java.util.Date arrivalTime;
 	
+	@Column(name="DEPARTURE_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private java.util.Date returnDepartureTime;
+	
+	@Column(name="ARRIVAL_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private java.util.Date returnArrivalTime;
+	
 	@Column(name="DEPARTURE_STATION", nullable=false)
-	private Station departureStation;
+	private Character departureStation;
 	
 	@Column(name="ARRIVAL_STATION", nullable=false)
-	private Station arrivalStation;
+	private Character arrivalStation;
 	
 	@Column(name="IS_CANCELLED", nullable=false)
 	private boolean isCancelled;
@@ -95,19 +109,19 @@ public class Ticket {
 		this.arrivalTime = arrivalTime;
 	}
 	
-	public Station getDepartureStation() {
+	public Character getDepartureStation() {
 		return departureStation;
 	}
 	
-	public void setDepartureStation(Station departureStation) {
+	public void setDepartureStation(Character departureStation) {
 		this.departureStation = departureStation;
 	}
 	
-	public Station getArrivalStation() {
+	public Character getArrivalStation() {
 		return arrivalStation;
 	}
 	
-	public void setArrivalStation(Station arrivalStation) {
+	public void setArrivalStation(Character arrivalStation) {
 		this.arrivalStation = arrivalStation;
 	}
 	
