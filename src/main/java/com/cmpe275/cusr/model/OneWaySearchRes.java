@@ -5,9 +5,7 @@ import java.util.List;
 public class OneWaySearchRes {
 	
 	private java.util.Calendar departureDate;
-	private List<ConnectionSegment> connections;
-	private Station arrivalStation;
-	private java.util.Date arrivalTime;
+	private List<Segment> connections;
 	private int numberOfSeats;
 	private double ticketPrice;
 	
@@ -17,24 +15,13 @@ public class OneWaySearchRes {
 	public void setDepartureDate(java.util.Calendar departureDate) {
 		this.departureDate = departureDate;
 	}
-	public List<ConnectionSegment> getConnections() {
+	public List<Segment> getConnections() {
 		return connections;
 	}
-	public void setConnections(List<ConnectionSegment> connections) {
+	public void setConnections(List<Segment> connections) {
 		this.connections = connections;
 	}
-	public Station getArrivalStation() {
-		return arrivalStation;
-	}
-	public void setArrivalStation(Station arrivalStation) {
-		this.arrivalStation = arrivalStation;
-	}
-	public java.util.Date getArrivalTime() {
-		return arrivalTime;
-	}
-	public void setArrivalTime(java.util.Date arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
+	
 	public int getNumberOfSeats() {
 		return numberOfSeats;
 	}

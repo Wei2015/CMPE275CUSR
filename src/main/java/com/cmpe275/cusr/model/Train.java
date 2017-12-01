@@ -12,13 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
-import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.EnumType;
-
-
 
 
 @Entity
@@ -53,7 +50,7 @@ public class Train {
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_STATUS")
-	@MapKeyJoinColumn(name="DATE", nullable=false)
+	@MapKeyColumn(name="BOOK_DATE", nullable=false)
 	@Column(name="USED_SEATS")
 	private Map<java.util.Calendar, Integer> trainStatus;
 	

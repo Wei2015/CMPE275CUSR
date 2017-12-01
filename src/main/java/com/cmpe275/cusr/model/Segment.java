@@ -3,9 +3,13 @@ package com.cmpe275.cusr.model;
 public class Segment {
 	
 	private long trainId;
+	
 	private java.util.Date departureTime;
+	
 	private java.util.Date arrivalTime;
+	
 	private Station departureStation;
+	
 	private Station arrivalStation;
 	
 	public long getTrainId() {

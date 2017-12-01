@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,11 @@ public class Ticket {
 	
 	@Column(name="DEPART_DATE", nullable=false)
 	private java.util.Calendar departDate;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="USER_ID")
+	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private User user;
 	
 	@Column(name="RETURN_DATE", nullable=true)
 	private java.util.Calendar returnDate;
@@ -92,11 +98,6 @@ public class Ticket {
 	
 	@Column(name="RETURN_STOP2", nullable=true)
 	private Character returnStop2;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="USER_ID")
-	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private User user;
 	
 	@ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinTable(name="DEPART_TRAINS", 
@@ -156,6 +157,14 @@ public class Ticket {
 
 	public void setReturnDate(java.util.Calendar returnDate) {
 		this.returnDate = returnDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public java.util.Date getDepartTime() {
@@ -268,14 +277,6 @@ public class Ticket {
 
 	public void setReturnStop2(Character returnStop2) {
 		this.returnStop2 = returnStop2;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public List<Train> getTrains() {
