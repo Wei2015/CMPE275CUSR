@@ -42,7 +42,7 @@
 				<div class="col-md-3 col-sm-6 form-group">
 						<p class = "fill-in box subtitle">Departure Station</p>
 						<select class="form-control border-radius" id="sel1" th:field="*{departureStation}">
-							<option th:each="station : ${searchContent.ALL_STATIONS}"
+							<option th:each="station : ${searchContent.allStations}"
 									th:value="${station}"
 									th:text="${station}">
 							</option>
@@ -53,7 +53,7 @@
 					
 						<p class = "fill-in box subtitle">Destination Station</p>
 						<select class="form-control border-radius" id="sel2" th:field="*{destinationStation}">
-								<option th:each="station : ${searchContent.ALL_STATIONS}"
+								<option th:each="station : ${searchContent.allStations}"
 									th:value="${station}"
 									th:text="${station}">
 								</option>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			
-  			<div class="row">
+  			 <div class="row">
 				<label class="container">
 					Round Trip  <input type="radio" name="radioButton" value="1" th:checked="*{roundTrip}"/> 
 					One Way Trip  <input type="radio" name="radioButton" value="0" th:checked="*{roundTrip}==false"/>
@@ -94,6 +94,13 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+					<label class ="container">
+					Express Train <input type="radio" name="radio" value="1" th:checked="*{expressTrain}"/> 
+					Regular Train <input type="radio" name="radio" value="0" th:checked="*{expressTrain}"/>
+					</label>
+			</div>
+				
 			<div class="row">
 				<div class="col-md-4 col-sm-8">
 					<p><input type="submit" value ="Search"/><input type="reset" value="Reset" /></p>

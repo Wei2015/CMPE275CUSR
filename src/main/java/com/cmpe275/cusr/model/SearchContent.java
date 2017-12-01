@@ -1,31 +1,39 @@
 package com.cmpe275.cusr.model;
 
+
 public class SearchContent {
-	private Character departureStation;
-	private Character destinationStation;
+	
+	private Station departureStation;
+	private Station destinationStation;
 	private String departureDate;
 	private String departureTime;
-	private boolean roundTrip;
+	private boolean roundTrip = true;
+	private boolean expressTrain = true;
 	private String returnDate;
 	private String returnTime;
+	
+	private Station[] allStations = Station.values();
 
-	public static final char[] ALL_STATIONS = 
-		{ 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+	
 	
 	public SearchContent() {
 		super();
 	}
 	
-	public Character getDepartureStation() {
+	public Station[] getAllStations() {
+		return allStations;
+	}
+	
+	public Station getDepartureStation() {
 		return departureStation;
 	}
-	public void setDepartureStation(Character departureStation) {
+	public void setDepartureStation(Station departureStation) {
 		this.departureStation = departureStation;
 	}
-	public Character getDestinationStation() {
+	public Station getDestinationStation() {
 		return destinationStation;
 	}
-	public void setDestinationStation(Character destinationStation) {
+	public void setDestinationStation(Station destinationStation) {
 		this.destinationStation = destinationStation;
 	}
 	public String getDepartureDate() {
@@ -43,6 +51,9 @@ public class SearchContent {
 	public boolean isRoundTrip() {
 		return roundTrip;
 	}
+	public boolean isExpressTrain() {
+			return expressTrain;
+		}
 	public void setRoundTrip(boolean roundTrip) {
 		this.roundTrip = roundTrip;
 	}
@@ -57,6 +68,24 @@ public class SearchContent {
 	}
 	public void setReturnTime(String returnTime) {
 		this.returnTime = returnTime;
+	}
+	//for testing purpose
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append("Departure Station: ");
+		result.append(getDepartureStation());
+		result.append("\nDestination Station: ");
+		result.append(getDestinationStation());
+		result.append("\nDeparture Date and Time: ");
+		result.append(getDepartureDate());
+		result.append(" ");
+		result.append(getDepartureTime());
+		if (isRoundTrip()) result.append("\nRound Trip \n");
+		else result.append("\nOne Way Trip \n");
+		if (isExpressTrain()) result.append("\nExpress Train Selected \n");
+		else result.append("\nRegular Train Selected \n");
+		return result.toString();
 	}
 	
 }
