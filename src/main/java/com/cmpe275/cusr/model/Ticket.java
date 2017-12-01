@@ -38,7 +38,7 @@ public class Ticket {
 	@Column(name="DATE", nullable=false)
 	private java.util.Calendar date;
 	
-	@Column(name="DATE", nullable=true)
+	@Column(name="RETURN_DATE", nullable=true)
 	private java.util.Calendar ReturnDate;
 	
 	@Column(name="DEPARTURE_TIME", nullable=false)
@@ -49,11 +49,11 @@ public class Ticket {
 	@Temporal(TemporalType.TIME)
 	private java.util.Date arrivalTime;
 	
-	@Column(name="DEPARTURE_TIME", nullable=true)
+	@Column(name="RETURN_DEPARTURE_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
 	private java.util.Date returnDepartureTime;
 	
-	@Column(name="ARRIVAL_TIME", nullable=true)
+	@Column(name="RETURN_ARRIVAL_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
 	private java.util.Date returnArrivalTime;
 	

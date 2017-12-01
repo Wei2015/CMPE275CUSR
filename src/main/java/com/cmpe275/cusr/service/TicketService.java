@@ -1,11 +1,8 @@
 package com.cmpe275.cusr.service;
 
-
-import org.springframework.http.ResponseEntity;
-
-import com.cmpe275.cusr.model.Ticket;
+import com.cmpe275.cusr.model.Booking;
 
 public interface TicketService {
-	public ResponseEntity<Ticket> purchase (SearchContent searchRes);
-	public void cancel(Ticket ticket);
+	/*public void purchase (long userId, Booking booking);
+	public void ticketCancel(long userId, Booking booking);*/
 }
