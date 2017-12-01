@@ -1,18 +1,19 @@
 package com.cmpe275.cusr.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class OneWaySearchRes {
 	
-	private java.util.Calendar departureDate;
+	private Date departureDate;
 	private List<Segment> connections;
 	private int numberOfSeats;
 	private double ticketPrice;
 	
-	public java.util.Calendar getDepartureDate() {
+	public Date getDepartureDate() {
 		return departureDate;
 	}
-	public void setDepartureDate(java.util.Calendar departureDate) {
+	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
 	public List<Segment> getConnections() {

@@ -1,11 +1,11 @@
 package com.cmpe275.cusr.model;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,7 +39,7 @@ public class Ticket {
 	private double price;
 	
 	@Column(name="DEPART_DATE", nullable=false)
-	private java.util.Calendar departDate;
+	private Date departDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID")
@@ -47,57 +47,57 @@ public class Ticket {
 	private User user;
 	
 	@Column(name="RETURN_DATE", nullable=true)
-	private java.util.Calendar returnDate;
+	private Date returnDate;
 	
 	@Column(name="DEPART_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date departTime;
+	private Date departTime;
 	
 	@Column(name="STOP1_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date stop1Time;
+	private Date stop1Time;
 	
 	@Column(name="STOP2_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date stop2Time;
+	private Date stop2Time;
 	
 	@Column(name="ARRIVAL_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date arrivalTime;
+	private Date arrivalTime;
 	
 	@Column(name="RETURN_DEPART_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date returnDepartTime;
+	private Date returnDepartTime;
 	
 	@Column(name="RETURN_STOP1_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date returnStop1Time;
+	private Date returnStop1Time;
 	
 	@Column(name="RETURN_STOP2_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date returnStop2Time;
+	private Date returnStop2Time;
 	
 	@Column(name="RETURN_ARRIVAL_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date returnArrivalTime;
+	private Date returnArrivalTime;
 	
 	@Column(name="DEPART_STATION", nullable=false)
-	private Character departStation;
+	private Station departStation;
 	
 	@Column(name="ARRIVAL_STATION", nullable=false)
-	private Character arrivalStation;
+	private Station arrivalStation;
 	
 	@Column(name="STOP1", nullable=true)
-	private Character stop1;
+	private Station stop1;
 	
 	@Column(name="STOP2", nullable=true)
-	private Character stop2;
+	private Station stop2;
 	
 	@Column(name="RETURN_STOP1", nullable=true)
-	private Character returnStop1;
+	private Station returnStop1;
 	
 	@Column(name="RETURN_STOP2", nullable=true)
-	private Character returnStop2;
+	private Station returnStop2;
 	
 	@ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinTable(name="DEPART_TRAINS", 
@@ -143,20 +143,12 @@ public class Ticket {
 		this.price = price;
 	}
 
-	public java.util.Calendar getDepartDate() {
+	public Date getDepartDate() {
 		return departDate;
 	}
 
-	public void setDepartDate(java.util.Calendar departDate) {
+	public void setDepartDate(Date departDate) {
 		this.departDate = departDate;
-	}
-
-	public java.util.Calendar getReturnDate() {
-		return returnDate;
-	}
-
-	public void setReturnDate(java.util.Calendar returnDate) {
-		this.returnDate = returnDate;
 	}
 
 	public User getUser() {
@@ -167,115 +159,123 @@ public class Ticket {
 		this.user = user;
 	}
 
-	public java.util.Date getDepartTime() {
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public Date getDepartTime() {
 		return departTime;
 	}
 
-	public void setDepartTime(java.util.Date departTime) {
+	public void setDepartTime(Date departTime) {
 		this.departTime = departTime;
 	}
 
-	public java.util.Date getStop1Time() {
+	public Date getStop1Time() {
 		return stop1Time;
 	}
 
-	public void setStop1Time(java.util.Date stop1Time) {
+	public void setStop1Time(Date stop1Time) {
 		this.stop1Time = stop1Time;
 	}
 
-	public java.util.Date getStop2Time() {
+	public Date getStop2Time() {
 		return stop2Time;
 	}
 
-	public void setStop2Time(java.util.Date stop2Time) {
+	public void setStop2Time(Date stop2Time) {
 		this.stop2Time = stop2Time;
 	}
 
-	public java.util.Date getArrivalTime() {
+	public Date getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(java.util.Date arrivalTime) {
+	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
-	public java.util.Date getReturnDepartTime() {
+	public Date getReturnDepartTime() {
 		return returnDepartTime;
 	}
 
-	public void setReturnDepartTime(java.util.Date returnDepartTime) {
+	public void setReturnDepartTime(Date returnDepartTime) {
 		this.returnDepartTime = returnDepartTime;
 	}
 
-	public java.util.Date getReturnStop1Time() {
+	public Date getReturnStop1Time() {
 		return returnStop1Time;
 	}
 
-	public void setReturnStop1Time(java.util.Date returnStop1Time) {
+	public void setReturnStop1Time(Date returnStop1Time) {
 		this.returnStop1Time = returnStop1Time;
 	}
 
-	public java.util.Date getReturnStop2Time() {
+	public Date getReturnStop2Time() {
 		return returnStop2Time;
 	}
 
-	public void setReturnStop2Time(java.util.Date returnStop2Time) {
+	public void setReturnStop2Time(Date returnStop2Time) {
 		this.returnStop2Time = returnStop2Time;
 	}
 
-	public java.util.Date getReturnArrivalTime() {
+	public Date getReturnArrivalTime() {
 		return returnArrivalTime;
 	}
 
-	public void setReturnArrivalTime(java.util.Date returnArrivalTime) {
+	public void setReturnArrivalTime(Date returnArrivalTime) {
 		this.returnArrivalTime = returnArrivalTime;
 	}
 
-	public Character getDepartStation() {
+	public Station getDepartStation() {
 		return departStation;
 	}
 
-	public void setDepartStation(Character departStation) {
+	public void setDepartStation(Station departStation) {
 		this.departStation = departStation;
 	}
 
-	public Character getArrivalStation() {
+	public Station getArrivalStation() {
 		return arrivalStation;
 	}
 
-	public void setArrivalStation(Character arrivalStation) {
+	public void setArrivalStation(Station arrivalStation) {
 		this.arrivalStation = arrivalStation;
 	}
 
-	public Character getStop1() {
+	public Station getStop1() {
 		return stop1;
 	}
 
-	public void setStop1(Character stop1) {
+	public void setStop1(Station stop1) {
 		this.stop1 = stop1;
 	}
 
-	public Character getStop2() {
+	public Station getStop2() {
 		return stop2;
 	}
 
-	public void setStop2(Character stop2) {
+	public void setStop2(Station stop2) {
 		this.stop2 = stop2;
 	}
 
-	public Character getReturnStop1() {
+	public Station getReturnStop1() {
 		return returnStop1;
 	}
 
-	public void setReturnStop1(Character returnStop1) {
+	public void setReturnStop1(Station returnStop1) {
 		this.returnStop1 = returnStop1;
 	}
 
-	public Character getReturnStop2() {
+	public Station getReturnStop2() {
 		return returnStop2;
 	}
 
-	public void setReturnStop2(Character returnStop2) {
+	public void setReturnStop2(Station returnStop2) {
 		this.returnStop2 = returnStop2;
 	}
 

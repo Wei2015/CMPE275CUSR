@@ -1,15 +1,13 @@
 package com.cmpe275.cusr.model;
 
+import com.google.cloud.Date;
+
 public class Segment {
 	
 	private long trainId;
-	
-	private java.util.Date departureTime;
-	
-	private java.util.Date arrivalTime;
-	
+	private Date departureTime;
+	private Date arrivalTime;
 	private Station departureStation;
-	
 	private Station arrivalStation;
 	
 	public long getTrainId() {
@@ -18,16 +16,16 @@ public class Segment {
 	public void setTrainId(long trainId) {
 		this.trainId = trainId;
 	}
-	public java.util.Date getDepartureTime() {
+	public Date getDepartureTime() {
 		return departureTime;
 	}
-	public void setDepartureTime(java.util.Date departureTime) {
+	public void setDepartureTime(Date departureTime) {
 		this.departureTime = departureTime;
 	}
-	public java.util.Date getArrivalTime() {
+	public Date getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setArrivalTime(java.util.Date arrivalTime) {
+	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	public Station getDepartureStation() {
