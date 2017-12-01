@@ -5,8 +5,8 @@ public class Segment {
 	private long trainId;
 	private java.util.Date departureTime;
 	private java.util.Date arrivalTime;
-	private Station departureStop;
-	private Station arrivalStop;
+	private Station departureStation;
+	private Station arrivalStation;
 	
 	public long getTrainId() {
 		return trainId;
@@ -26,16 +26,16 @@ public class Segment {
 	public void setArrivalTime(java.util.Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-	public Station getDepartureStop() {
-		return departureStop;
+	public Station getDepartureStation() {
+		return departureStation;
 	}
-	public void setDepartureStop(Station departureStop) {
-		this.departureStop = departureStop;
+	public void setDepartureStation(Station departureStation) {
+		this.departureStation = departureStation;
 	}
-	public Station getArrivalStop() {
-		return arrivalStop;
+	public Station getArrivalStation() {
+		return arrivalStation;
 	}
-	public void setArrivalStop(Station arrivalStop) {
-		this.arrivalStop = arrivalStop;
+	public void setArrivalStation(Station arrivalStation) {
+		this.arrivalStation = arrivalStation;
 	}
 }
