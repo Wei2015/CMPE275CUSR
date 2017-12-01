@@ -1,6 +1,7 @@
 package com.cmpe275.cusr.model;
 
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -12,6 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
+<<<<<<< HEAD
+=======
+import javax.persistence.MapKeyTemporal;
+>>>>>>> 073cb75143a285189426d924c2efb6f83ebddc0f
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +37,7 @@ public class Train {
 	
 	@Column(name="DEPARTURE_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
-	private java.util.Date departureTime;
+	private Date departureTime;
 	
 	@Column(name="TYPE", nullable=false)
 	private String type;
@@ -46,13 +51,18 @@ public class Train {
 	@MapKeyColumn(name="STATION")
 	@Column(name="DEPART_TIME_AT_STATION")
 	@Temporal(TemporalType.TIME)
-	private Map<Station, java.util.Date> trainTimeTable;
+	private Map<Station, Date> trainTimeTable;
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_STATUS")
+<<<<<<< HEAD
 	@MapKeyColumn(name="BOOK_DATE", nullable=false)
+=======
+	@MapKeyColumn(name="AVAILABLE_DATE", nullable=false)
+	@MapKeyTemporal(TemporalType.DATE)
+>>>>>>> 073cb75143a285189426d924c2efb6f83ebddc0f
 	@Column(name="USED_SEATS")
-	private Map<java.util.Calendar, Integer> trainStatus;
+	private Map<Date, Integer> trainStatus;
 	
 	public Train() {
 		super();
@@ -102,11 +112,11 @@ public class Train {
 		this.trainTimeTable = trainTimeTable;
 	}
 
-	public Map<java.util.Calendar, Integer> getTrainStatus() {
+	public Map<Date, Integer> getTrainStatus() {
 		return trainStatus;
 	}
 
-	public void setTrainStatus(Map<java.util.Calendar, Integer> trainStatus) {
+	public void setTrainStatus(Map<Date, Integer> trainStatus) {
 		this.trainStatus = trainStatus;
 	}
 
