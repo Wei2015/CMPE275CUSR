@@ -21,13 +21,14 @@ public class TicketController {
 	
 	@PostMapping("/purchase")
 	public String purchase(Model model, @RequestBody Booking booking) {
-		long userId = userService.getUerId();
+		//long userId = userService.getUerId();
+		long userId = 1;
 		ticketService.purchase(userId, booking);
 		model.addAttribute("userId", userId);
-		model.addAttribute("departureDate", booking.getDepartureDate());
-		model.addAttribute("departureTime", booking.getDepartureTime().get(0));
-		model.addAttribute("stop1Time", booking.getDepartureTime().get(1));
-		model.addAttribute("stop2Time", booking.getDepartureTime().get(2));
+		model.addAttribute("departureDate", booking.getDepartDate());
+		model.addAttribute("departureTime", booking.getDepartTime().get(0));
+		model.addAttribute("stop1Time", booking.getDepartTime().get(1));
+		model.addAttribute("stop2Time", booking.getDepartTime().get(2));
 		model.addAttribute("arrivalTime", booking.getArrivalTime());
 		model.addAttribute("departureStation", booking.getStation().get(0));
 		model.addAttribute("stop1Station", booking.getStation().get(1));

@@ -21,7 +21,8 @@ public class TicketServiceImpl {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public void purchase (long userId, Booking booking) {
+	@Transactional
+	public boolean purchase (long userId, Booking booking) {
 		
 		Ticket ticket = new Ticket();
 	}
