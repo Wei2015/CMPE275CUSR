@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>California Ultra-Speed Rail - User Login</title>
+<title>California Ultra-Speed Rail - User Registration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <link rel="stylesheet" type="text/css"
@@ -54,20 +54,20 @@
 	</div>
 	
 	<div>
-	<h3>Login with email</h3>
+	<h3>Create CUSR account</h3>
 	<br></br>
 	<form class="form-inline">
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="text" id="login-email" class="form-control" placeholder="Enter Email" name="email" />
+			<input type="text" id="reg-email" class="form-control" placeholder="Enter Email" name="email" />
 		</div>
 		
 		<div class="form-group">
 			<label for="pwd">Password</label>
-			<input type="password" id="login-pwd" class="form-control" placeholder="Enter Password" name="pwd" />
+			<input type="password" id="reg-pwd" class="form-control" placeholder="Enter Password" name="pwd" />
 		</div>
 		
-		<div id="login" class="btn btn-default">Login</div>
+		<div id="register" class="btn btn-default">Register</div>
 	</form>
 	</div>
 </div>
@@ -106,10 +106,10 @@
 		});
 	});
 	
-	$("#login").click(function(){
-		var email = $("#login-email").val();
-		var pwd = $("#login-pwd").val();
-		firebase.auth().signInWithEmailAndPassword(email, pwd).then(function(result){
+	$("#register").click(function(){
+		var email = $("#reg-email").val();
+		var pwd = $("#reg-pwd").val();
+		firebase.auth().createUserWithEmailAndPassword(email, pwd).then(function(result){
 			console.log('success');
 			console.log(result);
 		}).catch(function(error) {

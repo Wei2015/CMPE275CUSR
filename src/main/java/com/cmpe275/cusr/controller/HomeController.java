@@ -35,6 +35,11 @@ public class HomeController {
 	public String login(Model model) {
 		return "userlogin";
 	}
+	
+	@RequestMapping("/registration")
+	public String registration(Model model) {
+		return "userreg";
+	}
 
 	@RequestMapping("/adminlogin")
 	public String adminlogin(Model model) {
