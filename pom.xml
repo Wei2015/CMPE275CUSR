@@ -67,6 +67,11 @@
 			<artifactId>firebase-server-sdk</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>5.5.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
