@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>California Ultra-Speed Rail - Ticket Purchase</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">CUSR</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Booking</a></li>
+					<li><a th:href="@{/adminlogin}">Admin</a></li>
+					<li><a href="#">Page 3</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/unserinfo}"> <span
+							th:text="'Hello, ' + ${userId} + '!'" />
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h1>Thanks for your booking!</h1>
+		<br></br>
+	</div>
+
+	<div class="container">
+		<h2>Passenger Information</h2>
+		<br></br>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+					<th>Number of Passengers</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${userId}" />
+					<td th:text="${userId}" />
+					<td th:text="${userId}" />
+					<td th:text="${userId}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="container">
+		<h2>Ticket Information</h2>
+		<br></br>
+		<table class="table table-striped">
+			<tr>
+				<td>Departure Date</td>
+				<td th:text="${userId}"/>
+			</tr>
+		</table>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Train</th>
+					<th>Departure Station</th>
+					<th>Departure Time</th>
+					<th>Arrival Station</th>
+					<th>Arrival Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="train: ${trains}">
+					<td th:text="${train}" />
+				</tr>
+			</tbody>
+			
+		</table>
+		<br></br>
+		
+		<span th:if="${student.gender} == 'M'" th:text="Male"/>
+		<table class="table table-striped">
+			<tr>
+				<td>Return Date</td>
+				<td th:text="${userId}"/>
+			</tr>
+		</table>
+
+	</div>
+</body>
+</html>

@@ -294,4 +294,4 @@ public class Ticket {
 		this.returnTrains = returnTrains;
 	}
 	
-	}
+}

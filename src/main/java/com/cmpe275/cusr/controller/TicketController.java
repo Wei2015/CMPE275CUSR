@@ -1,8 +1,12 @@
 package com.cmpe275.cusr.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,12 +21,24 @@ public class TicketController {
 	UserService userService;
 	
 	@Autowired
-	TicketService ticketService;
+	TicketService ticketService;*/
 	
-	@PostMapping("/purchase")
-	public String purchase(Model model, @RequestBody Booking booking) {
-		//long userId = userService.getUerId();
+	@GetMapping("/purchase")
+	//public String purchase(Model model, @ModelAttribute("booking") Booking booking) {
+	public String purchase(Model model) {
 		long userId = 1;
+		model.addAttribute("userId", userId);
+		List<Integer> trains = new ArrayList<>();
+		trains.add(1);
+		trains.add(2);
+		trains.add(3);
+		model.addAttribute("trains", trains);
+		List<Integer> times = new ArrayList<>();
+		times.add(4);
+		times.add(5);
+		times.add(6);
+		model.addAttribute("times", times);
+		/*long userId = userService.getUerId();
 		ticketService.purchase(userId, booking);
 		model.addAttribute("userId", userId);
 		model.addAttribute("departureDate", booking.getDepartDate());
@@ -38,11 +54,11 @@ public class TicketController {
 		model.addAttribute("stop1Train", booking.getTrainId().get(1));
 		model.addAttribute("stop2Train", booking.getTrainId().get(2));
 		model.addAttribute("numOfSeats", booking.getNumOfSeats());
-		model.addAttribute("price", booking.getPrice());
+		model.addAttribute("price", booking.getPrice());*/
 		return "purchase";
 	}
 	
-	@PostMapping("/ticketCancel")
+	/*@PostMapping("/ticketCancel")
 	public String cancel(Model model, @RequestBody Booking booking) {
 		model.addAttribute("UserId", userService.getUerId());
 		return "ticketCancel";
