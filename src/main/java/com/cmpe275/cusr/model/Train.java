@@ -13,10 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
-<<<<<<< HEAD
-=======
 import javax.persistence.MapKeyTemporal;
->>>>>>> 073cb75143a285189426d924c2efb6f83ebddc0f
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,12 +52,8 @@ public class Train {
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_STATUS")
-<<<<<<< HEAD
-	@MapKeyColumn(name="BOOK_DATE", nullable=false)
-=======
-	@MapKeyColumn(name="AVAILABLE_DATE", nullable=false)
+	@MapKeyColumn(name="DATE", nullable=false)
 	@MapKeyTemporal(TemporalType.DATE)
->>>>>>> 073cb75143a285189426d924c2efb6f83ebddc0f
 	@Column(name="USED_SEATS")
 	private Map<Date, Integer> trainStatus;
 	
