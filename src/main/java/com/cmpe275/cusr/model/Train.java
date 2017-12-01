@@ -52,7 +52,7 @@ public class Train {
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_STATUS")
-	@MapKeyColumn(name="DATE", nullable=false)
+	@MapKeyColumn(name="BOOK_DATE", nullable=false)
 	@MapKeyTemporal(TemporalType.DATE)
 	@Column(name="USED_SEATS")
 	private Map<Date, Integer> trainStatus;
