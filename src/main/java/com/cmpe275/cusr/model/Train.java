@@ -53,8 +53,8 @@ public class Train {
 	
 	@ElementCollection
 	@CollectionTable(name="TRAIN_STATUS")
-	@MapKeyJoinColumn(name="AVAILABLE_DATE", nullable=false)
-	@Column(name="AVAILABLE_SEATS")
+	@MapKeyJoinColumn(name="DATE", nullable=false)
+	@Column(name="USED_SEATS")
 	private Map<java.util.Calendar, Integer> trainStatus;
 	
 	public Train() {
