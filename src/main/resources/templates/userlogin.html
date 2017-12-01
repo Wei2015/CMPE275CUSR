@@ -10,6 +10,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<link rel="stylesheet" href="/css/main.css" />
+<!-- for firebase -->
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+
 
 </head>
 <body>
@@ -42,8 +49,8 @@
 	<h3>Welcome to California Ultra-Speed Railway Ticket Booking System</h3>
 	<br></br>
 	<div>
-		<img class="login-logo" src="/img/google-login.png" />
-		<img class="login-logo" src="/img/fb-login.png" />
+		<img id="google-login" class="login-logo" style="cursor: pointer" src="/img/google-login.png" />
+		<img id="fb-login" class="login-logo" style="cursor: pointer" src="/img/fb-login.png" />
 	</div>
 	
 	<div>
@@ -64,6 +71,41 @@
 	</form>
 	</div>
 </div>
+
+<script>
+	var config = {
+	    apiKey: "AIzaSyC5KEveLKO7_v1_4hd9cg8exiXlcqIbo2E",
+	    authDomain: "cmpe275-cusr.firebaseapp.com",
+	    databaseURL: "https://cmpe275-cusr.firebaseio.com"
+	};
+	firebase.initializeApp(config);
+
+	var fb_provider = new firebase.auth.FacebookAuthProvider();
+
+	var google_provider = new firebase.auth.GoogleAuthProvider();
+
+	$("#fb-login").click(function(){
+		firebase.auth().signInWithPopup(fb_provider).then(function(result){
+			var token = result.credential.accessToken;
+			var user = result.user;
+			console.log('success');
+			console.log(user);
+		}).catch(function(error) {
+			console.log(error.code);
+		});
+	});
+
+	$("#google-login").click(function(){
+		firebase.auth().signInWithPopup(google_provider).then(function(result){
+			var token = result.credential.accessToken;
+			var user = result.user;
+			console.log('success');
+			console.log(user);
+		}).catch(function(error) {
+			console.log(error.code);
+		});
+	});
+</script>
 
 </body>
 </html>
