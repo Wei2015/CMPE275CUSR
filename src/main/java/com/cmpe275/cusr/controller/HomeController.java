@@ -45,5 +45,10 @@ public class HomeController {
 	public String adminlogin(Model model) {
 		return "adminlogin";
 	}
+	
+	@RequestMapping("/tickets")
+	public String showUserTickets(Model model) {
+		return "usertickets";
+	}
 
 }
