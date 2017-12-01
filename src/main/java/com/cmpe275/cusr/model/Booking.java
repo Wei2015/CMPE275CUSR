@@ -1,20 +1,22 @@
 package com.cmpe275.cusr.model;
 
+import java.util.Date;
 import java.util.List;
+
 
 public class Booking {
 	
-	private java.util.Calendar departureDate;
+	private Date departureDate;
 	private List<Segment> departureTrip;
-	private java.util.Calendar returnDate;
+	private Date returnDate;
 	private List<Segment> returnTrip;
 	private int numOfSeats;
 	private double price;
 	
-	public java.util.Calendar getDepartureDate() {
+	public Date getDepartureDate() {
 		return departureDate;
 	}
-	public void setDepartureDate(java.util.Calendar departureDate) {
+	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
 	public List<Segment> getDepartureTrip() {
@@ -23,10 +25,10 @@ public class Booking {
 	public void setDepartureTrip(List<Segment> departureTrip) {
 		this.departureTrip = departureTrip;
 	}
-	public java.util.Calendar getReturnDate() {
+	public Date getReturnDate() {
 		return returnDate;
 	}
-	public void setReturnDate(java.util.Calendar returnDate) {
+	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
 	public List<Segment> getReturnTrip() {

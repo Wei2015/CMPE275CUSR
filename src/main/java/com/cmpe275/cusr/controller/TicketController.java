@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cmpe275.cusr.model.Booking;
 import com.cmpe275.cusr.service.TicketService;
@@ -17,15 +17,15 @@ import com.cmpe275.cusr.service.UserService;
 @Controller
 public class TicketController {
 	
-	/*@Autowired
+	@Autowired
 	UserService userService;
 	
 	@Autowired
-	TicketService ticketService;*/
+	TicketService ticketService;
 	
 	@GetMapping("/purchase")
-	//public String purchase(Model model, @ModelAttribute("booking") Booking booking) {
-	public String purchase(Model model) {
+	public String purchase(Model model, @ModelAttribute Booking booking) {
+	/*public String purchase(Model model) {
 		long userId = 1;
 		model.addAttribute("userId", userId);
 		List<Integer> trains = new ArrayList<>();
@@ -37,7 +37,7 @@ public class TicketController {
 		times.add(4);
 		times.add(5);
 		times.add(6);
-		model.addAttribute("times", times);
+		model.addAttribute("times", times);*/
 		/*long userId = userService.getUerId();
 		ticketService.purchase(userId, booking);
 		model.addAttribute("userId", userId);
