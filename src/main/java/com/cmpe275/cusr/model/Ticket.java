@@ -58,17 +58,10 @@ public class Ticket {
 	private java.util.Date returnArrivalTime;
 	
 	@Column(name="DEPARTURE_STATION", nullable=false)
-<<<<<<< HEAD
 	private Character departureStation;
 	
 	@Column(name="ARRIVAL_STATION", nullable=false)
 	private Character arrivalStation;
-=======
-	private Station departureStation;
-	
-	@Column(name="ARRIVAL_STATION", nullable=false)
-	private Station arrivalStation;
->>>>>>> c267bec4026245f0b02af09b54e1f273acf9ef24
 	
 	@Column(name="IS_CANCELLED", nullable=false)
 	private boolean isCancelled;
@@ -116,7 +109,6 @@ public class Ticket {
 		this.arrivalTime = arrivalTime;
 	}
 	
-<<<<<<< HEAD
 	public Character getDepartureStation() {
 		return departureStation;
 	}
@@ -130,21 +122,6 @@ public class Ticket {
 	}
 	
 	public void setArrivalStation(Character arrivalStation) {
-=======
-	public Station getDepartureStation() {
-		return departureStation;
-	}
-	
-	public void setDepartureStation(Station departureStation) {
-		this.departureStation = departureStation;
-	}
-	
-	public Station getArrivalStation() {
-		return arrivalStation;
-	}
-	
-	public void setArrivalStation(Station arrivalStation) {
->>>>>>> c267bec4026245f0b02af09b54e1f273acf9ef24
 		this.arrivalStation = arrivalStation;
 	}
 	
