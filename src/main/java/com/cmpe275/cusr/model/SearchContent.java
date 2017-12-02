@@ -11,9 +11,10 @@ public class SearchContent {
 	private boolean expressTrain = true;
 	private String returnDate;
 	private String returnTime;
+	private int numberOfSeats;
 	
 	private Station[] allStations = Station.values();
-
+	private final int[] seats = {1,2,3,4,5}; 
 	
 	
 	public SearchContent() {
@@ -22,6 +23,17 @@ public class SearchContent {
 	
 	public Station[] getAllStations() {
 		return allStations;
+	}
+	public int getNumberOfSeats() {
+		return numberOfSeats;
+	}
+
+	public void setNumberOfSeats(int numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
+	}
+
+	public int[] getSeats() {
+		return seats;
 	}
 	
 	public Station getDepartureStation() {

@@ -74,6 +74,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+					<label class ="container">
+					Express Train <input type="radio" name="radio" value="1" th:checked="*{expressTrain}"/> 
+					Regular Train <input type="radio" name="radio" value="0" th:checked="*{expressTrain}"/>
+					</label>
+					
+					<div class="col-md-3 col-sm-6 form-group">
+						<p class = "fill-in box subtitle">Number of Seats</p>
+							<select class="form-control border-radius"  th:field="*{numberOfSeats}">
+								<option th:each="seat : ${searchContent.seats}"
+									th:value="${seat}"
+									th:text="${seat}">
+								</option>
+							</select>
+					</div>
+			</div>
 			
   			 <div class="row">
 				<label class="container">
@@ -93,12 +109,6 @@
 						<input type="text" class="form-control border-radius border-right" th:field="*{returnTime}" placeholder="HH:MM"/>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-					<label class ="container">
-					Express Train <input type="radio" name="radio" value="1" th:checked="*{expressTrain}"/> 
-					Regular Train <input type="radio" name="radio" value="0" th:checked="*{expressTrain}"/>
-					</label>
 			</div>
 				
 			<div class="row">
