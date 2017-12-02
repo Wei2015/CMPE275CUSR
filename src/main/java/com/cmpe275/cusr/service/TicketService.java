@@ -1,9 +1,10 @@
 package com.cmpe275.cusr.service;
 
 import com.cmpe275.cusr.model.Booking;
+import com.cmpe275.cusr.model.User;
 
 public interface TicketService {
 	
-	/*public boolean purchase (long userId, Booking booking);
-	public boolean cancel(long userId, Booking booking);*/
+	//public boolean purchase (User user, Booking booking);
+	//public boolean cancel(User user, Booking booking);
 }

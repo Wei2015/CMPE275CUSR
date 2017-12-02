@@ -13,30 +13,27 @@ import org.springframework.stereotype.Service;
 import com.cmpe275.cusr.model.Booking;
 import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.model.Train;
+import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.repository.TrainRepository;
-import com.cmpe275.cusr.repository.UserRepository;
 
 @Service
 public class TicketServiceImpl {
 
-	@Autowired
+	/*@Autowired
 	private TicketRepository ticketRepository;
 
 	@Autowired
 	private TrainRepository trainRepository;
 
-	@Autowired
-	private UserRepository userRepository;
-
 	@Transactional
-	public boolean purchase(long userId, Booking booking) {
+	public boolean purchase(User user, Booking booking) {
 		Ticket ticket = new Ticket();
 		int numOfSeats = booking.getNumOfSeats();
 		ticket.setNumOfSeats(numOfSeats);
 		double price = booking.getPrice();
 		ticket.setPrice(price);
-		ticket.setUser(userRepository.findOne(userId));
+		ticket.setUser(user);
 		
 		Date departureDate = booking.getDepartureDate();
 		ticket.setDepartDate(departureDate);
@@ -113,11 +110,11 @@ public class TicketServiceImpl {
 		return true;
 	}
 
-	public boolean cancel(long userId, Booking booking) {
+	public boolean cancel(User user, Booking booking) {
 		Date date = booking.getDepartureDate();
 		Date time = booking.getDepartureTrip().get(0).getDepartureTime();
 
 		return true;
-	}
+	}*/
 
 }
