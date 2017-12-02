@@ -26,7 +26,12 @@ FirebaseOptions options = new FirebaseOptions.Builder()
 
 FirebaseApp.initializeApp(options);
 ```
-* Filter checks request header for "X-Authorization-Firebase"
+* Verifying ID tokens using Firebase Admin SDK
+```
+// idToken comes from the client app (shown above)
+FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get();
+String uid = decodedToken.getUid();
+```
 
 ### Facebook Login
 Reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow

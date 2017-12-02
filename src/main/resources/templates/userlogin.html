@@ -74,7 +74,7 @@
 
 <script>
 	var config = {
-	    apiKey: "***",
+	    apiKey: "AIzaSyC5KEveLKO7_v1_4hd9cg8exiXlcqIbo2E",
 	    authDomain: "cmpe275-cusr.firebaseapp.com",
 	    databaseURL: "https://cmpe275-cusr.firebaseio.com"
 	};
@@ -88,7 +88,11 @@
 		firebase.auth().signInWithPopup(fb_provider).then(function(result){
 			var token = result.credential.accessToken;
 			var user = result.user;
-			window.location = "http://localhost:8080/tickets?email_identifier="+user.email;
+			//window.location = "http://localhost:8080/tickets?email_identifier="+user.email;
+			console.log(user);
+			user.getIdToken().then(function(data) {
+		      console.log(data)
+		    });
 		}).catch(function(error) {
 			console.log(error.code);
 		});
@@ -108,7 +112,11 @@
 		var email = $("#login-email").val();
 		var pwd = $("#login-pwd").val();
 		firebase.auth().signInWithEmailAndPassword(email, pwd).then(function(result){
-			window.location = "http://localhost:8080/tickets?email_identifier="+result.email;
+			//window.location = "http://localhost:8080/tickets?email_identifier="+result.email;
+			console.log(result);
+			result.getIdToken().then(function(data) {
+		      console.log(data)
+		    });
 		}).catch(function(error) {
 			console.log(error.code);
 		});
