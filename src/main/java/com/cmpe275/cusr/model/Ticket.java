@@ -103,7 +103,7 @@ public class Ticket {
 	@JoinTable(name="DEPART_TRAINS", 
 				joinColumns= {@JoinColumn(name="TICKET_ID", referencedColumnName="TICKET_ID")}, 
 				inverseJoinColumns= {@JoinColumn(name="DEPART_TRAIN_ID",referencedColumnName="TRAIN_ID")}) 
-	private List<Train> trains;
+	private List<Train> departTrains;
 	
 	@ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinTable(name="RETURN_TRAINS", 
@@ -279,12 +279,12 @@ public class Ticket {
 		this.returnStop2 = returnStop2;
 	}
 
-	public List<Train> getTrains() {
-		return trains;
+	public List<Train> getDepartTrains() {
+		return departTrains;
 	}
 
-	public void setTrains(List<Train> trains) {
-		this.trains = trains;
+	public void setDepartTrains(List<Train> departTrains) {
+		this.departTrains = departTrains;
 	}
 
 	public List<Train> getReturnTrains() {

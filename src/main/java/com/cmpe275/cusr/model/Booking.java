@@ -3,7 +3,6 @@ package com.cmpe275.cusr.model;
 import java.util.Date;
 import java.util.List;
 
-
 public class Booking {
 	
 	private Date departureDate;
