@@ -17,12 +17,12 @@ import com.cmpe275.cusr.service.UserService;
 
 @Controller
 public class TicketController {
-	
-	 /*@Autowired 
-	 UserService userService;
-	 
-	 @Autowired 
-	 TicketService ticketService;
+
+	/*@Autowired
+	UserService userService;
+
+	@Autowired
+	TicketService ticketService;
 
 	@PostMapping("/purchase")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
@@ -51,12 +51,28 @@ public class TicketController {
 		} else {
 			return "purchase_fail";
 		}
+	}
 
+	@PostMapping("/ticketCancel")
+	public String cancel(Model model, @ModelAttribute Booking booking) {
+		User user = userService.findUser();
+		if (ticketService.cancel(user, booking)) {
+			Date returnDate = booking.getReturnDate();
+			model.addAttribute("firstName", user.getFirstName());
+			model.addAttribute("lastName", user.getLastName());
+			model.addAttribute("email", user.getEmail());
+			model.addAttribute("numOfSeats", booking.getNumOfSeats());
+			model.addAttribute("price", booking.getPrice());
+			model.addAttribute("departureDate", booking.getDepartureDate());
+			model.addAttribute("departureTrip", booking.getDepartureTrip());
+			model.addAttribute("returnDate", returnDate);
+			model.addAttribute("returnTrip", booking.getReturnTrip());
+			model.addAttribute("round", returnDate == null ? "Y" : "N");
+			model.addAttribute("numOfTickets", booking.getNumOfSeats() > 1 ? "multiple" : "single");
+			return "ticketCancel_sucess";
+		} else {
+			return "ticketCancel_fail";
+		}
 	}*/
 
-	/*
-	 * @PostMapping("/ticketCancel") public String cancel(Model model, @RequestBody
-	 * Booking booking) { model.addAttribute("UserId", userService.getUerId());
-	 * return "ticketCancel"; }
-	 */
 }

@@ -41,7 +41,7 @@
 
 	<div class="container">
 		<h1>
-			<span th:if="${numOftickets} == 'mulptile'"
+			<span th:if="${numOfTickets} == 'mulptile'"
 				th:text="${firstName} + ', your tickets have been cancelled!'"/> 
 			<span th:unless="${numOftickets} == 'single'"
 				th:text="${firstName} + ', your ticket has been cancelled!'"/>
