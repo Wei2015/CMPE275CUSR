@@ -40,7 +40,9 @@
 	</nav>
 
 	<div class="container">
-		<h1><span th:text="${firstName} + ', thanks for your booking!'" /></h1>
+		<h1>
+			<span th:text="${firstName} + ', thanks for your booking!'" />
+		</h1>
 		<br></br>
 	</div>
 
@@ -88,19 +90,19 @@
 			</thead>
 			<tbody>
 				<tr th:each="dt: ${departureTrip}">
-					<td th:text="${dt.trainID}"/>
-					<td th:text="${dt.departureStation}"/>
-					<td th:text="${dt.departureTime}"/>
-					<td th:text="${dt.arrivalStation}"/>
-					<td th:text="${dt.arrivalTime}"/>
+					<td th:text="${dt.trainID}" />
+					<td th:text="${dt.departureStation}" />
+					<td th:text="${dt.departureTime}" />
+					<td th:text="${dt.arrivalStation}" />
+					<td th:text="${dt.arrivalTime}" />
 				</tr>
 			</tbody>
 
 		</table>
-		</div>
-		<br></br>
-		
-		<div th:if="${round} == 'Y'" class="container">
+	</div>
+	<br></br>
+
+	<div th:if="${round} == 'Y'" class="container">
 		<table class="table table-striped">
 			<tr>
 				<td><strong>Return Date</strong></td>
@@ -119,16 +121,15 @@
 			</thead>
 			<tbody>
 				<tr th:each="rt: ${returnTrip}">
-					<td th:text="${rt.trainID}"/>
-					<td th:text="${rt.departureStation}"/>
-					<td th:text="${rt.departureTime}"/>
-					<td th:text="${rt.arrivalStation}"/>
-					<td th:text="${rt.arrivalTime}"/>
+					<td th:text="${rt.trainID}" />
+					<td th:text="${rt.departureStation}" />
+					<td th:text="${rt.departureTime}" />
+					<td th:text="${rt.arrivalStation}" />
+					<td th:text="${rt.arrivalTime}" />
 				</tr>
 			</tbody>
-
 		</table>
-		</div>
-		<br></br>
+	</div>
+	<br></br>
 </body>
 </html>

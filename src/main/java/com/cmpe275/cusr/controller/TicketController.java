@@ -18,7 +18,7 @@ import com.cmpe275.cusr.service.UserService;
 @Controller
 public class TicketController {
 	
-	 @Autowired 
+	 /*@Autowired 
 	 UserService userService;
 	 
 	 @Autowired 
@@ -35,7 +35,7 @@ public class TicketController {
 		 * new ArrayList<>(); times.add(4); times.add(5); times.add(6);
 		 * model.addAttribute("times", times); return "purchase"; }
 		 */
-		long userId = userService.getUerId();
+		/*long userId = userService.getUerId();
 		if (ticketService.purchase(userId, booking)) {
 			Date returnDate = booking.getReturnDate();
 			model.addAttribute("firstName", userService.getFirstName());
@@ -53,7 +53,7 @@ public class TicketController {
 			return "purchase_fail";
 		}
 
-	}
+	}*/
 
 	/*
 	 * @PostMapping("/ticketCancel") public String cancel(Model model, @RequestBody
