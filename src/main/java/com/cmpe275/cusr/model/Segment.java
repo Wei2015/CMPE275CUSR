@@ -1,6 +1,6 @@
 package com.cmpe275.cusr.model;
 
-import com.google.cloud.Date;
+import java.util.Date;
 
 public class Segment {
 	

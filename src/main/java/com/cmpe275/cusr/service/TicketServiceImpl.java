@@ -1,5 +1,7 @@
 package com.cmpe275.cusr.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,15 @@ public class TicketServiceImpl {
 	
 	@Transactional
 	public boolean purchase (long userId, Booking booking) {
-		
 		Ticket ticket = new Ticket();
+		ticket.setNumOfSeats(booking.getNumOfSeats());
+		ticket.setPrice(booking.getPrice());
+		ticket.setDepartDate(booking.getDepartureDate());
+		ticket.setDepartTime(booking.getDepartureTrip().get(0).getDepartureTime());
+		ticket.
+		
+		
+		
 	}
 	
 	public void ticketCancel (long userId, Booking booking) {

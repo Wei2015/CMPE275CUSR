@@ -40,7 +40,7 @@
 	</nav>
 
 	<div class="container">
-		<h1>Thanks for your booking!</h1>
+		<h1>Your booking has failed, please try again!</h1>
 		<br></br>
 	</div>
 
@@ -53,56 +53,17 @@
 					<th>Firstname</th>
 					<th>Lastname</th>
 					<th>Email</th>
-					<th>Number of Passengers</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
+					<td th:text="${userId}"/>
+					<td th:text="${userId}"/>
+					<td th:text="${userId}"/>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 
-	<div class="container">
-		<h2>Ticket Information</h2>
-		<br></br>
-		<table class="table table-striped">
-			<tr>
-				<td><strong>Departure Date</strong></td>
-				<td th:text="${userId}"/>
-			</tr>
-		</table>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Train</th>
-					<th>Departure Station</th>
-					<th>Departure Time</th>
-					<th>Arrival Station</th>
-					<th>Arrival Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="train: ${trains}">
-					<td th:text="${train}" />
-				</tr>
-			</tbody>
-			
-		</table>
-		<br></br>
-		
-		<span th:if="${student.gender} == 'M'" th:text="Male"/>
-		<table class="table table-striped">
-			<tr>
-				<td><strong>Return Date</strong></td>
-				<td th:text="${userId}"/>
-			</tr>
-		</table>
-
-	</div>
 </body>
 </html>
