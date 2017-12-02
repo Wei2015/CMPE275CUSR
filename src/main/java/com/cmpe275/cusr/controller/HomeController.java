@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cmpe275.cusr.model.SearchContent;
 
 
+
 @Controller
 public class HomeController {
-	
+
 	
 	//show home page for get request on home url.
 	@GetMapping("/")

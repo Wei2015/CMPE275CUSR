@@ -2,6 +2,7 @@ package com.cmpe275.cusr.model;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -17,6 +18,8 @@ import javax.persistence.MapKeyTemporal;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+
 import javax.persistence.EnumType;
 
 
@@ -59,6 +62,16 @@ public class Train {
 	
 	public Train() {
 		super();
+	}
+	
+	public Train(String bound, Date departureTime, String type,  Map<Station, Date> trainTimeTable) {
+		super();
+		this.bound = bound;
+		this.departureTime = departureTime;
+		this.type = type;
+		this.capacity = 1000;
+		this.trainTimeTable = trainTimeTable;
+		this.trainStatus = new HashMap<Date, Integer>();
 	}
 
 	public long getTrainId() {
@@ -112,6 +125,24 @@ public class Train {
 	public void setTrainStatus(Map<Date, Integer> trainStatus) {
 		this.trainStatus = trainStatus;
 	}
+	
+	//for testing purpose
+		@Override
+		public String toString() {
+			StringBuilder result = new StringBuilder();
+			result.append("TrainBound: ");
+			result.append(getBound());
+			result.append("\nDeparture Time: ");
+			result.append(getDepartureTime());
+			result.append("\nExpress or Regular: ");
+			result.append(getType());
+			result.append("\nCapacity: ");
+			result.append(getCapacity());
+			for (Station s: trainTimeTable.keySet()) {
+				result.append("\nstation: " + s + " depart at: " + trainTimeTable.get(s));
+			}
+			return result.toString();
+		}
 
 }
 
