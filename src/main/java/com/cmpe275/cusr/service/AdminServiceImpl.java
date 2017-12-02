@@ -13,8 +13,6 @@ import com.cmpe275.cusr.model.Station;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.repository.TrainRepository;
 
-
-
 @Service
 public class AdminServiceImpl implements AdminService{
 	
@@ -25,6 +23,8 @@ public class AdminServiceImpl implements AdminService{
 	private TrainRepository trainRepo;
 	
 	public void populateTrainTable() {
+		
+		trainRepo.deleteAll();
 		//Adding Express Train Info
 		addExpressTrain("SB");
 		addExpressTrain("NB");
