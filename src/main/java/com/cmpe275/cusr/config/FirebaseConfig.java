@@ -22,10 +22,10 @@ public class FirebaseConfig {
 		return firebase;
 	}
 
-	@Value("${rs.pscode.firebase.database.url}")
+	@Value("https://cmpe275-cusr.firebaseio.com")
 	private String databaseUrl;
 
-	@Value("${rs.pscode.firebase.config.path}")
+	@Value("../../../../resources/cmpe275-cusr-firebase-adminsdk-b4bca-1111977888.json")
 	private String configPath;
 
 	@PostConstruct
