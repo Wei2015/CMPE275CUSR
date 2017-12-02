@@ -73,11 +73,11 @@ public class Train {
 		this.bound = bound;
 	}
 
-	public java.util.Date getDepartureTime() {
+	public Date getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(java.util.Date departureTime) {
+	public void setDepartureTime(Date departureTime) {
 		this.departureTime = departureTime;
 	}
 
@@ -97,11 +97,11 @@ public class Train {
 		this.capacity = capacity;
 	}
 
-	public Map<Station, java.util.Date> getTrainTimeTable() {
+	public Map<Station, Date> getTrainTimeTable() {
 		return trainTimeTable;
 	}
 
-	public void setTrainTimeTable(Map<Station, java.util.Date> trainTimeTable) {
+	public void setTrainTimeTable(Map<Station, Date> trainTimeTable) {
 		this.trainTimeTable = trainTimeTable;
 	}
 

@@ -32,7 +32,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a th:href="@{/unserinfo}"> <span
-							th:text="'Hello, ' + ${userId} + '!'" />
+							th:text="'Hello, ' + ${firstName} + '!'" />
 					</a></li>
 				</ul>
 			</div>
@@ -40,7 +40,7 @@
 	</nav>
 
 	<div class="container">
-		<h1>Thanks for your booking!</h1>
+		<h1><span th:text="${firstName} + ', thanks for your booking!'" /></h1>
 		<br></br>
 	</div>
 
@@ -50,18 +50,18 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Firstname</th>
-					<th>Lastname</th>
+					<th>First Name</th>
+					<th>Last Name</th>
 					<th>Email</th>
 					<th>Number of Passengers</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
-					<td th:text="${userId}" />
+					<td th:text="${firstName}" />
+					<td th:text="${lastName}" />
+					<td th:text="${email}" />
+					<td th:text="${numOfSeats}" />
 				</tr>
 			</tbody>
 		</table>
@@ -73,7 +73,7 @@
 		<table class="table table-striped">
 			<tr>
 				<td><strong>Departure Date</strong></td>
-				<td th:text="${userId}" />
+				<td th:text="${departureDate}" />
 			</tr>
 		</table>
 		<table class="table table-striped">
@@ -87,8 +87,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="train: ${trains}">
-					<td th:text="${train}" />
+				<tr th:each="dt: ${departureTrip}">
+					<td th:text="${dt.trainID}"/>
+					<td th:text="${dt.departureStation}"/>
+					<td th:text="${dt.departureTime}"/>
+					<td th:text="${dt.arrivalStation}"/>
+					<td th:text="${dt.arrivalTime}"/>
 				</tr>
 			</tbody>
 
@@ -100,7 +104,7 @@
 		<table class="table table-striped">
 			<tr>
 				<td><strong>Return Date</strong></td>
-				<td th:text="${userId}" />
+				<td th:text="${returnDate}" />
 			</tr>
 		</table>
 		<table class="table table-striped">
@@ -114,8 +118,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="train: ${trains}">
-					<td th:text="${train}" />
+				<tr th:each="rt: ${returnTrip}">
+					<td th:text="${rt.trainID}"/>
+					<td th:text="${rt.departureStation}"/>
+					<td th:text="${rt.departureTime}"/>
+					<td th:text="${rt.arrivalStation}"/>
+					<td th:text="${rt.arrivalTime}"/>
 				</tr>
 			</tbody>
 

@@ -17,14 +17,15 @@ import com.cmpe275.cusr.service.UserService;
 
 @Controller
 public class TicketController {
+	
+	 @Autowired 
+	 UserService userService;
+	 
+	 @Autowired 
+	 TicketService ticketService;
+	
 
-	/*
-	 * @Autowired UserService userService;
-	 * 
-	 * @Autowired TicketService ticketService;
-	 */
-
-	/*@GetMapping("/purchase")
+	@PostMapping("/purchase")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
 		/*
 		 * public String purchase(Model model) { long userId = 1; String round = "v";
@@ -34,10 +35,12 @@ public class TicketController {
 		 * new ArrayList<>(); times.add(4); times.add(5); times.add(6);
 		 * model.addAttribute("times", times); return "purchase"; }
 		 */
-		/*long userId = userService.getUerId();
+		long userId = userService.getUerId();
 		if (ticketService.purchase(userId, booking)) {
 			Date returnDate = booking.getReturnDate();
-			model.addAttribute("userId", userId);
+			model.addAttribute("firstName", userService.getFirstName());
+			model.addAttribute("lastName", userService.getLastName());
+			model.addAttribute("email", userService.getEmail());
 			model.addAttribute("numOfSeats", booking.getNumOfSeats());
 			model.addAttribute("price", booking.getPrice());
 			model.addAttribute("departureDate", booking.getDepartureDate());

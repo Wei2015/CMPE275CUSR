@@ -33,12 +33,14 @@ public class TicketServiceImpl {
 	public boolean purchase(long userId, Booking booking) {
 		Ticket ticket = new Ticket();
 		int numOfSeats = booking.getNumOfSeats();
-		double price = booking.getPrice();
 		ticket.setNumOfSeats(numOfSeats);
+		double price = booking.getPrice();
 		ticket.setPrice(price);
 		ticket.setUser(userRepository.findOne(userId));
-		int departTripSize = booking.getDepartureTrip().size();
-		ticket.setDepartDate(booking.getDepartureDate());
+		
+		Date departureDate = booking.getDepartureDate();
+		ticket.setDepartDate(departureDate);
+		int departTripSize = booking.getDepartureTrip().size();		
 		ticket.setDepartTime(booking.getDepartureTrip().get(0).getDepartureTime());
 		if (departTripSize > 1) {
 			ticket.setStop1Time(booking.getDepartureTrip().get(1).getDepartureTime());
@@ -59,22 +61,23 @@ public class TicketServiceImpl {
 		for (int i = 0; i < departTripSize; i++) {
 			Train train = trainRepository.findOne(booking.getDepartureTrip().get(i).getTrainId());
 			departTrains.add(train);
-			Map<Date, Integer> m = train.getTrainStatus();
-			int newNumOfSeats = numOfSeats;
-			if (m.containsKey(booking.getDepartureDate())) {
-				newNumOfSeats += m.get(booking.getDepartureDate());
+			Map<Date, Integer> map = train.getTrainStatus();
+			int updatedNumOfSeats = numOfSeats;
+			if (map.containsKey(departureDate)) {
+				updatedNumOfSeats += map.get(departureDate);
 			}
-			m.put(booking.getDepartureDate(), newNumOfSeats);
-			if (newNumOfSeats > train.getCapacity()) {
+			map.put(booking.getDepartureDate(), updatedNumOfSeats);
+			if (updatedNumOfSeats > train.getCapacity()) {
 				return false;
 			}
 		}
 		ticket.setDepartTrains(departTrains);
 
 		List<Train> returnTrains = new ArrayList<>();
-		if (booking.getReturnDate() != null) {
+		Date returnDate = booking.getReturnDate();
+		if (returnDate != null) {
+			ticket.setReturnDate(returnDate);
 			int returnTripSize = booking.getReturnTrip().size();
-			ticket.setReturnDate(booking.getReturnDate());
 			ticket.setReturnDepartTime(booking.getReturnTrip().get(0).getDepartureTime());
 			if (returnTripSize > 1) {
 				ticket.setReturnStop1Time(booking.getReturnTrip().get(1).getDepartureTime());
@@ -92,13 +95,13 @@ public class TicketServiceImpl {
 			for (int i = 0; i < returnTripSize; i++) {
 				Train train = trainRepository.findOne(booking.getReturnTrip().get(i).getTrainId());
 				departTrains.add(train);
-				Map<Date, Integer> m = train.getTrainStatus();
-				int newNumOfSeats = numOfSeats;
-				if (m.containsKey(booking.getReturnDate())) {
-					newNumOfSeats += m.get(booking.getReturnDate());
+				Map<Date, Integer> map = train.getTrainStatus();
+				int updatedNumOfSeats = numOfSeats;
+				if (map.containsKey(returnDate)) {
+					updatedNumOfSeats += map.get(returnDate);
 				}
-				m.put(booking.getReturnDate(), newNumOfSeats);
-				if (newNumOfSeats > train.getCapacity()) {
+				map.put(booking.getReturnDate(), updatedNumOfSeats);
+				if (updatedNumOfSeats > train.getCapacity()) {
 					return false;
 				}
 			}
@@ -110,8 +113,11 @@ public class TicketServiceImpl {
 		return true;
 	}
 
-	public void ticketCancel(long userId, Booking booking) {
+	public boolean cancel(long userId, Booking booking) {
+		Date date = booking.getDepartureDate();
+		Date time = booking.getDepartureTrip().get(0).getDepartureTime();
 
+		return true;
 	}
 
 }
