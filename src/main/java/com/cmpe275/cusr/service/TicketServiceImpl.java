@@ -29,31 +29,39 @@ public class TicketServiceImpl {
 	@Transactional
 	public boolean purchase(User user, Booking booking) {
 		Ticket ticket = new Ticket();
+		//General information.
 		int numOfSeats = booking.getNumOfSeats();
 		ticket.setNumOfSeats(numOfSeats);
 		double price = booking.getPrice();
 		ticket.setPrice(price);
 		ticket.setUser(user);
-		
+		//Depart trip.
 		Date departureDate = booking.getDepartureDate();
 		ticket.setDepartDate(departureDate);
-		int departTripSize = booking.getDepartureTrip().size();		
-		ticket.setDepartTime(booking.getDepartureTrip().get(0).getDepartureTime());
+		
+		int departTripSize = booking.getDepartureTrip().size();
+		ticket.setDepartSegment1DepartTime(booking.getDepartureTrip().get(0).getDepartureTime());
+		ticket.setDepartSegment1ArrivalTime(booking.getDepartureTrip().get(0).getArrivalTime());
 		if (departTripSize > 1) {
-			ticket.setStop1Time(booking.getDepartureTrip().get(1).getDepartureTime());
+			ticket.setDepartSegment2DepartTime(booking.getDepartureTrip().get(1).getDepartureTime());
+			ticket.setDepartSegment2ArrivalTime(booking.getDepartureTrip().get(1).getArrivalTime());
 		}
 		if (departTripSize > 2) {
-			ticket.setStop2Time(booking.getDepartureTrip().get(2).getDepartureTime());
+			ticket.setDepartSegment3DepartTime(booking.getDepartureTrip().get(2).getDepartureTime());
+			ticket.setDepartSegment3ArrivalTime(booking.getDepartureTrip().get(2).getArrivalTime());
 		}
-		ticket.setArrivalTime(booking.getDepartureTrip().get(2).getArrivalTime());
+		
 		ticket.setDepartStation(booking.getDepartureTrip().get(0).getDepartureStation());
+		ticket.setArrivalStation(booking.getDepartureTrip().get(0).getArrivalStation());
 		if (departTripSize > 1) {
 			ticket.setStop1(booking.getDepartureTrip().get(1).getDepartureStation());
+			ticket.setArrivalStation(booking.getDepartureTrip().get(1).getArrivalStation());
 		}
 		if (departTripSize > 2) {
 			ticket.setStop2(booking.getDepartureTrip().get(2).getDepartureStation());
-		}
-		ticket.setArrivalStation(booking.getDepartureTrip().get(2).getArrivalStation());
+			ticket.setArrivalStation(booking.getDepartureTrip().get(2).getArrivalStation());
+		}	
+		
 		List<Train> departTrains = new ArrayList<>();
 		for (int i = 0; i < departTripSize; i++) {
 			Train train = trainRepository.findOne(booking.getDepartureTrip().get(i).getTrainId());
@@ -70,19 +78,22 @@ public class TicketServiceImpl {
 		}
 		ticket.setDepartTrains(departTrains);
 
+		//Return trip.
 		List<Train> returnTrains = new ArrayList<>();
 		Date returnDate = booking.getReturnDate();
 		if (returnDate != null) {
 			ticket.setReturnDate(returnDate);
 			int returnTripSize = booking.getReturnTrip().size();
-			ticket.setReturnDepartTime(booking.getReturnTrip().get(0).getDepartureTime());
+			ticket.setReturnSegment1DepartTime(booking.getReturnTrip().get(0).getDepartureTime());
+			ticket.setReturnSegment1ArrivalTime(booking.getReturnTrip().get(0).getArrivalTime());
 			if (returnTripSize > 1) {
-				ticket.setReturnStop1Time(booking.getReturnTrip().get(1).getDepartureTime());
+				ticket.setReturnSegment2DepartTime(booking.getReturnTrip().get(1).getDepartureTime());
+				ticket.setReturnSegment2ArrivalTime(booking.getReturnTrip().get(1).getArrivalTime());
 			}
 			if (returnTripSize > 2) {
-				ticket.setReturnStop2Time(booking.getReturnTrip().get(2).getDepartureTime());
+				ticket.setReturnSegment3DepartTime(booking.getReturnTrip().get(2).getDepartureTime());
+				ticket.setReturnSegment3ArrivalTime(booking.getReturnTrip().get(2).getArrivalTime());
 			}
-			ticket.setReturnArrivalTime(booking.getReturnTrip().get(2).getArrivalTime());
 			if (returnTripSize > 1) {
 				ticket.setReturnStop1(booking.getReturnTrip().get(1).getDepartureStation());
 			}
@@ -104,16 +115,25 @@ public class TicketServiceImpl {
 			}
 			ticket.setReturnTrains(returnTrains);
 		}
+		
+		//Ticket status.
+		ticket.setCancelled(false);
+		
+		//Store into database.
 		departTrains.forEach(t -> trainRepository.save(t));
 		returnTrains.forEach(t -> trainRepository.save(t));
 		ticketRepository.save(ticket);
+		
+		//Email service.
+		
 		return true;
 	}
-
+	
+	@Transactional
 	public boolean cancel(User user, Booking booking) {
 		Date date = booking.getDepartureDate();
 		Date time = booking.getDepartureTrip().get(0).getDepartureTime();
-
+		Date now = new Date();
 		return true;
 	}*/
 

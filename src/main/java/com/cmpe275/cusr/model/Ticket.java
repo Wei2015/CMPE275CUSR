@@ -38,48 +38,66 @@ public class Ticket {
 	@Column (name="PRICE", nullable=false)
 	private double price;
 	
-	@Column(name="DEPART_DATE", nullable=false)
-	private Date departDate;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID")
 	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private User user;
 	
+	@Column(name="DEPART_DATE", nullable=false)
+	@Temporal(TemporalType.DATE)
+	private Date departDate;
+	
 	@Column(name="RETURN_DATE", nullable=true)
+	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 	
-	@Column(name="DEPART_TIME", nullable=false)
+	@Column(name="DEPART_SEGMENT1_DEPART_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
-	private Date departTime;
+	private Date departSegment1DepartTime;
 	
-	@Column(name="STOP1_TIME", nullable=true)
+	@Column(name="DEPART_SEGMENT1_ARRIVAL_TIME", nullable=false)
 	@Temporal(TemporalType.TIME)
-	private Date stop1Time;
+	private Date departSegment1ArrivalTime;
 	
-	@Column(name="STOP2_TIME", nullable=true)
+	@Column(name="DEPART_SEGMENT2_DEPART_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date stop2Time;
+	private Date departSegment2DepartTime;
 	
-	@Column(name="ARRIVAL_TIME", nullable=false)
+	@Column(name="DEPART_SEGMENT2_ARRIVAL_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date arrivalTime;
+	private Date departSegment2ArrivalTime;
 	
-	@Column(name="RETURN_DEPART_TIME", nullable=true)
+	@Column(name="DEPART_SEGMENT3_DEPART_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date returnDepartTime;
+	private Date departSegment3DepartTime;
 	
-	@Column(name="RETURN_STOP1_TIME", nullable=true)
+	@Column(name="DEPART_SEGMENT3_ARRIVAL_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date returnStop1Time;
+	private Date departSegment3ArrivalTime;
 	
-	@Column(name="RETURN_STOP2_TIME", nullable=true)
+	@Column(name="RETURN_SEGMENT1_DEPART_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date returnStop2Time;
+	private Date returnSegment1DepartTime;
 	
-	@Column(name="RETURN_ARRIVAL_TIME", nullable=true)
+	@Column(name="RETURN_SEGMENT1_ARRIVAL_TIME", nullable=true)
 	@Temporal(TemporalType.TIME)
-	private Date returnArrivalTime;
+	private Date returnSegment1ArrivalTime;
+	
+	@Column(name="RETURN_SEGMENT2_DEPART_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private Date returnSegment2DepartTime;
+	
+	@Column(name="RETURN_SEGMENT2_ARRIVAL_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private Date returnSegment2ArrivalTime;
+	
+	@Column(name="RETURN_SEGMENT3_DEPART_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private Date returnSegment3DepartTime;
+	
+	@Column(name="RETURN_SEGMENT3_ARRIVAL_TIME", nullable=true)
+	@Temporal(TemporalType.TIME)
+	private Date returnSegment3ArrivalTime;
 	
 	@Column(name="DEPART_STATION", nullable=false)
 	private Station departStation;
@@ -143,20 +161,20 @@ public class Ticket {
 		this.price = price;
 	}
 
-	public Date getDepartDate() {
-		return departDate;
-	}
-
-	public void setDepartDate(Date departDate) {
-		this.departDate = departDate;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getDepartDate() {
+		return departDate;
+	}
+
+	public void setDepartDate(Date departDate) {
+		this.departDate = departDate;
 	}
 
 	public Date getReturnDate() {
@@ -167,68 +185,100 @@ public class Ticket {
 		this.returnDate = returnDate;
 	}
 
-	public Date getDepartTime() {
-		return departTime;
+	public Date getDepartSegment1DepartTime() {
+		return departSegment1DepartTime;
 	}
 
-	public void setDepartTime(Date departTime) {
-		this.departTime = departTime;
+	public void setDepartSegment1DepartTime(Date departSegment1DepartTime) {
+		this.departSegment1DepartTime = departSegment1DepartTime;
 	}
 
-	public Date getStop1Time() {
-		return stop1Time;
+	public Date getDepartSegment1ArrivalTime() {
+		return departSegment1ArrivalTime;
 	}
 
-	public void setStop1Time(Date stop1Time) {
-		this.stop1Time = stop1Time;
+	public void setDepartSegment1ArrivalTime(Date departSegment1ArrivalTime) {
+		this.departSegment1ArrivalTime = departSegment1ArrivalTime;
 	}
 
-	public Date getStop2Time() {
-		return stop2Time;
+	public Date getDepartSegment2DepartTime() {
+		return departSegment2DepartTime;
 	}
 
-	public void setStop2Time(Date stop2Time) {
-		this.stop2Time = stop2Time;
+	public void setDepartSegment2DepartTime(Date departSegment2DepartTime) {
+		this.departSegment2DepartTime = departSegment2DepartTime;
 	}
 
-	public Date getArrivalTime() {
-		return arrivalTime;
+	public Date getDepartSegment2ArrivalTime() {
+		return departSegment2ArrivalTime;
 	}
 
-	public void setArrivalTime(Date arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setDepartSegment2ArrivalTime(Date departSegment2ArrivalTime) {
+		this.departSegment2ArrivalTime = departSegment2ArrivalTime;
 	}
 
-	public Date getReturnDepartTime() {
-		return returnDepartTime;
+	public Date getDepartSegment3DepartTime() {
+		return departSegment3DepartTime;
 	}
 
-	public void setReturnDepartTime(Date returnDepartTime) {
-		this.returnDepartTime = returnDepartTime;
+	public void setDepartSegment3DepartTime(Date departSegment3DepartTime) {
+		this.departSegment3DepartTime = departSegment3DepartTime;
 	}
 
-	public Date getReturnStop1Time() {
-		return returnStop1Time;
+	public Date getDepartSegment3ArrivalTime() {
+		return departSegment3ArrivalTime;
 	}
 
-	public void setReturnStop1Time(Date returnStop1Time) {
-		this.returnStop1Time = returnStop1Time;
+	public void setDepartSegment3ArrivalTime(Date departSegment3ArrivalTime) {
+		this.departSegment3ArrivalTime = departSegment3ArrivalTime;
 	}
 
-	public Date getReturnStop2Time() {
-		return returnStop2Time;
+	public Date getReturnSegment1DepartTime() {
+		return returnSegment1DepartTime;
 	}
 
-	public void setReturnStop2Time(Date returnStop2Time) {
-		this.returnStop2Time = returnStop2Time;
+	public void setReturnSegment1DepartTime(Date returnSegment1DepartTime) {
+		this.returnSegment1DepartTime = returnSegment1DepartTime;
 	}
 
-	public Date getReturnArrivalTime() {
-		return returnArrivalTime;
+	public Date getReturnSegment1ArrivalTime() {
+		return returnSegment1ArrivalTime;
 	}
 
-	public void setReturnArrivalTime(Date returnArrivalTime) {
-		this.returnArrivalTime = returnArrivalTime;
+	public void setReturnSegment1ArrivalTime(Date returnSegment1ArrivalTime) {
+		this.returnSegment1ArrivalTime = returnSegment1ArrivalTime;
+	}
+
+	public Date getReturnSegment2DepartTime() {
+		return returnSegment2DepartTime;
+	}
+
+	public void setReturnSegment2DepartTime(Date returnSegment2DepartTime) {
+		this.returnSegment2DepartTime = returnSegment2DepartTime;
+	}
+
+	public Date getReturnSegment2ArrivalTime() {
+		return returnSegment2ArrivalTime;
+	}
+
+	public void setReturnSegment2ArrivalTime(Date returnSegment2ArrivalTime) {
+		this.returnSegment2ArrivalTime = returnSegment2ArrivalTime;
+	}
+
+	public Date getReturnSegment3DepartTime() {
+		return returnSegment3DepartTime;
+	}
+
+	public void setReturnSegment3DepartTime(Date returnSegment3DepartTime) {
+		this.returnSegment3DepartTime = returnSegment3DepartTime;
+	}
+
+	public Date getReturnSegment3ArrivalTime() {
+		return returnSegment3ArrivalTime;
+	}
+
+	public void setReturnSegment3ArrivalTime(Date returnSegment3ArrivalTime) {
+		this.returnSegment3ArrivalTime = returnSegment3ArrivalTime;
 	}
 
 	public Station getDepartStation() {
@@ -294,5 +344,4 @@ public class Ticket {
 	public void setReturnTrains(List<Train> returnTrains) {
 		this.returnTrains = returnTrains;
 	}
-	
 }
