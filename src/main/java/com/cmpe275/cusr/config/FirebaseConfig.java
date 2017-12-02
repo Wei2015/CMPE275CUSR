@@ -1,5 +1,7 @@
 package com.cmpe275.cusr.config;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +28,7 @@ public class FirebaseConfig {
 	@Value("https://cmpe275-cusr.firebaseio.com")
 	private String databaseUrl;
 
-	@Value("../../../../resources/cmpe275-cusr-firebase-adminsdk-b4bca-1111977888.json")
+	@Value("cmpe275-cusr-firebase-adminsdk-b4bca-1111977888.json")
 	private String configPath;
 
 	@PostConstruct
@@ -36,11 +39,28 @@ public class FirebaseConfig {
 		 * 
 		 * Create service account , download json
 		 */
-		InputStream inputStream = FirebaseConfig.class.getClassLoader().getResourceAsStream(configPath);
+		System.out.println(configPath);
+		System.out.println(System.getProperty("user.dir"));
+		
+		/*InputStream inputStream = FirebaseConfig.class.getClassLoader().getResourceAsStream(configPath);
 
 		FirebaseOptions options = new FirebaseOptions.Builder().setServiceAccount(inputStream)
 				.setDatabaseUrl(databaseUrl).build();
-		FirebaseApp.initializeApp(options);
+		FirebaseApp.initializeApp(options);*/
+		
+		try {
+			FileInputStream serviceAccount = new FileInputStream(configPath);
+			FirebaseOptions options = new FirebaseOptions.Builder()
+					  .setServiceAccount(serviceAccount)
+					  .setDatabaseUrl(databaseUrl)
+					  .build();
+			FirebaseApp.initializeApp(options);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 }

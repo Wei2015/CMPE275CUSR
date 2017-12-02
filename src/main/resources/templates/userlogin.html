@@ -92,6 +92,7 @@
 			console.log(user);
 			user.getIdToken().then(function(data) {
 		      console.log(data)
+		      window.location = "http://localhost:8080/signin?firebaseToken="+data;
 		    });
 		}).catch(function(error) {
 			console.log(error.code);

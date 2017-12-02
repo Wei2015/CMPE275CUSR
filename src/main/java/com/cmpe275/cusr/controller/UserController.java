@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cmpe275.cusr.config.auth.firebase.FirebaseTokenHolder;
@@ -34,6 +35,18 @@ public class UserController {
 		
 		//validate token and return FirebaseTokenHolder instance
 		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
+		System.out.println(tokenHolder.getUid());
+		return "usertickets";
+	}
+	@GetMapping("/signin")
+	public String signinSuccessGet(Model model, @RequestParam(value="firebaseToken", required=true) String firebaseToken) {
+		
+		if(StringUtils.isBlank(firebaseToken))
+			throw new IllegalArgumentException("FirebaseTokenBlank");
+		
+		//validate token and return FirebaseTokenHolder instance
+		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
+		System.out.println("Token authenticated");
 		System.out.println(tokenHolder.getUid());
 		return "usertickets";
 	}
