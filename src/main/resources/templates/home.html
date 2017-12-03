@@ -76,8 +76,9 @@
 			</div>
 			<div class="row">
 					<label class ="container">
-					Express Train <input type="radio" name="radio" value="1" th:checked="*{expressTrain}"/> 
-					Regular Train <input type="radio" name="radio" value="0" th:checked="*{expressTrain}"/>
+						Express Train <input type="radio" th:name="trainType" value="Express" th:checked="*{trainType}"/> 
+						Regular Train <input type="radio" th:name="trainType" value="Regular" th:checked="*{trainType}"/>
+						Any Train <input type="radio" th:name="trainType" value="Any" th:checked="*{trainType}"/>
 					</label>
 					
 					<div class="col-md-3 col-sm-6 form-group">

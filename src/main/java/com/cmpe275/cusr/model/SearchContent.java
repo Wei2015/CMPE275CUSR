@@ -7,8 +7,8 @@ public class SearchContent {
 	private Station destinationStation;
 	private String departureDate;
 	private String departureTime;
-	private boolean roundTrip = true;
-	private boolean expressTrain = true;
+	private boolean roundTrip;
+	private String trainType;
 	private String returnDate;
 	private String returnTime;
 	private int numberOfSeats;
@@ -16,6 +16,7 @@ public class SearchContent {
 	private Station[] allStations = Station.values();
 	private final int[] seats = {1,2,3,4,5}; 
 	
+
 	
 	public SearchContent() {
 		super();
@@ -24,6 +25,7 @@ public class SearchContent {
 	public Station[] getAllStations() {
 		return allStations;
 	}
+	
 	public int getNumberOfSeats() {
 		return numberOfSeats;
 	}
@@ -35,7 +37,7 @@ public class SearchContent {
 	public int[] getSeats() {
 		return seats;
 	}
-	
+
 	public Station getDepartureStation() {
 		return departureStation;
 	}
@@ -63,12 +65,18 @@ public class SearchContent {
 	public boolean isRoundTrip() {
 		return roundTrip;
 	}
-	public boolean isExpressTrain() {
-			return expressTrain;
-		}
 	public void setRoundTrip(boolean roundTrip) {
 		this.roundTrip = roundTrip;
 	}
+	
+	public String getTrainType() {
+		return trainType;
+	}
+
+	public void setTrainType(String trainType) {
+		this.trainType = trainType;
+	}
+
 	public String getReturnDate() {
 		return returnDate;
 	}
@@ -81,7 +89,6 @@ public class SearchContent {
 	public void setReturnTime(String returnTime) {
 		this.returnTime = returnTime;
 	}
-	//for testing purpose
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -93,10 +100,10 @@ public class SearchContent {
 		result.append(getDepartureDate());
 		result.append(" ");
 		result.append(getDepartureTime());
-		if (isRoundTrip()) result.append("\nRound Trip \n");
-		else result.append("\nOne Way Trip \n");
-		if (isExpressTrain()) result.append("\nExpress Train Selected \n");
-		else result.append("\nRegular Train Selected \n");
+		if (isRoundTrip()) result.append("\nRound Trip");
+		else result.append("\nOne Way Trip");
+		result.append("\nTrain Type Selected: " + getTrainType());
+		result.append("\nNumber of seats selected: " + getNumberOfSeats());
 		return result.toString();
 	}
 	
