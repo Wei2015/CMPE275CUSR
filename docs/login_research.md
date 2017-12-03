@@ -33,6 +33,13 @@ FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdTokenAsync(idTok
 String uid = decodedToken.getUid();
 ```
 
+### Taking Firebase Token and setting user authentication in security context
+* First verify firebase user with user in our own database (if not, create new DB user)
+* Create Firebase AuthenticationToken which implements AbstractAuthToken
+* Authentication auth = new FirebaseAuthenticationToken(uId, token)
+* set security context authentication with auth
+Reference: https://stackoverflow.com/questions/7900994/programmatically-login-in-a-user-using-spring-security
+
 ### Facebook Login
 Reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
 <br>
