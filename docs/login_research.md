@@ -38,7 +38,16 @@ String uid = decodedToken.getUid();
 * Create Firebase AuthenticationToken which implements AbstractAuthToken
 * Authentication auth = new FirebaseAuthenticationToken(uId, token)
 * set security context authentication with auth
+<br>
 Reference: https://stackoverflow.com/questions/7900994/programmatically-login-in-a-user-using-spring-security
+
+### Disable Spring security login screen?
+Reference: https://stackoverflow.com/questions/23636368/how-to-disable-spring-security-login-screen
+<br>
+Reference: https://stackoverflow.com/questions/25639188/disable-basic-authentication-while-using-spring-security-java-configuration
+
+### Securing API endpoints
+* //TODO
 
 ### Facebook Login
 Reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
