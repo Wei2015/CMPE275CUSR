@@ -51,11 +51,11 @@ Reference: https://stackoverflow.com/questions/25639188/disable-basic-authentica
 * Grant access to specific routes in SecurityConfig using antMatchers and roles
 ```
 @Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/user/**").hasRole("USER")
-			.anyRequest().permitAll();
-	}
+protected void configure(HttpSecurity http) throws Exception {
+	http.authorizeRequests()
+		.antMatchers("/user/**").hasRole("USER")
+		.anyRequest().permitAll();
+}
 ```
 
 ### Facebook Login
