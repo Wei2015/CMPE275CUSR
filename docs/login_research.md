@@ -47,7 +47,16 @@ Reference: https://stackoverflow.com/questions/23636368/how-to-disable-spring-se
 Reference: https://stackoverflow.com/questions/25639188/disable-basic-authentication-while-using-spring-security-java-configuration
 
 ### Securing API endpoints
-* //TODO
+* Using SecurityContext, set authentication with an auth token (I used a custom firebaseAuthenticationToken on top of an abstract token)
+* Grant access to specific routes in SecurityConfig using antMatchers and roles
+```
+@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+			.antMatchers("/user/**").hasRole("USER")
+			.anyRequest().permitAll();
+	}
+```
 
 ### Facebook Login
 Reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
