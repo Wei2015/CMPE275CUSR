@@ -88,7 +88,9 @@
 		firebase.auth().signInWithPopup(fb_provider).then(function(result){
 			var token = result.credential.accessToken;
 			var user = result.user;
-			window.location = "http://localhost:8080/tickets?email_identifier="+user.email;
+			user.getIdToken().then(function(data) {
+		      window.location = "http://localhost:8080/signin?firebaseToken="+data;
+		    });
 		}).catch(function(error) {
 			console.log(error.code);
 		});
@@ -98,7 +100,9 @@
 		firebase.auth().signInWithPopup(google_provider).then(function(result){
 			var token = result.credential.accessToken;
 			var user = result.user;
-			window.location = "http://localhost:8080/tickets?email_identifier="+user.email;
+			user.getIdToken().then(function(data) {
+		      window.location = "http://localhost:8080/signin?firebaseToken="+data;
+		    });
 		}).catch(function(error) {
 			console.log(error.code);
 		});
@@ -108,7 +112,9 @@
 		var email = $("#reg-email").val();
 		var pwd = $("#reg-pwd").val();
 		firebase.auth().createUserWithEmailAndPassword(email, pwd).then(function(result){
-			window.location = "http://localhost:8080/tickets?email_identifier="+result.email;
+			result.getIdToken().then(function(data) {
+		      window.location = "http://localhost:8080/signin?firebaseToken="+data;
+		    });
 		}).catch(function(error) {
 			console.log(error.code);
 		});
