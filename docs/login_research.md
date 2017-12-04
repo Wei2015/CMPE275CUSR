@@ -56,9 +56,11 @@ Reference: https://github.com/knalum/spring-auth
 
 ### Tasks
 ~~1. Disable Spring Basic Security Login Prompt. Done by just authenticating everything in security config.~~<br>
-2. Make UserId available via UserService<br>
+~~2. Make UserId available via UserService~~<br>
 ~~3. Test and debug current login/signup functionalities (database updated? getUserId through security context?)~~<br>
-4. Migrate content in UserController to UserService<br>
+~~4. Migrate content in UserController to UserService~~<br>
 ~~5. Web Security Config and Fix issue with redirection~~<br>
-6. Authenticate User in UserService to make sure UserId matches with Email
+6. Authenticate User in UserService to make sure UserId matches with Email<br>
+7. Securing anonymous pages & implementing logout<br>
+8. Replace default error page
 <br>
