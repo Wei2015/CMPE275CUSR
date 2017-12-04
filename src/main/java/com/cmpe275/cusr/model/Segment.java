@@ -1,29 +1,51 @@
 package com.cmpe275.cusr.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+
 
 public class Segment {
 	
-	private long trainId;
+	private String bound;
 	private Date departureTime;
 	private Date arrivalTime;
 	private Station departureStation;
 	private Station arrivalStation;
 	
-	public long getTrainId() {
-		return trainId;
+	private SimpleDateFormat convertTime = new SimpleDateFormat("HH:mm:ss");
+	
+	public Segment() {
+		super();
 	}
-	public void setTrainId(long trainId) {
-		this.trainId = trainId;
+	
+	public Segment(String bound, Date departureTime, Date arrivalTime, Station departureStation, Station arrivalStation) {
+		super();
+		this.bound = bound;
+		this.departureTime = departureTime;
+		this.arrivalTime = arrivalTime;
+		this.departureStation = departureStation;
+		this.arrivalStation = arrivalStation;
 	}
-	public Date getDepartureTime() {
-		return departureTime;
+
+
+	
+	public String getBound() {
+		return bound;
+	}
+
+	public void setBound(String bound) {
+		this.bound = bound;
+	}
+
+	public String getDepartureTime() {
+		return convertTime.format(departureTime);
 	}
 	public void setDepartureTime(Date departureTime) {
 		this.departureTime = departureTime;
 	}
-	public Date getArrivalTime() {
-		return arrivalTime;
+	public String getArrivalTime() {
+		return convertTime.format(arrivalTime);
 	}
 	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;

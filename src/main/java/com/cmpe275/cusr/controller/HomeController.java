@@ -1,5 +1,11 @@
 package com.cmpe275.cusr.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cmpe275.cusr.model.OneWayList;
+import com.cmpe275.cusr.model.OneWayTrip;
 import com.cmpe275.cusr.model.SearchContent;
+import com.cmpe275.cusr.model.Segment;
+import com.cmpe275.cusr.model.Station;
 
 
 
@@ -26,10 +36,50 @@ public class HomeController {
 	//show search results without login
 	@PostMapping("/")
 	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
-		search.setDepartureDate("12-1-2017");
-		//model.addAttribute("searchContent",search);
-		System.out.println(search.toString());
-		return "home";
+		//testing show List of trips found on view
+				Date depart = new Date();
+				Date arrival = new Date();
+				Date departDate = new Date();
+				Date departDate2 = new Date();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				try {
+					departDate = dateFormat.parse("12/09/2017");
+					departDate = dateFormat.parse("12/25/2017");
+					depart = timeFormat.parse("12:23:00");
+					arrival = timeFormat.parse("22:45:00");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				OneWayTrip oneWay = new OneWayTrip(departDate, arrival, 3, 10.00);
+				Segment seg1 = new Segment("NB0800",depart, arrival, Station.C, Station.N);
+				Segment seg2 = new Segment("NB1200",arrival, depart, Station.N, Station.Q);
+				List<Segment> connection = new ArrayList<>();
+				connection.add(seg1);
+				connection.add(seg2);
+				oneWay.setConnections(connection);
+				
+				OneWayTrip oneWay2 = new OneWayTrip(departDate2, arrival, 5, 45.00);
+				Segment seg11 = new Segment("SB0915",depart, arrival, Station.A, Station.C);
+				Segment seg22 = new Segment("SB1230",arrival, depart, Station.C, Station.N);
+				List<Segment> connection2 = new ArrayList<>();
+				connection2.add(seg11);
+				connection2.add(seg22);
+				oneWay2.setConnections(connection2);
+				
+				List<OneWayTrip> oneList = new ArrayList<>();
+				oneList.add(oneWay);
+				oneList.add(oneWay2);
+				OneWayList testOneWayList = new OneWayList();
+				testOneWayList.setFirstFive(oneList);
+				model.addAttribute("oneWayList", testOneWayList);
+				
+				
+				
+				
+				//add search inquiry in the view
+				model.addAttribute("searchContent", search);
+				return "searchResult";
 	}
 	
 	@RequestMapping("/login")
