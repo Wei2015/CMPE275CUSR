@@ -52,13 +52,12 @@ public class UserController {
 		//validate token and return FirebaseTokenHolder instance
 		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
 		System.out.println("Token authenticated");
+		
 		User loadedUser = userService.signin(tokenHolder.getUid(), tokenHolder.getEmail());
 		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser.getEmail(), loadedUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
-		return "usertickets";
-		//redirection keeps giving 403 FORBIDDEN
-		//return "redirect:/registration";
+		return "redirect:/user/tickets";
 	}
 	
 }

@@ -12,13 +12,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("cmpe275-cusr-firebase-adminsdk-b4bca-1111977888.json");
+		//web.ignoring().antMatchers("/resources/");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/user/**").hasRole("USER")
-			.antMatchers("/**").permitAll();
+			.anyRequest().permitAll();
 	}
 }
