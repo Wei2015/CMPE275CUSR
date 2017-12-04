@@ -56,8 +56,9 @@ public class UserController {
 		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser.getEmail(), loadedUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
-		//should redirect to another secured mapping
 		return "usertickets";
+		//redirection keeps giving 403 FORBIDDEN
+		//return "redirect:/registration";
 	}
 	
 }

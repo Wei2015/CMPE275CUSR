@@ -47,7 +47,7 @@ public class HomeController {
 		return "adminlogin";
 	}
 	
-	@RequestMapping("/tickets")
+	@RequestMapping("/user/tickets")
 	public String showUserTickets(Model model) {
 		return "usertickets";
 	}
