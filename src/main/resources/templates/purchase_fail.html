@@ -40,7 +40,12 @@
 	</nav>
 
 	<div class="container">
-		<h1><span th:text="${firstName} + ', tickets hava been sold out!'" /></h1>
+		<h1>
+			<span th:if="${numOfTickets} == 'mulptile'"
+				th:text="${firstName} + ', the tickets have been sold out!'" /> 
+			<span th:unless="${numOftickets} == 'single'"
+				th:text="${firstName} + ', the ticket has been sold out!'" />
+		</h1>
 		<br></br>
 	</div>
 

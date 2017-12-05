@@ -37,16 +37,18 @@ public class TicketController {
 		/*User user = userService.findUser();
 		if (ticketService.purchase(user, booking)) {
 			Date returnDate = booking.getReturnDate();
+			int numOfSeats = booking.getNumOfSeats();
 			model.addAttribute("firstName", user.getFirstName());
 			model.addAttribute("lastName", user.getLastName());
 			model.addAttribute("email", user.getEmail());
-			model.addAttribute("numOfSeats", booking.getNumOfSeats());
+			model.addAttribute("numOfSeats", numOfSeats);
 			model.addAttribute("price", booking.getPrice());
 			model.addAttribute("departureDate", booking.getDepartureDate());
 			model.addAttribute("departureTrip", booking.getDepartureTrip());
 			model.addAttribute("returnDate", returnDate);
 			model.addAttribute("returnTrip", booking.getReturnTrip());
 			model.addAttribute("round", returnDate == null ? "Y" : "N");
+			model.addAttribute("numOfTickets", numOfSeats > 1 ? "multiple" : "single");
 			return "purchase_success";
 		} else {
 			return "purchase_fail";
@@ -58,17 +60,18 @@ public class TicketController {
 		User user = userService.findUser();
 		if (ticketService.cancel(user, booking)) {
 			Date returnDate = booking.getReturnDate();
+			int numOfSeats = booking.getNumOfSeats();
 			model.addAttribute("firstName", user.getFirstName());
 			model.addAttribute("lastName", user.getLastName());
 			model.addAttribute("email", user.getEmail());
-			model.addAttribute("numOfSeats", booking.getNumOfSeats());
+			model.addAttribute("numOfSeats", numOfSeats);
 			model.addAttribute("price", booking.getPrice());
 			model.addAttribute("departureDate", booking.getDepartureDate());
 			model.addAttribute("departureTrip", booking.getDepartureTrip());
 			model.addAttribute("returnDate", returnDate);
 			model.addAttribute("returnTrip", booking.getReturnTrip());
 			model.addAttribute("round", returnDate == null ? "Y" : "N");
-			model.addAttribute("numOfTickets", booking.getNumOfSeats() > 1 ? "multiple" : "single");
+			model.addAttribute("numOfTickets", numOfSeats > 1 ? "multiple" : "single");
 			return "ticketCancel_sucess";
 		} else {
 			return "ticketCancel_fail";

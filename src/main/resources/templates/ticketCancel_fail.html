@@ -32,7 +32,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a th:href="@{/usertickets}"> <span
-							th:text="'Hello, ' + ${firstName} + '!'"/>
+							th:text="'Hello, ' + ${firstName} + '!'" />
 					</a></li>
 				</ul>
 			</div>
@@ -42,10 +42,11 @@
 	<div class="container">
 		<h1>
 			<span th:if="${numOftickets} == 'mulptile'"
-				th:text="${firstName} + ', your tickets cannot been cancelled!'"/> 
+				th:text="${firstName} + ', your tickets cannot been cancelled!'"/>
 			<span th:unless="${numOftickets} == 'single'"
 				th:text="${firstName} + ', your ticket cannot been cancelled!'"/>
-		<br></br>		
+		</h1>
+		<br></br>
 		<h2>Please cancel your ticket(s) one hour before boarding time.</h2>
 		<br></br>
 	</div>
@@ -132,6 +133,15 @@
 					<td th:text="${rt.arrivalTime}" />
 				</tr>
 			</tbody>
+		</table>
+	</div>
+	<br></br>
+	<div class="container">
+		<table class="table table-striped">
+			<tr>
+				<td><strong>Price</strong></td>
+				<td th:text="${price}" />
+			</tr>
 		</table>
 	</div>
 	<br></br>
