@@ -17,6 +17,8 @@ import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.repository.TrainRepository;
 
+import in.kiranreddy.EmailService;
+
 @Service
 public class TicketServiceImpl {
 
@@ -25,6 +27,9 @@ public class TicketServiceImpl {
 
 	@Autowired
 	private TrainRepository trainRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Transactional
 	public boolean purchase(User user, Booking booking) {
@@ -125,7 +130,7 @@ public class TicketServiceImpl {
 		ticketRepository.save(ticket);
 		
 		//Email service.
-		
+		emailService.sendMail(user.getEmail(),"CUSR Booking confirmation","Thanks for your bokking!");
 		return true;
 	}
 	
