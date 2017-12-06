@@ -17,8 +17,6 @@ import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.repository.TrainRepository;
 
-import in.kiranreddy.EmailService;
-
 @Service
 public class TicketServiceImpl {
 
