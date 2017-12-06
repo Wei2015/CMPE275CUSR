@@ -2,6 +2,8 @@ package com.cmpe275.cusr.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +21,10 @@ public class TrainStatus {
 	@Column (name = "DATE")
 	private String date;
 	
+	@Column(name="STATION")
+	@Enumerated(EnumType.STRING)
+	private Station station;
+	
 	@Column (name = "USED_SEATS")
 	private int usedSeats;
 	
@@ -35,6 +41,14 @@ public class TrainStatus {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public Station getStation() {
+		return station;
+	}
+
+	public void setStation(Station station) {
+		this.station = station;
 	}
 
 	public int getUsedSeats() {
