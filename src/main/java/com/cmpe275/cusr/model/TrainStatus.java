@@ -24,7 +24,32 @@ public class TrainStatus {
 	
 	@Column (name="IS_CANCELLED")
 	private boolean isCancelled;
-	
-	
 
+	public long getStatusId() {
+		return statusId;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public int getUsedSeats() {
+		return usedSeats;
+	}
+
+	public void setUsedSeats(int usedSeats) {
+		this.usedSeats = usedSeats;
+	}
+
+	public boolean isCancelled() {
+		return isCancelled;
+	}
+
+	public void setCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}	
 }

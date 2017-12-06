@@ -35,14 +35,10 @@ public class Train {
 	
 	@Column(name="CAPACITY")
 	private int capacity;
-	
-	
 
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.LAZY)
 	@JoinColumn (name="TRAIN_ID")
 	private List<TrainStatus> trainStatus;
-	
-
 	
 	public Train() {
 		super();

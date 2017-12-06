@@ -1,15 +1,16 @@
 package com.cmpe275.cusr.model;
 
-
-
+import com.cmpe275.cusr.service.Calculator;
 
 public class Segment implements Comparable<Segment>{
 	
+	private long trainId;
 	private String bound;
 	private String departureTime;
 	private String arrivalTime;
 	private Station departureStation;
 	private Station arrivalStation;
+	private double price;
 	
 	
 	public Segment() {
@@ -23,10 +24,13 @@ public class Segment implements Comparable<Segment>{
 		this.arrivalTime = arrivalTime;
 		this.departureStation = departureStation;
 		this.arrivalStation = arrivalStation;
+		this.price = getPrice();
+	}
+	
+	public long getTrainId() {
+		return trainId;
 	}
 
-
-	
 	public String getBound() {
 		return bound;
 	}
@@ -58,6 +62,14 @@ public class Segment implements Comparable<Segment>{
 	}
 	public void setArrivalStation(Station arrivalStation) {
 		this.arrivalStation = arrivalStation;
+	}
+	
+	public double getPrice() {
+		return Calculator.pricePerSeat(departureStation, arrivalStation, bound);
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 	@Override
