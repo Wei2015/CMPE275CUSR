@@ -27,6 +27,10 @@ public class User implements UserDetails {
 	
 	@Column(name="EMAIL", nullable = false, unique = true)
 	private String email;
+	
+	@Column(name="NAME", nullable = false)
+	private String name;
+	
 
 	public User() {
 		super();
@@ -55,6 +59,15 @@ public class User implements UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

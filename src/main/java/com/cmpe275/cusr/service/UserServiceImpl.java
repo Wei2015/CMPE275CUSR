@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired(required = false)
 	private FirebaseService firebaseService;
 	
-	public String findUser() {
-		String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return userId;
+	public User findUser() {
+		User u = (User) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+		return u;
 	}
 	
 	public void signInAuthentication(String firebaseToken) {
@@ -31,20 +31,20 @@ public class UserServiceImpl implements UserService {
 		
 		//validate token and return FirebaseTokenHolder instance
 		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
-		System.out.println("Token authenticated");
-		
-		User loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail());
-		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser.getEmail(), loadedUser.getAuthorities());
+		User loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), tokenHolder.getName());
+		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser, loadedUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
-	public User getUserFromDB(String UId, String email) {
+	public User getUserFromDB(String UId, String email, String name) {
 		User userLoaded = userRepository.findByUIdEmail(UId, email);
 		
 		if(userLoaded == null) {
 			userLoaded = new User();
 			userLoaded.setUserUId(UId);
 			userLoaded.setEmail(email);
+			userLoaded.setName(name);
+			
 			userRepository.save(userLoaded);
 		} 
 		return userLoaded;
