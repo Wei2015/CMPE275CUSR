@@ -10,13 +10,13 @@ public class OneWayTrip implements Comparable<OneWayTrip>{
 	private String departureDate;
 	private List<Segment> connections;
 	private int numberOfSeats;
-	private int ticketPrice;
+	private double ticketPrice;
 	private String arrivalTime;
 	
 	public OneWayTrip() {
 		super();
 	}
-	public OneWayTrip(String departureDate, String arrivalTime, int numberOfSeats, int ticketPrice) {
+	public OneWayTrip(String departureDate, String arrivalTime, int numberOfSeats, double ticketPrice) {
 		super();
 		this.departureDate = departureDate;
 		this.arrivalTime = arrivalTime;
