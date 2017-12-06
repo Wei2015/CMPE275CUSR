@@ -1,25 +1,22 @@
 package com.cmpe275.cusr.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 
-public class Segment {
+public class Segment implements Comparable<Segment>{
 	
 	private String bound;
-	private Date departureTime;
-	private Date arrivalTime;
+	private String departureTime;
+	private String arrivalTime;
 	private Station departureStation;
 	private Station arrivalStation;
 	
-	private SimpleDateFormat convertTime = new SimpleDateFormat("HH:mm:ss");
 	
 	public Segment() {
 		super();
 	}
 	
-	public Segment(String bound, Date departureTime, Date arrivalTime, Station departureStation, Station arrivalStation) {
+	public Segment(String bound, String departureTime, String arrivalTime, Station departureStation, Station arrivalStation) {
 		super();
 		this.bound = bound;
 		this.departureTime = departureTime;
@@ -39,15 +36,15 @@ public class Segment {
 	}
 
 	public String getDepartureTime() {
-		return convertTime.format(departureTime);
+		return departureTime;
 	}
-	public void setDepartureTime(Date departureTime) {
+	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
 	public String getArrivalTime() {
-		return convertTime.format(arrivalTime);
+		return arrivalTime;
 	}
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	public Station getDepartureStation() {
@@ -61,5 +58,11 @@ public class Segment {
 	}
 	public void setArrivalStation(Station arrivalStation) {
 		this.arrivalStation = arrivalStation;
+	}
+	
+	@Override
+	public int compareTo(Segment other) {
+		return this.getArrivalTime().compareTo(other.getArrivalTime());
+	
 	}
 }
