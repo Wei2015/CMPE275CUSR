@@ -1,35 +1,33 @@
 package com.cmpe275.cusr.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class OneWayTrip {
+public class OneWayTrip implements Comparable<OneWayTrip>{
 	
-	private Date departureDate;
+	private String departureDate;
 	private List<Segment> connections;
 	private int numberOfSeats;
-	private double ticketPrice;
-	private Date arrivalTime;
+	private int ticketPrice;
+	private String arrivalTime;
 	
-	private SimpleDateFormat convertDate = new SimpleDateFormat("MM/dd/yyyy");
-	private SimpleDateFormat convertTime = new SimpleDateFormat("HH:mm:ss");
-
 	public OneWayTrip() {
 		super();
 	}
-	public OneWayTrip(Date departureDate, Date arrivalTime, int numberOfSeats, double ticketPrice) {
+	public OneWayTrip(String departureDate, String arrivalTime, int numberOfSeats, int ticketPrice) {
 		super();
 		this.departureDate = departureDate;
 		this.arrivalTime = arrivalTime;
 		this.numberOfSeats = numberOfSeats;
 		this.ticketPrice = ticketPrice;
+		this.connections = new ArrayList<Segment>();
 	}
 	public String getDepartureDate() {
-		return convertDate.format(departureDate);
+		return departureDate;
 	}
-	public void setDepartureDate(Date departureDate) {
+	public void setDepartureDate(String departureDate) {
 		this.departureDate = departureDate;
 	}
 	public List<Segment> getConnections() {
@@ -46,16 +44,22 @@ public class OneWayTrip {
 		this.numberOfSeats = numberOfSeats;
 	}
 	public double getTicketPrice() {
+		//calculate ticketPrice based on segment info
 		return ticketPrice;
 	}
-	public void setTicketPrice(double ticketPrice) {
+	public void setTicketPrice(int ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
 	public String getArrivalTime() {
-		return convertTime.format(arrivalTime);
+		return arrivalTime;
 	}
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
+	}
+	@Override
+	public int compareTo(OneWayTrip other) {
+		return this.getArrivalTime().compareTo(other.getArrivalTime());
+	
 	}
 
 }

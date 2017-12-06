@@ -37,31 +37,18 @@ public class HomeController {
 	@PostMapping("/")
 	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
 		//testing show List of trips found on view
-				Date depart = new Date();
-				Date arrival = new Date();
-				Date departDate = new Date();
-				Date departDate2 = new Date();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-				try {
-					departDate = dateFormat.parse("12/09/2017");
-					departDate = dateFormat.parse("12/25/2017");
-					depart = timeFormat.parse("12:23:00");
-					arrival = timeFormat.parse("22:45:00");
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				OneWayTrip oneWay = new OneWayTrip(departDate, arrival, 3, 10.00);
-				Segment seg1 = new Segment("NB0800",depart, arrival, Station.C, Station.N);
-				Segment seg2 = new Segment("NB1200",arrival, depart, Station.N, Station.Q);
+		
+				OneWayTrip oneWay = new OneWayTrip("12/09/2017", "22:45:00", 3, 10);
+				Segment seg1 = new Segment("NB0800","10:23:00", "12:23:00", Station.C, Station.N);
+				Segment seg2 = new Segment("NB1200","12:45:00","15:23:00", Station.N, Station.Q);
 				List<Segment> connection = new ArrayList<>();
 				connection.add(seg1);
 				connection.add(seg2);
 				oneWay.setConnections(connection);
 				
-				OneWayTrip oneWay2 = new OneWayTrip(departDate2, arrival, 5, 45.00);
-				Segment seg11 = new Segment("SB0915",depart, arrival, Station.A, Station.C);
-				Segment seg22 = new Segment("SB1230",arrival, depart, Station.C, Station.N);
+				OneWayTrip oneWay2 = new OneWayTrip("12/11/2017", "7:25:00", 3, 45);
+				Segment seg11 = new Segment("SB0915","7:25:00", "9:25:00", Station.A, Station.C);
+				Segment seg22 = new Segment("SB1230","9:37:00", "10:25:00", Station.C, Station.N);
 				List<Segment> connection2 = new ArrayList<>();
 				connection2.add(seg11);
 				connection2.add(seg22);
@@ -73,6 +60,7 @@ public class HomeController {
 				OneWayList testOneWayList = new OneWayList();
 				testOneWayList.setFirstFive(oneList);
 				model.addAttribute("oneWayList", testOneWayList);
+			
 				
 				
 				
