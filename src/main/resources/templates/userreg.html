@@ -116,13 +116,15 @@
 	$("#register").click(function(){
 		var email = $("#reg-email").val();
 		var pwd = $("#reg-pwd").val();
+		var name = $("#reg-username").val();
 		firebase.auth().createUserWithEmailAndPassword(email, pwd).then(function(result){
 			result.updateProfile({
-				displayName: $("#reg-username").val()
+				displayName: name
 			}).then(function(res) {
 				// Update successful.
 				firebase.auth().currentUser.getIdToken().then(function(data) {
-			    		window.location = "http://localhost:8080/signin?firebaseToken="+data;
+					var url = "http://localhost:8080/signin?firebaseToken="+data+"%26name="+name;
+			    		window.location = decodeURIComponent(url);
 				});
 			}).catch(function(error) {
 			  // An error happened.

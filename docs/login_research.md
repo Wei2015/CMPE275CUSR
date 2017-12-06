@@ -69,7 +69,8 @@ Reference: https://github.com/knalum/spring-auth
 ~~3. Test and debug current login/signup functionalities (database updated? getUserId through security context?)~~<br>
 ~~4. Migrate content in UserController to UserService~~<br>
 ~~5. Web Security Config and Fix issue with redirection~~<br>
-6. Authenticate User in UserService to make sure UserId matches with Email<br>
+~~6. Authenticate User in UserService to make sure UserId matches with Email~~<br>
 7. Securing anonymous pages & implementing logout<br>
-~~8. Replace default error page~~
+~~8. Replace default error page~~<br>
+~~9. Replace token credentials with actual user model~~
 <br>

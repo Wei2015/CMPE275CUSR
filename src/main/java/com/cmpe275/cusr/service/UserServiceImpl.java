@@ -25,13 +25,19 @@ public class UserServiceImpl implements UserService {
 		return u;
 	}
 	
-	public void signInAuthentication(String firebaseToken) {
+	public void signInAuthentication(String firebaseToken, String name) {
 		if(StringUtils.isBlank(firebaseToken))
 			throw new IllegalArgumentException("FirebaseTokenBlank");
 		
 		//validate token and return FirebaseTokenHolder instance
 		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
-		User loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), tokenHolder.getName());
+		User loadedUser = null;
+		
+		if(name == null)
+			loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), tokenHolder.getName());
+		else //if register using email
+			loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), name);
+		
 		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser, loadedUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}

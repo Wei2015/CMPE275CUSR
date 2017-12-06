@@ -24,9 +24,9 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("/signin")
-	public String signinSuccessGet(Model model, @RequestParam(value="firebaseToken", required=true) String firebaseToken) {
+	public String signinSuccessGet(Model model, @RequestParam(value="firebaseToken", required=true) String firebaseToken, @RequestParam(value="name", required=false) String name) {
 		
-		userService.signInAuthentication(firebaseToken);
+		userService.signInAuthentication(firebaseToken, name);
 		
 		return "redirect:/user/tickets";
 	}
