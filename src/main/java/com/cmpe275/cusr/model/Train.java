@@ -1,26 +1,17 @@
 package com.cmpe275.cusr.model;
 
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.CollectionTable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MapKeyEnumerated;
-import javax.persistence.MapKeyTemporal;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-
-import javax.persistence.EnumType;
+import javax.persistence.FetchType;
 
 
 @Entity
@@ -36,8 +27,8 @@ public class Train {
 	private String bound;
 	
 	@Column(name="DEPARTURE_TIME", nullable=false)
-	@Temporal(TemporalType.TIME)
-	private Date departureTime;
+	
+	private String departureTime;
 	
 	@Column(name="TYPE", nullable=false)
 	private String type;
@@ -45,34 +36,26 @@ public class Train {
 	@Column(name="CAPACITY")
 	private int capacity;
 	
-	@ElementCollection
-	@CollectionTable(name="TRAIN_SCHEDULE")
-	@MapKeyEnumerated(EnumType.STRING)
-	@MapKeyColumn(name="STATION")
-	@Column(name="DEPART_TIME_AT_STATION")
-	@Temporal(TemporalType.TIME)
-	private Map<Station, Date> trainTimeTable;
 	
-	@ElementCollection
-	@CollectionTable(name="TRAIN_STATUS")
-	@MapKeyColumn(name="BOOK_DATE", nullable=false)
-	@MapKeyTemporal(TemporalType.DATE)
-	@Column(name="USED_SEATS")
-	private Map<Date, Integer> trainStatus;
+
+	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.LAZY)
+	@JoinColumn (name="TRAIN_ID")
+	private List<TrainStatus> trainStatus;
+	
+
 	
 	public Train() {
 		super();
 	}
 	
-	public Train(String bound, Date departureTime, String type,  Map<Station, Date> trainTimeTable) {
+	public Train(String bound, String departureTime, String type) {
 		super();
 		this.bound = bound;
 		this.departureTime = departureTime;
 		this.type = type;
 		this.capacity = 1000;
-		this.trainTimeTable = trainTimeTable;
-		this.trainStatus = new HashMap<Date, Integer>();
 	}
+	
 
 	public long getTrainId() {
 		return trainId;
@@ -86,11 +69,11 @@ public class Train {
 		this.bound = bound;
 	}
 
-	public Date getDepartureTime() {
+	public String getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(Date departureTime) {
+	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
 
@@ -110,23 +93,15 @@ public class Train {
 		this.capacity = capacity;
 	}
 
-	public Map<Station, Date> getTrainTimeTable() {
-		return trainTimeTable;
-	}
-
-	public void setTrainTimeTable(Map<Station, Date> trainTimeTable) {
-		this.trainTimeTable = trainTimeTable;
-	}
-
-	public Map<Date, Integer> getTrainStatus() {
+		public List<TrainStatus> getTrainStatus() {
 		return trainStatus;
 	}
 
-	public void setTrainStatus(Map<Date, Integer> trainStatus) {
+	public void setTrainStatus(List<TrainStatus> trainStatus) {
 		this.trainStatus = trainStatus;
 	}
-	
-	//for testing purpose
+
+		//for testing purpose
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
@@ -138,9 +113,6 @@ public class Train {
 			result.append(getType());
 			result.append("\nCapacity: ");
 			result.append(getCapacity());
-			for (Station s: trainTimeTable.keySet()) {
-				result.append("\nstation: " + s + " depart at: " + trainTimeTable.get(s));
-			}
 			return result.toString();
 		}
 
