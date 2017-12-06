@@ -10,7 +10,7 @@ import com.cmpe275.cusr.service.AdminService;
 
 @Controller
 public class AdminController {
-	@Autowired 
+	/*@Autowired 
 	AdminService adminService;
 	
 	@GetMapping("/admin")
@@ -19,6 +19,6 @@ public class AdminController {
 		model.addAttribute("message", "sucessfully loaded train information.");
 		return "test";
 		
-	}
+	}*/
 
 }

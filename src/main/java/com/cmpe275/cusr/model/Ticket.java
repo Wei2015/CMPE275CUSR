@@ -1,7 +1,5 @@
 package com.cmpe275.cusr.model;
 
-
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,9 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 @Entity
 @Table(name="TICKET")
@@ -44,60 +39,60 @@ public class Ticket {
 	private User user;
 	
 	@Column(name="DEPART_DATE", nullable=false)
-	@Temporal(TemporalType.DATE)
-	private Date departDate;
+	//@Temporal(TemporalType.DATE)
+	private String departDate;
 	
 	@Column(name="RETURN_DATE", nullable=true)
-	@Temporal(TemporalType.DATE)
-	private Date returnDate;
+	//@Temporal(TemporalType.DATE)
+	private String returnDate;
 	
 	@Column(name="DEPART_SEGMENT1_DEPART_TIME", nullable=false)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment1DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment1DepartTime;
 	
 	@Column(name="DEPART_SEGMENT1_ARRIVAL_TIME", nullable=false)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment1ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment1ArrivalTime;
 	
 	@Column(name="DEPART_SEGMENT2_DEPART_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment2DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment2DepartTime;
 	
 	@Column(name="DEPART_SEGMENT2_ARRIVAL_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment2ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment2ArrivalTime;
 	
 	@Column(name="DEPART_SEGMENT3_DEPART_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment3DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment3DepartTime;
 	
 	@Column(name="DEPART_SEGMENT3_ARRIVAL_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date departSegment3ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String departSegment3ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT1_DEPART_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment1DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment1DepartTime;
 	
 	@Column(name="RETURN_SEGMENT1_ARRIVAL_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment1ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment1ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT2_DEPART_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment2DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment2DepartTime;
 	
 	@Column(name="RETURN_SEGMENT2_ARRIVAL_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment2ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment2ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT3_DEPART_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment3DepartTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment3DepartTime;
 	
 	@Column(name="RETURN_SEGMENT3_ARRIVAL_TIME", nullable=true)
-	@Temporal(TemporalType.TIME)
-	private Date returnSegment3ArrivalTime;
+	//@Temporal(TemporalType.TIME)
+	private String returnSegment3ArrivalTime;
 	
 	@Column(name="DEPART_STATION", nullable=false)
 	private Station departStation;
@@ -169,115 +164,115 @@ public class Ticket {
 		this.user = user;
 	}
 
-	public Date getDepartDate() {
+	public String getDepartDate() {
 		return departDate;
 	}
 
-	public void setDepartDate(Date departDate) {
+	public void setDepartDate(String departDate) {
 		this.departDate = departDate;
 	}
 
-	public Date getReturnDate() {
+	public String getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
 	}
 
-	public Date getDepartSegment1DepartTime() {
+	public String getDepartSegment1DepartTime() {
 		return departSegment1DepartTime;
 	}
 
-	public void setDepartSegment1DepartTime(Date departSegment1DepartTime) {
+	public void setDepartSegment1DepartTime(String departSegment1DepartTime) {
 		this.departSegment1DepartTime = departSegment1DepartTime;
 	}
 
-	public Date getDepartSegment1ArrivalTime() {
+	public String getDepartSegment1ArrivalTime() {
 		return departSegment1ArrivalTime;
 	}
 
-	public void setDepartSegment1ArrivalTime(Date departSegment1ArrivalTime) {
+	public void setDepartSegment1ArrivalTime(String departSegment1ArrivalTime) {
 		this.departSegment1ArrivalTime = departSegment1ArrivalTime;
 	}
 
-	public Date getDepartSegment2DepartTime() {
+	public String getDepartSegment2DepartTime() {
 		return departSegment2DepartTime;
 	}
 
-	public void setDepartSegment2DepartTime(Date departSegment2DepartTime) {
+	public void setDepartSegment2DepartTime(String departSegment2DepartTime) {
 		this.departSegment2DepartTime = departSegment2DepartTime;
 	}
 
-	public Date getDepartSegment2ArrivalTime() {
+	public String getDepartSegment2ArrivalTime() {
 		return departSegment2ArrivalTime;
 	}
 
-	public void setDepartSegment2ArrivalTime(Date departSegment2ArrivalTime) {
+	public void setDepartSegment2ArrivalTime(String departSegment2ArrivalTime) {
 		this.departSegment2ArrivalTime = departSegment2ArrivalTime;
 	}
 
-	public Date getDepartSegment3DepartTime() {
+	public String getDepartSegment3DepartTime() {
 		return departSegment3DepartTime;
 	}
 
-	public void setDepartSegment3DepartTime(Date departSegment3DepartTime) {
+	public void setDepartSegment3DepartTime(String departSegment3DepartTime) {
 		this.departSegment3DepartTime = departSegment3DepartTime;
 	}
 
-	public Date getDepartSegment3ArrivalTime() {
+	public String getDepartSegment3ArrivalTime() {
 		return departSegment3ArrivalTime;
 	}
 
-	public void setDepartSegment3ArrivalTime(Date departSegment3ArrivalTime) {
+	public void setDepartSegment3ArrivalTime(String departSegment3ArrivalTime) {
 		this.departSegment3ArrivalTime = departSegment3ArrivalTime;
 	}
 
-	public Date getReturnSegment1DepartTime() {
+	public String getReturnSegment1DepartTime() {
 		return returnSegment1DepartTime;
 	}
 
-	public void setReturnSegment1DepartTime(Date returnSegment1DepartTime) {
+	public void setReturnSegment1DepartTime(String returnSegment1DepartTime) {
 		this.returnSegment1DepartTime = returnSegment1DepartTime;
 	}
 
-	public Date getReturnSegment1ArrivalTime() {
+	public String getReturnSegment1ArrivalTime() {
 		return returnSegment1ArrivalTime;
 	}
 
-	public void setReturnSegment1ArrivalTime(Date returnSegment1ArrivalTime) {
+	public void setReturnSegment1ArrivalTime(String returnSegment1ArrivalTime) {
 		this.returnSegment1ArrivalTime = returnSegment1ArrivalTime;
 	}
 
-	public Date getReturnSegment2DepartTime() {
+	public String getReturnSegment2DepartTime() {
 		return returnSegment2DepartTime;
 	}
 
-	public void setReturnSegment2DepartTime(Date returnSegment2DepartTime) {
+	public void setReturnSegment2DepartTime(String returnSegment2DepartTime) {
 		this.returnSegment2DepartTime = returnSegment2DepartTime;
 	}
 
-	public Date getReturnSegment2ArrivalTime() {
+	public String getReturnSegment2ArrivalTime() {
 		return returnSegment2ArrivalTime;
 	}
 
-	public void setReturnSegment2ArrivalTime(Date returnSegment2ArrivalTime) {
+	public void setReturnSegment2ArrivalTime(String returnSegment2ArrivalTime) {
 		this.returnSegment2ArrivalTime = returnSegment2ArrivalTime;
 	}
 
-	public Date getReturnSegment3DepartTime() {
+	public String getReturnSegment3DepartTime() {
 		return returnSegment3DepartTime;
 	}
 
-	public void setReturnSegment3DepartTime(Date returnSegment3DepartTime) {
+	public void setReturnSegment3DepartTime(String returnSegment3DepartTime) {
 		this.returnSegment3DepartTime = returnSegment3DepartTime;
 	}
 
-	public Date getReturnSegment3ArrivalTime() {
+	public String getReturnSegment3ArrivalTime() {
 		return returnSegment3ArrivalTime;
 	}
 
-	public void setReturnSegment3ArrivalTime(Date returnSegment3ArrivalTime) {
+	public void setReturnSegment3ArrivalTime(String returnSegment3ArrivalTime) {
 		this.returnSegment3ArrivalTime = returnSegment3ArrivalTime;
 	}
 
