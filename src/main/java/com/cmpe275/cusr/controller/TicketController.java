@@ -18,13 +18,13 @@ import com.cmpe275.cusr.service.UserService;
 @Controller
 public class TicketController {
 
-	/*@Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
 	TicketService ticketService;
 
-	@PostMapping("/purchase")
+	@PostMapping("/user/purchase")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
 		/*
 		 * public String purchase(Model model) { long userId = 1; String round = "v";
@@ -34,12 +34,11 @@ public class TicketController {
 		 * new ArrayList<>(); times.add(4); times.add(5); times.add(6);
 		 * model.addAttribute("times", times); return "purchase"; }
 		 */
-		/*User user = userService.findUser();
+		User user = userService.findUser();
 		if (ticketService.purchase(user, booking)) {
 			Date returnDate = booking.getReturnDate();
 			int numOfSeats = booking.getNumOfSeats();
-			model.addAttribute("firstName", user.getFirstName());
-			model.addAttribute("lastName", user.getLastName());
+			model.addAttribute("name", user.getName());
 			model.addAttribute("email", user.getEmail());
 			model.addAttribute("numOfSeats", numOfSeats);
 			model.addAttribute("price", booking.getPrice());
@@ -55,14 +54,13 @@ public class TicketController {
 		}
 	}
 
-	@PostMapping("/ticketCancel")
+	@PostMapping("/user/ticketCancel")
 	public String cancel(Model model, @ModelAttribute Booking booking) {
 		User user = userService.findUser();
 		if (ticketService.cancel(user, booking)) {
 			Date returnDate = booking.getReturnDate();
 			int numOfSeats = booking.getNumOfSeats();
-			model.addAttribute("firstName", user.getFirstName());
-			model.addAttribute("lastName", user.getLastName());
+			model.addAttribute("name", user.getName());
 			model.addAttribute("email", user.getEmail());
 			model.addAttribute("numOfSeats", numOfSeats);
 			model.addAttribute("price", booking.getPrice());
@@ -76,6 +74,5 @@ public class TicketController {
 		} else {
 			return "ticketCancel_fail";
 		}
-	}*/
-
+	}
 }

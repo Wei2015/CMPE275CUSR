@@ -32,7 +32,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a th:href="@{/usertickets}"> <span
-							th:text="'Hello, ' + ${firstName} + '!'" />
+							th:text="'Hello, ' + ${name} + '!'" />
 					</a></li>
 				</ul>
 			</div>
@@ -41,7 +41,7 @@
 
 	<div class="container">
 		<h1>
-			<span th:text="${firstName} + ', thanks for your booking!'" />
+			<span th:text="${name} + ', thanks for your booking!'" />
 		</h1>
 		<br></br>
 	</div>
@@ -52,16 +52,14 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Name</th>
 					<th>Email</th>
 					<th>Number of Passengers</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${firstName}" />
-					<td th:text="${lastName}" />
+					<td th:text="${name}" />
 					<td th:text="${email}" />
 					<td th:text="${numOfSeats}" />
 				</tr>
