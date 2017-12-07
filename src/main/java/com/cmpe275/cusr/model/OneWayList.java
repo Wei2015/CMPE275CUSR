@@ -1,6 +1,8 @@
 package com.cmpe275.cusr.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class OneWayList {
@@ -12,6 +14,7 @@ public class OneWayList {
 
 	public OneWayList() {
 		super();
+		firstFive = new ArrayList<OneWayTrip>();
 	}
 	
 	public static int[] getCOUNT() {

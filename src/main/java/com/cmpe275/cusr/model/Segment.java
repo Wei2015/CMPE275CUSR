@@ -2,9 +2,9 @@ package com.cmpe275.cusr.model;
 
 import com.cmpe275.cusr.service.Calculator;
 
+
 public class Segment implements Comparable<Segment>{
 	
-	private long trainId;
 	private String bound;
 	private String departureTime;
 	private String arrivalTime;
@@ -26,9 +26,15 @@ public class Segment implements Comparable<Segment>{
 		this.arrivalStation = arrivalStation;
 		this.price = getPrice();
 	}
+
+
 	
-	public long getTrainId() {
-		return trainId;
+	public double getPrice() {
+		return Calculator.pricePerSeat(departureStation, arrivalStation, bound);
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public String getBound() {
@@ -64,17 +70,19 @@ public class Segment implements Comparable<Segment>{
 		this.arrivalStation = arrivalStation;
 	}
 	
-	public double getPrice() {
-		return Calculator.pricePerSeat(departureStation, arrivalStation, bound);
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	
 	@Override
 	public int compareTo(Segment other) {
 		return this.getArrivalTime().compareTo(other.getArrivalTime());
 	
+	}
+	@Override
+	public String toString() {
+		StringBuilder output = new StringBuilder();
+		output.append("Bound: " + bound);
+		output.append(" Departure Station:" + departureStation);
+		output.append(" Departure Time: " + departureTime);
+		output.append(" Arrivale Station: " + arrivalStation);
+		output.append(" Arrival Time: " + arrivalTime);
+		return output.toString();
 	}
 }

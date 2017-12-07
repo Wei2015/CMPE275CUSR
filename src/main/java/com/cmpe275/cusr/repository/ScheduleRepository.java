@@ -13,6 +13,9 @@ public interface ScheduleRepository extends CrudRepository<TrainSchedule, Long>{
 	
 	
 	TrainSchedule findByStopAndTrain(Station stop, Train train);
-	List<TrainSchedule> findByStopAndDepartTimeAfter(Station stop, String departTime);
-
+	
+	List<TrainSchedule> findByStopAndDepartTimeGreaterThanEqual(Station stop, String departTime);
+	
+	List<TrainSchedule> findByStopAndArrivalTimeGreaterThan(Station stop, String departTime);
+	
 }
