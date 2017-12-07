@@ -36,7 +36,6 @@
 <div class="container">
   <h3>Welcome to California Ultra-Speed Railway Ticket Booking System</h3>
   <br></br>
- 
 		<form class="form-dropdown" action="#" th:action="@{/}" th:object="${searchContent}" method ="post">
 			 <div class="row">
 				<div class="col-md-3 col-sm-6 form-group">
@@ -63,7 +62,7 @@
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 							<p class = "fill-in box subtitle">Departure Date</p>
-							<input type="text" class="form-control border-radius border-right" th:field="*{departureDate}" placeholder="MM-DD-YYYY"/>
+							<input type="date" class="form-control border-radius border-right" th:field="*{departureDate}" placeholder="YYYY-MM-DD"/>
 					</div>
 				</div>
 				
@@ -75,33 +74,46 @@
 				</div>
 			</div>
 			<div class="row">
-					<label class ="container">
-						Express Train <input type="radio" th:name="trainType" value="Express" th:checked="*{trainType}"/> 
-						Regular Train <input type="radio" th:name="trainType" value="Regular" th:checked="*{trainType}"/>
-						Any Train <input type="radio" th:name="trainType" value="Any" th:checked="*{trainType}"/>
-					</label>
-					
-					<div class="col-md-3 col-sm-6 form-group">
-						<p class = "fill-in box subtitle">Number of Seats</p>
-							<select class="form-control border-radius"  th:field="*{numberOfSeats}">
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Train Type</p>
+						<select class="form-control border-radius" id="sel1" th:field="*{trainType}">
+							<option th:each="type : ${searchContent.trainTypeOptions}"
+									th:value="${type}"
+									th:text="${type}">
+							</option>
+						</select>
+				</div>
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Number of Connections</p>
+						<select class="form-control border-radius" id="sel2" th:field="*{numberOfConnections}">
+							<option th:each="type : ${searchContent.connectionOptions}"
+									th:value="${type}"
+									th:text="${type}">
+							</option>
+						</select>
+				</div>
+				
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Number of Seats</p>
+						<select class="form-control border-radius"  th:field="*{numberOfSeats}">
 								<option th:each="seat : ${searchContent.seats}"
 									th:value="${seat}"
 									th:text="${seat}">
 								</option>
-							</select>
-					</div>
+						</select>
+				</div>
 			</div>
 			
-  			 <div class="row">
-				<label class="container">
-					Round Trip  <input type="radio" name="radioButton" value="1" th:checked="*{roundTrip}"/> 
-					One Way Trip  <input type="radio" name="radioButton" value="0" th:checked="*{roundTrip}==false"/>
+  			<div class="row">
+				<label class ="container">
+					Round Trip  <input type="radio" name="roundTrip" value="1" th:checked="*{roundTrip}"/> 
+					One Way Trip  <input type="radio" name="roundTrip" value="0" th:checked="*{roundTrip==false}"/>
 				</label>
 
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 						<p class = "fill-in box subtitle">Return Date</p>
-						<input type="text" class="form-control border-radius border-right" th:field="*{returnDate}" placeholder="MM-DD-YYYY"/>
+						<input type="date" class="form-control border-radius border-right" th:field="*{returnDate}" placeholder="MM-DD-YYYY"/>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6">
@@ -111,10 +123,12 @@
 					</div>
 				</div>
 			</div>
-				
+			
+			
 			<div class="row">
 				<div class="col-md-4 col-sm-8">
-					<p><input type="submit" value ="Search"/><input type="reset" value="Reset" /></p>
+					<input type="submit" value ="Search"/>
+					<input type="reset" value="Reset" />
 				</div>
  		   </div>
 		</form>
