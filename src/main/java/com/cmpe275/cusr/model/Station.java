@@ -13,6 +13,4 @@ public enum Station {
 	public int getIndex() {
 		return index;
 	}
-
-
 }

@@ -35,63 +35,48 @@ public class Ticket {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="USER_ID")
-	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private User user;
 	
 	@Column(name="DEPART_DATE", nullable=false)
-	//@Temporal(TemporalType.DATE)
 	private String departDate;
 	
 	@Column(name="RETURN_DATE", nullable=true)
-	//@Temporal(TemporalType.DATE)
 	private String returnDate;
 	
 	@Column(name="DEPART_SEGMENT1_DEPART_TIME", nullable=false)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment1DepartTime;
 	
 	@Column(name="DEPART_SEGMENT1_ARRIVAL_TIME", nullable=false)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment1ArrivalTime;
 	
 	@Column(name="DEPART_SEGMENT2_DEPART_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment2DepartTime;
 	
 	@Column(name="DEPART_SEGMENT2_ARRIVAL_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment2ArrivalTime;
 	
 	@Column(name="DEPART_SEGMENT3_DEPART_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment3DepartTime;
 	
 	@Column(name="DEPART_SEGMENT3_ARRIVAL_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String departSegment3ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT1_DEPART_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment1DepartTime;
 	
 	@Column(name="RETURN_SEGMENT1_ARRIVAL_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment1ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT2_DEPART_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment2DepartTime;
 	
 	@Column(name="RETURN_SEGMENT2_ARRIVAL_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment2ArrivalTime;
 	
 	@Column(name="RETURN_SEGMENT3_DEPART_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment3DepartTime;
 	
 	@Column(name="RETURN_SEGMENT3_ARRIVAL_TIME", nullable=true)
-	//@Temporal(TemporalType.TIME)
 	private String returnSegment3ArrivalTime;
 	
 	@Column(name="DEPART_STATION", nullable=false)

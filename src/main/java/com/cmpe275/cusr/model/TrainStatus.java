@@ -1,12 +1,17 @@
 package com.cmpe275.cusr.model;
 
+import java.util.Map;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyEnumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -21,12 +26,12 @@ public class TrainStatus {
 	@Column (name = "DATE")
 	private String date;
 	
-	@Column(name="STATION")
-	@Enumerated(EnumType.STRING)
-	private Station station;
-	
-	@Column (name = "USED_SEATS")
-	private int usedSeats;
+	@ElementCollection
+	@CollectionTable(name="SEAT_STATUS")
+	@MapKeyEnumerated(EnumType.STRING)
+	@MapKeyColumn(name="STATION", nullable=false)
+	@Column(name="USED_SEATS")
+	private Map<Station, Integer> seatStatus;
 	
 	@Column (name="IS_CANCELLED")
 	private boolean isCancelled;
@@ -43,20 +48,12 @@ public class TrainStatus {
 		this.date = date;
 	}
 
-	public Station getStation() {
-		return station;
+	public Map<Station, Integer> getSeatStatus() {
+		return seatStatus;
 	}
 
-	public void setStation(Station station) {
-		this.station = station;
-	}
-
-	public int getUsedSeats() {
-		return usedSeats;
-	}
-
-	public void setUsedSeats(int usedSeats) {
-		this.usedSeats = usedSeats;
+	public void setSeatStatus(Map<Station, Integer> seatStatus) {
+		this.seatStatus = seatStatus;
 	}
 
 	public boolean isCancelled() {
@@ -65,5 +62,5 @@ public class TrainStatus {
 
 	public void setCancelled(boolean isCancelled) {
 		this.isCancelled = isCancelled;
-	}	
+	}
 }
