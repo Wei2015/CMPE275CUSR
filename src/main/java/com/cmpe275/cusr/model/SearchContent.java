@@ -12,9 +12,12 @@ public class SearchContent {
 	private String returnDate;
 	private String returnTime;
 	private int numberOfSeats;
+	private String numberOfConnections;
 	
 	private Station[] allStations = Station.values();
 	private final int[] seats = {1,2,3,4,5}; 
+	private final String[] connectionOptions= {"Any", "None", "One"};
+	private final String[] trainTypeOptions= {"Any", "Regular","Express"};
 	
 
 	
@@ -33,9 +36,26 @@ public class SearchContent {
 	public void setNumberOfSeats(int numberOfSeats) {
 		this.numberOfSeats = numberOfSeats;
 	}
+	
+
+	public String getNumberOfConnections() {
+		return numberOfConnections;
+	}
+
+	public void setNumberOfConnections(String numberOfConnections) {
+		this.numberOfConnections = numberOfConnections;
+	}
 
 	public int[] getSeats() {
 		return seats;
+	}
+	
+	public String[] getConnectionOptions() {
+		return connectionOptions;
+	}
+	
+	public String[] getTrainTypeOptions() {
+		return trainTypeOptions;
 	}
 
 	public Station getDepartureStation() {
@@ -104,6 +124,7 @@ public class SearchContent {
 		else result.append("\nOne Way Trip");
 		result.append("\nTrain Type Selected: " + getTrainType());
 		result.append("\nNumber of seats selected: " + getNumberOfSeats());
+		result.append("\nNumber of Connection: " + getNumberOfConnections());
 		return result.toString();
 	}
 	
