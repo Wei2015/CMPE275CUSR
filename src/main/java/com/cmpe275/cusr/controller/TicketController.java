@@ -55,7 +55,7 @@ public class TicketController {
 	}
 
 	@PostMapping("/user/ticketCancel")
-	public String cancel(Model model, @ModelAttribute Booking booking) {
+	public String cancel(Model model, @ModelAttribute Ticket ticket) {
 		User user = userService.findUser();
 		if (ticketService.cancel(user, booking)) {
 			Date returnDate = booking.getReturnDate();

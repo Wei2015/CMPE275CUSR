@@ -34,11 +34,8 @@ public class Ticket {
 	@Column(name="NUM_OF_SEATS", nullable=false)
 	private int numOfSeats;
 	
-	@ElementCollection
-	@CollectionTable(name="PASSENGER")
-	@MapKeyColumn(name="PASSENGER_NAME", nullable=false)
-	@Column(name="PASSENGER_EMAIL", nullable=false)
-	private Map<String, String> passenger;
+	@Column(name="PASSENGER", nullable=false)
+	private List<String> passenger;
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
@@ -143,11 +140,11 @@ public class Ticket {
 		this.numOfSeats = numOfSeats;
 	}
 
-	public Map<String, String> getPassenger() {
+	public List<String> getPassenger() {
 		return passenger;
 	}
 
-	public void setPassenger(Map<String, String> passenger) {
+	public void setPassenger(List<String> passenger) {
 		this.passenger = passenger;
 	}
 

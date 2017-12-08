@@ -260,7 +260,7 @@ public class TicketServiceImpl {
 	
 	@Transactional
 	public boolean cancel(User user, Ticket ticket) {
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate departureDate = LocalDate.parse(ticket.getDepartDate(), dateFormatter);
 		LocalDate currentDate = LocalDate.now();
 		
@@ -272,7 +272,7 @@ public class TicketServiceImpl {
 			return false;
 		} 
 		if (currentDate.isEqual(departureDate)) {
-			if (Duration.between(departureTime, currentTime).toMinutes() < 60) {
+			if (Duration.between(currentTime, departureTime).toMinutes() < 60) {
 				return false;
 			}
 		}
