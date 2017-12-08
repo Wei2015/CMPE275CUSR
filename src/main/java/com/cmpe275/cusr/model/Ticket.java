@@ -1,9 +1,12 @@
 package com.cmpe275.cusr.model;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +33,12 @@ public class Ticket {
 	
 	@Column(name="NUM_OF_SEATS", nullable=false)
 	private int numOfSeats;
+	
+	@ElementCollection
+	@CollectionTable(name="PASSENGER")
+	@MapKeyColumn(name="PASSENGER_NAME", nullable=false)
+	@Column(name="PASSENGER_EMAIL", nullable=false)
+	private Map<String, String> passenger;
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
@@ -131,6 +141,14 @@ public class Ticket {
 
 	public void setNumOfSeats(int numOfSeats) {
 		this.numOfSeats = numOfSeats;
+	}
+
+	public Map<String, String> getPassenger() {
+		return passenger;
+	}
+
+	public void setPassenger(Map<String, String> passenger) {
+		this.passenger = passenger;
 	}
 
 	public double getPrice() {
