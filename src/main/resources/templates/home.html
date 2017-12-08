@@ -58,7 +58,8 @@
 								</option>
 						</select>
 				</div>
-				
+			</div>
+			<div class="row">
 				<div class="col-md-3 col-sm-6">
 					<div class="form-group">
 							<p class = "fill-in box subtitle">Departure Date</p>
@@ -71,6 +72,12 @@
 							<p class = "fill-in box subtitle">Departure Time</p>
 							<input type="text" class="form-control border-radius border-right" th:field="*{departureTime}" placeholder="HH:MM"/>
 					</div>
+				</div >
+				<div class="col-md-6 col-sm-12">
+					<label class ="form-group">
+						Exact Departure Time  <input type="radio" name="exactTime" value="1" th:checked="*{exactTime}"/> 
+						Flexible Departure Time  <input type="radio" name="exactTime" value="0" th:checked="*{exactTime==false}"/>
+					</label>
 				</div>
 			</div>
 			<div class="row">
