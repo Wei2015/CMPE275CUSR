@@ -35,8 +35,7 @@ public class Ticket {
 	@Column(name="NUM_OF_SEATS", nullable=false)
 	private int numOfSeats;
 	
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="PASSENGER", nullable=false)
+	@Column(name="PASSENGER", nullable=false)
 	private List<String> passenger;
 	
 	@Column (name="PRICE", nullable=false)
