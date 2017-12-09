@@ -8,6 +8,7 @@ public class SearchContent {
 	private String departureDate;
 	private String departureTime;
 	private boolean roundTrip;
+	private boolean exactTime;
 	private String trainType;
 	private String returnDate;
 	private String returnTime;
@@ -85,8 +86,16 @@ public class SearchContent {
 	public boolean isRoundTrip() {
 		return roundTrip;
 	}
+
 	public void setRoundTrip(boolean roundTrip) {
 		this.roundTrip = roundTrip;
+	}
+	
+	public boolean isExactTime() {
+		return exactTime;
+	}
+	public void setExactTime(boolean exactTime) {
+		this.exactTime = exactTime;
 	}
 	
 	public String getTrainType() {
