@@ -9,6 +9,7 @@ public class Booking {
 	private String returnDate;
 	private List<Segment> returnTrip;
 	private int numOfSeats;
+	private List<String> passenger;
 	private double price;
 	
 	public String getDepartureDate() {
@@ -40,6 +41,13 @@ public class Booking {
 	}
 	public void setNumOfSeats(int numOfSeats) {
 		this.numOfSeats = numOfSeats;
+	}
+	
+	public List<String> getPassenger() {
+		return passenger;
+	}
+	public void setPassenger(List<String> passenger) {
+		this.passenger = passenger;
 	}
 	public double getPrice() {
 		return price;

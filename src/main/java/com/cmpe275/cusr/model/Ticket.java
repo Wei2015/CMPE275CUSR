@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,14 +35,15 @@ public class Ticket {
 	@Column(name="NUM_OF_SEATS", nullable=false)
 	private int numOfSeats;
 	
-	@Column(name="PASSENGER", nullable=false)
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="PASSENGER", nullable=false)
 	private List<String> passenger;
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name="USER_ID", nullable=false)
 	private User user;
 	
 	@Column(name="DEPART_DATE", nullable=false)
