@@ -31,7 +31,7 @@ public class TrainServiceImpl implements TrainService {
 	private static String fullPattern = "yyyy-MM-dd HH:mm:ss";
 	private static String timePattern = "HH:mm:ss";
 	
-	public OneWayList searchOneWay(SearchContent content) {
+public OneWayList searchOneWay(SearchContent content) {
 		
 		//get input parameters
 		String departureDate = content.getDepartureDate();
@@ -60,15 +60,25 @@ public class TrainServiceImpl implements TrainService {
 			result.setMessage("Departure time is within 5 minutes from now!");
 			return result;
 		}
-		
+			
 		//find direct trip, if isExactTime == true, search only departure time is exact.
 		List<Segment> directTrips= getDirectTripSorted(departure,destination,departureTime, isExactTime);
 		for (Segment s: directTrips) {
+			if (trainType.equals("Express") && !s.getBound().endsWith("00"))
+				continue;
+			else if (trainType.equals("Regular") && s.getBound().endsWith("00"))
+				continue;
 			OneWayTrip oneTrip = new OneWayTrip(departureDate, numberOfSeats);
 			List<Segment> connection = new ArrayList<>();
 			connection.add(s);
 			oneTrip.setConnections(connection);
 			result.getFirstFive().add(oneTrip);
+		}
+		
+		//return result if number of connections is None
+		if (numberOfConnections.equals("None")) {
+			sorting(result);
+			return result;
 		}
 		
 		//adjust SB and NB iteration index
@@ -79,20 +89,29 @@ public class TrainServiceImpl implements TrainService {
 			end = -end;
 		}
 		
-		//find one change trip, some bug exits. NB need to be i--
+		//find two segments trip. Check trainType is met. 
 		for (int i = start+1; i < end; i++) {
 			Station oneStop = allStations[Math.abs(i)];
 			List<Segment> firstTrip = getDirectTripSorted(departure, oneStop, departureTime, isExactTime);
 			List<Segment> lastTrip = getDirectTripSorted(oneStop, destination, departureTime, false);
 			List<List<Segment>> oneStopTrips= getOneStopTrip(firstTrip, lastTrip);
 			for (List<Segment> l: oneStopTrips) {
-				OneWayTrip oneTrip = new OneWayTrip(departureDate, numberOfSeats);
-				oneTrip.setConnections(l);
-				result.getFirstFive().add(oneTrip);
+				boolean isTypeRight = checkTrainType(trainType, l);
+				if (isTypeRight) {
+					OneWayTrip oneTrip = new OneWayTrip(departureDate, numberOfSeats);
+					oneTrip.setConnections(l);
+					result.getFirstFive().add(oneTrip);
+				}
 			}
 		}
 		
-		//find two change trip
+		//return result if number of connections is One
+		if (numberOfConnections.equals("One")) {
+			sorting(result);
+			return result;
+		}
+		
+		//find three segments trip
 		for (int i=start+1; i < end-1; i++) {
 			Station firstStop = allStations[Math.abs(i)];
 			for (int j=i+1; j < destination.getIndex(); j++) {
@@ -109,17 +128,12 @@ public class TrainServiceImpl implements TrainService {
 			}
 		}
 		
-		//sorting based on arrival time
-		if (result.getFirstFive().size() != 0)  {
-			Collections.sort(result.getFirstFive());
-			//get first five trips
-			if (result.getFirstFive().size() > NUMBER_OF_TRIP_RETURNED)
-				result.setFirstFive(result.getFirstFive().subList(0, NUMBER_OF_TRIP_RETURNED));
-		} 
+		//return result if number of connections is One
+		sorting(result);
 		return result;
 
 	}
-	//Search for two stops trip
+	//Search for two stops trip, verify connection time is within 2 hours
 	private List<List<Segment>> getTwoStopTrip (List<Segment> firstPart, List<Segment> secondPart, List<Segment> lastPart){
 		List<List<Segment>> result = new ArrayList<>();
 		if (firstPart.size()==0 || secondPart.size()==0 || lastPart.size() ==0) return result;
@@ -129,9 +143,9 @@ public class TrainServiceImpl implements TrainService {
 				if (second.getArrivalTime() == null) continue;
 				for (Segment first:firstPart) {
 					if (first.getArrivalTime()==null) continue;
-					if (first.getArrivalTime().compareTo(second.getDepartureTime())<0 
+					if (checkConnectionTime(first.getArrivalTime(), second.getDepartureTime())
 							&& !first.getBound().equals(second.getBound())
-							&& second.getArrivalTime().compareTo(last.getDepartureTime())<0 
+							&& checkConnectionTime(second.getArrivalTime(), last.getDepartureTime()) 
 							&& !second.getBound().equals(last.getBound())) {
 									List<Segment> foundOne = new ArrayList<>();
 									foundOne.add(first);
@@ -147,7 +161,7 @@ public class TrainServiceImpl implements TrainService {
 	}
 	
 	
-	//Search for arrival time at stop not later than departure time 
+	//Search for arrival time at stop not later than departure time, verify connection is within 2 hours.
 	private List<List<Segment>> getOneStopTrip (List<Segment> firstPart, List<Segment> secondPart) {
 		List<List<Segment>> result = new ArrayList<>();
 		if (firstPart.size()==0 || secondPart.size()==0) return result;
@@ -232,6 +246,33 @@ public class TrainServiceImpl implements TrainService {
 			if (nextDepart.before(arrival)) return true;
 		}
 		return false;
+	}
+	
+	//verify train type is correct for trips with connections
+	private boolean checkTrainType(String type, List<Segment> segmentList) {
+		List<String> bounds = new ArrayList<>();
+		for (Segment s: segmentList) {
+			if (s.getBound().endsWith("00"))
+				bounds.add("Express");
+			else 
+				bounds.add("Regular");
+		}
+		if (type.equals("Express") &&!bounds.contains("Express"))
+			return false;
+		else if (type.equals("Regular") && bounds.contains("Express"))
+			return false;
+		return true;
+	}
+	
+	private void sorting(OneWayList result) {
+		if (result.getFirstFive().size() != 0)  {
+			Collections.sort(result.getFirstFive());
+			//get first five trips
+			if (result.getFirstFive().size() > NUMBER_OF_TRIP_RETURNED)
+				result.setFirstFive(result.getFirstFive().subList(0, NUMBER_OF_TRIP_RETURNED));
+		}else {
+			result.setMessage("No bookable trip found!");
+		}
 	}
 	
 }

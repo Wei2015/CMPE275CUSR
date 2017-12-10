@@ -59,7 +59,12 @@ public class OneWayTrip implements Comparable<OneWayTrip>{
 	}
 	@Override
 	public int compareTo(OneWayTrip other) {
-		return this.getArrivalTime().compareTo(other.getArrivalTime());
+		int result = this.getArrivalTime().compareTo(other.getArrivalTime());
+		if (result != 0) {
+			return result;
+		}else {
+			return this.getConnections().get(0).getDepartureTime().compareTo(other.getConnections().get(0).getDepartureTime());
+		}
 	
 	}
 
