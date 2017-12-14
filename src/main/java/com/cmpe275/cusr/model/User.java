@@ -19,37 +19,23 @@ public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="DB_ID")
-	private long dbId;
-	
-	@Column(name="USER_UID")
-	private String userUId;
+	@Column(name="USER_ID")
+	private String userId;
 	
 	@Column(name="EMAIL", nullable = false, unique = true)
 	private String email;
-	
-	@Column(name="NAME", nullable = false)
-	private String name;
-	
 
 	public User() {
 		super();
 	}
 	
-	public long getDBId() {
-		return dbId;
-	}
-	
-	public void setDBId(long DBId) {
-		this.dbId = DBId;
-	}
 
-	public String getUserUId() {
-		return userUId;
+	public String getUserId() {
+		return userId;
 	}
 	
-	public void setUserUId(String UId) {
-		this.userUId = UId;
+	public void setUserUId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getEmail() {
@@ -60,15 +46,6 @@ public class User implements UserDetails {
 		this.email = email;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
