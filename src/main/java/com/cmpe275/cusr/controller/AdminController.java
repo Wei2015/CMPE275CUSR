@@ -10,15 +10,15 @@ import com.cmpe275.cusr.service.AdminService;
 
 @Controller
 public class AdminController {
-	/*@Autowired 
+	@Autowired 
 	AdminService adminService;
 	
 	@GetMapping("/admin")
 	public String populateTrainInfo(Model model) {
 		adminService.populateTrainTable();
 		model.addAttribute("message", "sucessfully loaded train information.");
-		return "test";
+		return "admin";
 		
-	}*/
+	}
 
 }
