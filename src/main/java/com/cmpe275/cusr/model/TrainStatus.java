@@ -2,6 +2,7 @@ package com.cmpe275.cusr.model;
 
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -10,6 +11,8 @@ import javax.persistence.EnumType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.Table;
@@ -22,6 +25,10 @@ public class TrainStatus {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="STATUS_ID")
 	private long statusId;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn (name ="TRAIN_ID")
+	private Train train;
 	
 	@Column (name = "DATE")
 	private String date;

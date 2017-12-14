@@ -17,7 +17,9 @@ import com.cmpe275.cusr.model.Segment;
 import com.cmpe275.cusr.model.Station;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.model.TrainSchedule;
+import com.cmpe275.cusr.model.TrainStatus;
 import com.cmpe275.cusr.repository.ScheduleRepository;
+import com.cmpe275.cusr.repository.TrainStatusRepository;
 
 
 @Service
@@ -25,6 +27,9 @@ public class TrainServiceImpl implements TrainService {
 	
 	@Autowired
 	private ScheduleRepository scheduleRepo;
+	
+	@Autowired 
+	private TrainStatusRepository trainStatusRepo;
 	
 	private static int NUMBER_OF_TRIP_RETURNED = 5;
 
@@ -62,7 +67,7 @@ public OneWayList searchOneWay(SearchContent content) {
 		}
 			
 		//find direct trip, if isExactTime == true, search only departure time is exact.
-		List<Segment> directTrips= getDirectTripSorted(departure,destination,departureTime, isExactTime);
+		List<Segment> directTrips= getDirectTripSorted(departure, destination, departureDate, departureTime, isExactTime, numberOfSeats);
 		for (Segment s: directTrips) {
 			if (trainType.equals("Express") && !s.getBound().endsWith("00"))
 				continue;
@@ -92,8 +97,8 @@ public OneWayList searchOneWay(SearchContent content) {
 		//find two segments trip. Check trainType requirement is met. 
 		for (int i = start+1; i < end; i++) {
 			Station oneStop = allStations[Math.abs(i)];
-			List<Segment> firstTrip = getDirectTripSorted(departure, oneStop, departureTime, isExactTime);
-			List<Segment> lastTrip = getDirectTripSorted(oneStop, destination, departureTime, false);
+			List<Segment> firstTrip = getDirectTripSorted(departure, oneStop, departureDate, departureTime, isExactTime, numberOfSeats);
+			List<Segment> lastTrip = getDirectTripSorted(oneStop, destination, departureDate, departureTime, false, numberOfSeats);
 			List<List<Segment>> oneStopTrips= getOneStopTrip(firstTrip, lastTrip);
 			for (List<Segment> l: oneStopTrips) {
 				boolean isTypeRight = checkTrainType(trainType, l);
@@ -116,9 +121,9 @@ public OneWayList searchOneWay(SearchContent content) {
 			Station firstStop = allStations[Math.abs(i)];
 			for (int j=i+1; j < destination.getIndex(); j++) {
 				Station secondStop = allStations[Math.abs(j)];
-				List<Segment> firstTrip = getDirectTripSorted(departure, firstStop, departureTime, isExactTime);
-				List<Segment> secondTrip = getDirectTripSorted(firstStop, secondStop, departureTime, false);
-				List<Segment> lastTrip = getDirectTripSorted(secondStop, destination, departureTime, false);
+				List<Segment> firstTrip = getDirectTripSorted(departure, firstStop, departureDate, departureTime, isExactTime, numberOfSeats);
+				List<Segment> secondTrip = getDirectTripSorted(firstStop, secondStop, departureDate, departureTime, false, numberOfSeats);
+				List<Segment> lastTrip = getDirectTripSorted(secondStop, destination, departureDate, departureTime, false, numberOfSeats);
 				List<List<Segment>> twoStopTrips= getTwoStopTrip(firstTrip, secondTrip, lastTrip);
 				for (List<Segment> l: twoStopTrips) {
 					boolean isTypeRight = checkTrainType(trainType, l);
@@ -187,7 +192,8 @@ public OneWayList searchOneWay(SearchContent content) {
 	}
 	
 	//search for direct trip
-	private List<Segment> getDirectTripSorted (Station departure, Station destination, String departureTime, boolean isExactTime) {
+	private List<Segment> getDirectTripSorted (Station departure, Station destination, String departureDate, String departureTime, 
+											boolean isExactTime, int numberOfSeats) {
 		//Get direction for "NB" or "SB" 
 		String direction = (destination.getIndex()-departure.getIndex()) >0? "SB" : "NB";
 		//Obtain list of train based on departure time and station
@@ -205,6 +211,10 @@ public OneWayList searchOneWay(SearchContent content) {
 				String departTime = t.getDepartTime();
 				String bound = t.getTrain().getBound();
 				Train train = t.getTrain();
+				//check is seat on this train at this station is available
+				TrainStatus status = trainStatusRepo.findByTrainAndDate(train, departureDate);
+				if (status.getSeatStatus().get(departure) + numberOfSeats <= 1000) 
+					continue;
 				String arrivalTime = null;
 				TrainSchedule arrival = scheduleRepo.findByStopAndTrain(destination,train);
 				if (arrival != null) {

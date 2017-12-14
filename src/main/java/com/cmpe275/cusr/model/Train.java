@@ -89,7 +89,7 @@ public class Train {
 		this.capacity = capacity;
 	}
 
-		public List<TrainStatus> getTrainStatus() {
+	public List<TrainStatus> getTrainStatus() {
 		return trainStatus;
 	}
 

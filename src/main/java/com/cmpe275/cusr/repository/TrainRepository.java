@@ -8,4 +8,6 @@ import com.cmpe275.cusr.model.Train;
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
 	
+	Train findByBound (String bound);
+	
 }
