@@ -89,7 +89,7 @@ public OneWayList searchOneWay(SearchContent content) {
 			end = -end;
 		}
 		
-		//find two segments trip. Check trainType is met. 
+		//find two segments trip. Check trainType requirement is met. 
 		for (int i = start+1; i < end; i++) {
 			Station oneStop = allStations[Math.abs(i)];
 			List<Segment> firstTrip = getDirectTripSorted(departure, oneStop, departureTime, isExactTime);
@@ -112,7 +112,7 @@ public OneWayList searchOneWay(SearchContent content) {
 		}
 		
 		//find three segments trip
-		for (int i=start+1; i < end-1; i++) {
+		outer: for (int i=start+1; i < end-1; i++) {
 			Station firstStop = allStations[Math.abs(i)];
 			for (int j=i+1; j < destination.getIndex(); j++) {
 				Station secondStop = allStations[Math.abs(j)];
@@ -121,14 +121,18 @@ public OneWayList searchOneWay(SearchContent content) {
 				List<Segment> lastTrip = getDirectTripSorted(secondStop, destination, departureTime, false);
 				List<List<Segment>> twoStopTrips= getTwoStopTrip(firstTrip, secondTrip, lastTrip);
 				for (List<Segment> l: twoStopTrips) {
-					OneWayTrip oneTrip = new OneWayTrip(departureDate, numberOfSeats);
-					oneTrip.setConnections(l);
-					result.getFirstFive().add(oneTrip);
+					boolean isTypeRight = checkTrainType(trainType, l);
+					if (isTypeRight) {
+						OneWayTrip oneTrip = new OneWayTrip(departureDate, numberOfSeats);
+						oneTrip.setConnections(l);
+						result.getFirstFive().add(oneTrip);
+						if (result.getFirstFive().size() >= NUMBER_OF_TRIP_RETURNED) 
+							break outer;
+					}
 				}
 			}
 		}
-		
-		//return result if number of connections is One
+		//sort all trips and return result
 		sorting(result);
 		return result;
 
@@ -259,7 +263,7 @@ public OneWayList searchOneWay(SearchContent content) {
 		}
 		if (type.equals("Express") &&!bounds.contains("Express"))
 			return false;
-		else if (type.equals("Regular") && bounds.contains("Express"))
+		if (type.equals("Regular") && bounds.contains("Express"))
 			return false;
 		return true;
 	}
