@@ -1,5 +1,6 @@
 package com.cmpe275.cusr.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class Ticket {
 	private int numOfSeats;
 	
 	@Column(name="PASSENGER", nullable=false)
-	private List<String> passenger;
+	private ArrayList<String> passenger = new ArrayList<String>();
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
@@ -145,7 +146,7 @@ public class Ticket {
 		return passenger;
 	}
 
-	public void setPassenger(List<String> passenger) {
+	public void setPassenger(ArrayList<String> passenger) {
 		this.passenger = passenger;
 	}
 

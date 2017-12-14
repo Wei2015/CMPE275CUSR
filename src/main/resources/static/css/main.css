@@ -11,3 +11,9 @@ h2 {
 	width: 400px;
 	margin: 15px 35px 25px 0px; 
 }
+
+.middle-border {
+	margin-top: 40px;
+	min-height: 200px;
+	border-right: 1px solid #ddd;
+}

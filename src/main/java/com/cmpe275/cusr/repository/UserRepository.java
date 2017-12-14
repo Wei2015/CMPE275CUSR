@@ -9,6 +9,6 @@ import com.cmpe275.cusr.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	@Query("SELECT u from User u WHERE AND u.email = ?1")
+	@Query("SELECT u from User u WHERE u.email = ?1")
 	User findByEmail(String EMAIL);
 }
