@@ -37,10 +37,6 @@
         <li><a href="#">Admin</a></li>
         <li><a href="#">Page 3</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
     </div>
   </div>
 </nav>
@@ -53,22 +49,44 @@
 		<img id="fb-login" class="login-logo" style="cursor: pointer" src="/img/fb-login.png" />
 	</div>
 	
-	<div>
-	<h3>Login with email</h3>
-	<br></br>
-	<form class="form-inline">
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="text" id="login-email" class="form-control" placeholder="Enter Email" name="email" />
+	<div class="row">
+		<div class="col-md-5">
+			<h3>Login with email</h3>
+			<form class="form">
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="text" id="login-email" class="form-control" placeholder="Enter Email" name="email" />
+				</div>
+				
+				<div class="form-group">
+					<label for="pwd">Password</label>
+					<input type="password" id="login-pwd" class="form-control" placeholder="Enter Password" name="pwd" />
+				</div>
+				
+				<div id="login" class="btn btn-default">Login</div>
+			</form>
 		</div>
-		
-		<div class="form-group">
-			<label for="pwd">Password</label>
-			<input type="password" id="login-pwd" class="form-control" placeholder="Enter Password" name="pwd" />
-		</div>
-		
-		<div id="login" class="btn btn-default">Login</div>
-	</form>
+
+		<div class="col-md-1 middle-border"></div>
+        <div class="col-md-1"></div>
+
+        <div class="col-md-5">
+        	<h3>Create a CUSR account</h3>
+			<form class="form">
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="text" id="reg-email" class="form-control" placeholder="Enter Email" name="email" />
+				</div>
+				
+				<div class="form-group">
+					<label for="pwd">Password</label>
+					<input type="password" id="reg-pwd" class="form-control" placeholder="Enter Password" name="pwd" />
+				</div>
+				
+				<div id="register" class="btn btn-default">Register</div>
+			</form>
+        </div>
+
 	</div>
 </div>
 
@@ -115,6 +133,18 @@
 			result.getIdToken().then(function(data) {
 		      window.location = "http://localhost:8080/signin?firebaseToken="+data;
 		    });
+		}).catch(function(error) {
+			console.log(error.code);
+		});
+	});
+
+	$("#register").click(function(){
+		var email = $("#reg-email").val();
+		var pwd = $("#reg-pwd").val();
+		firebase.auth().createUserWithEmailAndPassword(email, pwd).then(function(result){
+			result.getIdToken().then(function(data) {
+				window.location = "http://localhost:8080/signin?firebaseToken="+data;
+			});
 		}).catch(function(error) {
 			console.log(error.code);
 		});
