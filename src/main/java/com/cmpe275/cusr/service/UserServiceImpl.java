@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 		return u;
 	}
 	
-	public void signInAuthentication(String firebaseToken, String name) {
+	public void signInAuthentication(String firebaseToken) {
 		if(StringUtils.isBlank(firebaseToken))
 			throw new IllegalArgumentException("FirebaseTokenBlank");
 		
@@ -33,23 +33,18 @@ public class UserServiceImpl implements UserService {
 		FirebaseTokenHolder tokenHolder = firebaseService.parseToken(firebaseToken);
 		User loadedUser = null;
 		
-		if(name == null)
-			loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), tokenHolder.getName());
-		else //if register using email
-			loadedUser = getUserFromDB(tokenHolder.getUid(), tokenHolder.getEmail(), name);
+		loadedUser = getUserFromDB(tokenHolder.getEmail());
 		
-		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserUId(), loadedUser, loadedUser.getAuthorities());
+		Authentication auth = new FirebaseAuthenticationToken(loadedUser.getUserId(), loadedUser, loadedUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
-	public User getUserFromDB(String UId, String email, String name) {
-		User userLoaded = userRepository.findByUIdEmail(UId, email);
+	public User getUserFromDB(String email) {
+		User userLoaded = userRepository.findByEmail(email);
 		
 		if(userLoaded == null) {
 			userLoaded = new User();
-			userLoaded.setUserUId(UId);
 			userLoaded.setEmail(email);
-			userLoaded.setName(name);
 			
 			userRepository.save(userLoaded);
 		} 
