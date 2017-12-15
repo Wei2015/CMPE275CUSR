@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cmpe275.cusr.model.Booking;
+import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.service.TicketService;
 import com.cmpe275.cusr.service.UserService;
@@ -23,20 +24,34 @@ public class TicketController {
 	@Autowired
 	TicketService ticketService;
 	
-	@PostMapping("/user/select")
+	/*private List<Segment> departureTrip = new ArrayList<Segment>();
+	public TicketController() {
+		//departureTrip.add(new Segment(S, ))
+	}
+	/*
+	 * public String purchase(Model model) { long userId = 1; String round = "v";
+	 * model.addAttribute("userId", userId); model.addAttribute("round", round);
+	 * List<Integer> trains = new ArrayList<>(); trains.add(1); trains.add(2);
+	 * trains.add(3); model.addAttribute("trains", trains); List<Integer> times =
+	 * new ArrayList<>(); times.add(4); times.add(5); times.add(6);
+	 * model.addAttribute("times", times); return "purchase"; }
+	 */
+	
+	/*@PostMapping("/user/select")
 	public String select(Model model, @ModelAttribute Booking booking) { 
-		String returnDate = booking.getReturnDate();
 		int numOfSeats = booking.getNumOfSeats();
+		model.addAttribute("numOfSeats", numOfSeats);
 		List<String> passenger = new ArrayList<>();
 		for (int i = 0; i < numOfSeats; ++i) {
 			passenger.add("");
 		}
 		model.addAttribute("passenger", passenger);
-		model.addAttribute("numOfSeats", numOfSeats);
-		model.addAttribute("price", booking.getPrice());
-		model.addAttribute("totalPrice", booking.getPrice() + 1);
+		double price = booking.getPrice();
+		model.addAttribute("price", price);
+		model.addAttribute("totalPrice", price + 1);
 		model.addAttribute("departureDate", booking.getDepartureDate());
 		model.addAttribute("departureTrip", booking.getDepartureTrip());
+		String returnDate = booking.getReturnDate();
 		model.addAttribute("round", returnDate == null ? "Y" : "N");
 		if (returnDate != null) {
 			model.addAttribute("returnDate", returnDate);
@@ -49,11 +64,11 @@ public class TicketController {
 	public String purchase(Model model, @ModelAttribute Booking booking) {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
-		if (ticketService.purchase(user, booking)) {
-			int numOfSeats = booking.getNumOfSeats();
+		boolean purchaseRes = ticketService.purchase(user, booking);
+		model.addAttribute("purchaseRes", purchaseRes == true ? "success" : "fail");
+		if (purchaseRes) {
+			model.addAttribute("numOfSeats", booking.getNumOfSeats());
 			model.addAttribute("passenger", booking.getPassenger());
-			model.addAttribute("numOfSeats", numOfSeats);
-			model.addAttribute("numOfTickets", numOfSeats > 1 ? "multiple" : "single");
 			model.addAttribute("totalPrice", booking.getPrice() + 1);
 			model.addAttribute("departureDate", booking.getDepartureDate());
 			model.addAttribute("departureTrip", booking.getDepartureTrip());
@@ -63,10 +78,8 @@ public class TicketController {
 				model.addAttribute("returnDate", returnDate);
 				model.addAttribute("returnTrip", booking.getReturnTrip());
 			}
-			return "purchase_success";
-		} else {
-			return "purchase_fail";
 		}
+		return "purchase";
 	}
 
 	@PostMapping("/user/ticketCancel")
