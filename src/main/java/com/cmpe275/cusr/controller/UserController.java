@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmpe275.cusr.model.SearchContent;
+import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.service.UserService;
+
 
 @Controller
 public class UserController {
@@ -24,17 +27,27 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private TicketRepository ticketRepository;
+	
 	@GetMapping("/signin")
 	public String signinSuccessGet(Model model, @RequestParam(value="firebaseToken", required=true) String firebaseToken) {
 		
 		userService.signInAuthentication(firebaseToken);
 		
-		return "redirect:/user/tickets";
+		return "redirect:/tickets";
 	}
-	@GetMapping()
+	@GetMapping("/search")
 	public String index(Model model) {
 		SearchContent search = new SearchContent();
 		model.addAttribute("searchContent", search);
 		return "search";
+	}
+	
+	@GetMapping("/tickets")
+	public String showUserTickets(Model model) {
+		long userId = userService.findUser().getUserId();
+		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
+		return "usertickets";
 	}
 }

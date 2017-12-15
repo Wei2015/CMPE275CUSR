@@ -31,7 +31,9 @@ public class HomeController {
 	
 	//show home page for get request on home url.
 	@GetMapping("/")
-	
+	public String login(Model model) {
+		return "userlogin";
+	}
 	
 	//show search results without login
 	@PostMapping("/")
@@ -48,16 +50,10 @@ public class HomeController {
 				return "searchResult";
 	}
 	
-	@RequestMapping("/login")
-	public String login(Model model) {
-		return "userlogin";
-	}
-	
 	@RequestMapping("/registration")
 	public String registration(Model model) {
 		return "userreg";
 	}
-	
 	
 	/* No need for admin login
 	@RequestMapping("/adminlogin")
@@ -65,10 +61,5 @@ public class HomeController {
 		return "adminlogin";
 	}
 	*/
-	
-	@RequestMapping("/user/tickets")
-	public String showUserTickets(Model model) {
-		return "usertickets";
-	}
 
 }

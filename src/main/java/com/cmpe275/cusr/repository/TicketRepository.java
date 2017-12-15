@@ -11,5 +11,5 @@ import com.cmpe275.cusr.model.Ticket;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	@Query("SELECT t from Ticket t WHERE t.user.userId = ?1")
-	ArrayList<Ticket> findTicketsByUserId(String ID);
+	ArrayList<Ticket> findTicketsByUserId(long ID);
 }
