@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cmpe275.cusr.service.AdminService;
 
@@ -15,10 +17,23 @@ public class AdminController {
 	
 	@GetMapping("/admin")
 	public String populateTrainInfo(Model model) {
-		adminService.populateTrainTable();
-		model.addAttribute("message", "sucessfully loaded train information.");
+		model.addAttribute("message", "Please populate train schedule table and status table.");
 		return "admin";
 		
+	}
+	
+	@PostMapping(value ="/populateTable", params="trainScheduleTable")
+	public String populateTrainSchedule(Model model) {
+		adminService.populateTrainTable();
+		model.addAttribute("message", "sucessfully loaded train schedule information.");
+		return "admin";
+	}
+	
+	@PostMapping(value ="/populateTable", params="trainStatusTable")
+	public String populateTrainStatus(Model model) {
+		adminService.populateTrainStatus();
+		model.addAttribute("message", "sucessfully loaded train status information for next 4 weeks.");
+		return "admin";
 	}
 
 }

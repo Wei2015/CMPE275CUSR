@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,18 @@ import org.springframework.stereotype.Service;
 import com.cmpe275.cusr.model.Station;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.model.TrainSchedule;
+import com.cmpe275.cusr.model.TrainStatus;
 import com.cmpe275.cusr.repository.ScheduleRepository;
 import com.cmpe275.cusr.repository.TrainRepository;
+import com.cmpe275.cusr.repository.TrainStatusRepository;
 
 
 @Service
 public class AdminServiceImpl implements AdminService {
 	private static final String EXPRESS = "EXPRESS";
 	private static final String REGULAR = "REGULAR";
+	private static final int TIMEFRAME = 28;
+	private static String datePattern = "yyyy-MM-dd";
 	
 	@Autowired
 	private TrainRepository trainRepo;
@@ -27,6 +32,44 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ScheduleRepository scheduleRepo;
 	
+	@Autowired
+	private TrainStatusRepository trainStatusRepo;
+	
+	//populate train status information
+	public void populateTrainStatus() {
+		if (!(trainRepo.count()>0))
+			populateTrainTable();
+		
+		trainStatusRepo.deleteAll();
+		List<Train> allTrains = trainRepo.findAll();
+		
+		SimpleDateFormat format = new SimpleDateFormat(datePattern);
+		
+		for (Train t: allTrains) {
+			for (int i = 0; i < TIMEFRAME; i++) {
+				Date current = new Date();
+				current.setTime(current.getTime()+1000*60*60*24*i);
+				String currentDate= format.format(current);
+				TrainStatus newStatus = new TrainStatus(t, currentDate, false);
+				Map<Station, Integer> map = newStatus.getSeatStatus();
+				Station[] stations = Station.values();
+				if (t.getBound().endsWith("00")) {
+					for (int j = 0; j < stations.length; j+=5) {
+						map.put(stations[j], 0);
+					}
+				} else {
+					for (int j= 0; j< stations.length; j++) {
+						map.put(stations[j], 0);
+					}
+				}
+				newStatus.setSeatStatus(map);
+				trainStatusRepo.save(newStatus);
+			}
+		}
+	}
+	
+	
+	//populate train schedule information
 	public void populateTrainTable() {
 		
 		trainRepo.deleteAll();

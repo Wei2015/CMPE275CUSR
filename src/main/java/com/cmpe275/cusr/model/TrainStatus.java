@@ -1,5 +1,6 @@
 package com.cmpe275.cusr.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -42,6 +43,20 @@ public class TrainStatus {
 	
 	@Column (name="IS_CANCELLED")
 	private boolean isCancelled;
+	
+	
+
+	public TrainStatus() {
+		super();
+	}
+
+	public TrainStatus(Train train, String date, boolean isCancelled) {
+		super();
+		this.train = train;
+		this.date = date;
+		this.seatStatus = new HashMap<Station, Integer>();
+		this.isCancelled = isCancelled;
+	}
 
 	public long getStatusId() {
 		return statusId;
