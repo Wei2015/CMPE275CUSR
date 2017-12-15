@@ -58,8 +58,6 @@ public class UserController {
 				OneWayList dbResult = trainService.searchOneWay(search);
 				model.addAttribute("oneWayList", dbResult);
 				
-				
-				
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
 				return "searchResult";
