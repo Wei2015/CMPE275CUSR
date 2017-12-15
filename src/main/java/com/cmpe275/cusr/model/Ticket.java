@@ -32,7 +32,7 @@ public class Ticket {
 	private int numOfSeats;
 	
 	@Column(name="PASSENGER", nullable=false)
-	private List<String> passenger = new ArrayList<String>();
+	private ArrayList<String> passenger = new ArrayList<String>();
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
@@ -137,11 +137,11 @@ public class Ticket {
 		this.numOfSeats = numOfSeats;
 	}
 
-	public List<String> getPassenger() {
+	public ArrayList<String> getPassenger() {
 		return passenger;
 	}
 
-	public void setPassenger(List<String> passenger) {
+	public void setPassenger(ArrayList<String> passenger) {
 		this.passenger = passenger;
 	}
 
