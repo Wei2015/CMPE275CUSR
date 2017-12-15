@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>California Ultra-Speed Rail - User Login/Registration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" href="/css/main.css" />
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" th:href="@{/}">CUSR</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li ><a href="#">Booking</a></li>
+          <li><a th:href="@{/adminlogin}">Admin</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container" th:object="${oneWayTrip}">
+		
+		<div class = "row">
+			<h2>Your first trip is:</h2>
+		</div>
+		<div class = "row">
+			<div class="col-md-6 col-sm-12">
+	 			<table class="table table-striped" >
+					<thead>
+						<tr>
+						<th>Departure Date</th>
+						<th>Arrival Time</th>
+						<th>Number of Passenger</th>
+						<th>Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						
+						<td th:text="*{departureDate}"/>
+						<th th:text="*{arrivalTime}"/>
+						<td th:text="*{numberOfSeats}"/>
+						<td th:text="*{ticketPrice}"/>
+						
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+</div>
+<div class="container" th:object="${returnWayList}" >
+		<div class = "row">
+			<h2 th:text="*{message}"></h2>
+		</div>
+		<div class = "row">
+			<h2>Your return trip searching results are:</h2>
+		</div>
+		
+		<div class = "row">
+			<div class="col-md-8 col-sm-16">
+			<table class="table table-striped"  >
+				<thead>
+						<tr>
+						<th>Departure Date</th>
+						<th>Arrival Time</th>
+						<th>Number of Passenger</th>
+						<th>Price</th>
+						<th>Select Trip</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="oneWayTrip,iterStat:*{firstFive}" >
+						<td th:text="${oneWayTrip.departureDate}"/>
+						<th th:text="${oneWayTrip.arrivalTime}"/>
+						<td th:text="${oneWayTrip.numberOfSeats}"/>
+						<td th:text="${oneWayTrip.ticketPrice}"/>
+						<td><form th:action="@{/book}" method ="post">
+							<input type="submit" th:value="Trip + ${iterStat.count}" th:name="Select" />
+						</form></td>
+						</tr>
+					</tbody>	
+			</table>
+			</div>
+		</div>
+		<br></br><br></br>
+		<div class="row">
+			<h3>Trip Details</h3>
+		</div>
+		<div class = "row">
+			<table class="table table-striped" >
+				<thead>
+					<tr>
+						<th:block th:each= "c:*{COUNT}">
+							<th>Train_ID</th>
+							<th>Departure Station</th>
+							<th>Departure Time</th>
+							<th>Arrival Station</th>
+							<th>Arrival Time</th>
+						</th:block>
+					</tr>
+				</thead>
+				<tbody>				
+					<tr th:each="oneWayTrip: *{firstFive}">
+							<th:block th:each="segment:${oneWayTrip.connections}">
+								<td th:text="${segment.bound}"/>
+								<td th:text="${segment.departureStation}"/>
+								<td th:text="${segment.departureTime}" />
+								<td th:text="${segment.arrivalStation}"/>
+								<td th:text="${segment.arrivalTime}"/>
+							</th:block>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+</body>
+</html>

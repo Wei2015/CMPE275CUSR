@@ -56,10 +56,28 @@
         <td th:text="${ticket.arrivalStation}"></td>
         <td th:text="${ticket.passenger}"></td>
         <td>Ticket Details</td>
-        <td>Cancel Ticket</td>
+        <td a th:href="@{/ticketCancel}">Cancel Ticket</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div id="ticketModal" class="modal fade" role="dialog" th:fragment="modalContents">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ticket Details</h4>
+      </div>
+      <div class="modal-body">
+        <p>Details...</p>
+        <p th:text="${ticket.departDate}"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>

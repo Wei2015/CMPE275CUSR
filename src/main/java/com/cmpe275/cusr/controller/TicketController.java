@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cmpe275.cusr.model.Booking;
@@ -42,7 +43,7 @@ public class TicketController {
 	 * model.addAttribute("times", times); return "purchase"; }
 	 */
 	
-	/*@PostMapping("/user/select")
+	/*@PostMapping("/select")
 	public String select(Model model, @ModelAttribute Booking booking) { 
 		int numOfSeats = booking.getNumOfSeats();
 		model.addAttribute("numOfSeats", numOfSeats);
@@ -65,7 +66,7 @@ public class TicketController {
 		return "select";
 	}
 
-	@PostMapping("/user/purchase")
+	@PostMapping("/purchase")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
@@ -87,7 +88,7 @@ public class TicketController {
 		return "purchase";
 	}
 
-	@PostMapping("/user/ticketCancel")
+	@PostMapping("/ticketCancel")
 	public String cancel(Model model, @ModelAttribute long ticketId) {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
@@ -103,5 +104,11 @@ public class TicketController {
 		long userId = userService.findUser().getUserId();
 		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
 		return "usertickets";
+	}
+	
+	@GetMapping("/ticketDetails/{id}")
+	public String ticketDetails(@PathVariable("id") long id, Model model) {
+		model.addAttribute("ticket", ticketRepository.findOne(id));
+		return "usertickets :: modalContents";
 	}
 }
