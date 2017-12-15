@@ -32,7 +32,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a th:href="@{/usertickets}"> <span
-							th:text="'Hello, ' + ${name} + '!'" />
+							th:text="'Hello, ' + ${email} + '!'" />
 					</a></li>
 				</ul>
 			</div>
@@ -40,35 +40,40 @@
 	</nav>
 
 	<div class="container">
-		<h1>
-			<span th:text="${name} + ', thanks for your booking!'" />
-		</h1>
+		<h1>Thanks for your booking!</h1>
 		<br></br>
 	</div>
 
 	<div class="container">
-		<h2>Passenger Information</h2>
+		<h2>User Information:</h2>
 		<br></br>
 		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Number of Passengers</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${name}" />
-					<td th:text="${email}" />
-					<td th:text="${numOfSeats}" />
-				</tr>
-			</tbody>
+			<tr>
+				<th>Email</th>
+				<td th:text="${email}" />
+			</tr>
+		</table>
+	</div>
+	
+	<div class="container">
+		<h2>Passenger Information:</h2>
+		<br></br>
+		<table class="table table-striped">
+			<tr>
+				<th>Number of Passengers</th>
+				<td th:text="${numOfSeats}" />
+			</tr>
+		</table>
+		<table th:each="p: ${passenger}" class="table table-striped">
+			<tr>
+				<th>Passenger Name</th>
+				<td th:text="${p}" />
+			</tr>
 		</table>
 	</div>
 
 	<div class="container">
-		<h2>Ticket Information</h2>
+		<h2>Ticket Information:</h2>
 		<br></br>
 		<table class="table table-striped">
 			<tr>
@@ -103,7 +108,7 @@
 	<div th:if="${round} == 'Y'" class="container">
 		<table class="table table-striped">
 			<tr>
-				<td><strong>Return Date</strong></td>
+				<th>Return Date</th>
 				<td th:text="${returnDate}" />
 			</tr>
 		</table>
@@ -129,11 +134,12 @@
 		</table>
 	</div>
 	<br></br>
+	
 	<div class="container">
 		<table class="table table-striped">
 			<tr>
-				<td><strong>Price</strong></td>
-				<td th:text="${price}" />
+				<th>Total Price</th>
+				<td th:text="'$' + ${totalPrice}" />
 			</tr>
 		</table>
 	</div>

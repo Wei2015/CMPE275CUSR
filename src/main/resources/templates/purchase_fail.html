@@ -40,31 +40,20 @@
 	</nav>
 
 	<div class="container">
-		<h1>
-			<span th:if="${numOfTickets} == 'mulptile'"
-				th:text="${name} + ', the tickets have been sold out!'" /> 
-			<span th:unless="${numOftickets} == 'single'"
-				th:text="${name} + ', the ticket has been sold out!'" />
-		</h1>
+		<h1> Your booking is unsuccessful. The tickets have been sold out, or the train has been cancelled." </h1> 
+			<!--  <span th:unless="${numOftickets} == 'single'"
+				th:text="${name} + ', the ticket has been sold out!'" />-->
 		<br></br>
 	</div>
 
 	<div class="container">
-		<h2>Passenger Information</h2>
+		<h2>User Information</h2>
 		<br></br>
 		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${name}" />
-					<td th:text="${email}" />
-				</tr>
-			</tbody>
+			<tr>
+				<th>Email</th>
+				<td th:text="${email}" />
+			</tr>
 		</table>
 	</div>
 </body>
