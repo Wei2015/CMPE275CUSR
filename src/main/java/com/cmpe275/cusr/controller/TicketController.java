@@ -6,23 +6,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cmpe275.cusr.model.Booking;
 import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.model.User;
+import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.service.TicketService;
 import com.cmpe275.cusr.service.UserService;
 
 @Controller
 public class TicketController {
 
-	/*@Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
 	TicketService ticketService;
+	
+	@Autowired
+	TicketRepository ticketRepository;
 	
 	/*private List<Segment> departureTrip = new ArrayList<Segment>();
 	public TicketController() {
@@ -92,4 +97,11 @@ public class TicketController {
 			return "ticketCancel_fail";
 		}
 	}*/
+	
+	@GetMapping("/tickets")
+	public String showUserTickets(Model model) {
+		long userId = userService.findUser().getUserId();
+		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
+		return "usertickets";
+	}
 }

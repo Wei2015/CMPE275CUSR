@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmpe275.cusr.model.OneWayList;
 import com.cmpe275.cusr.model.SearchContent;
-import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.service.TrainService;
 import com.cmpe275.cusr.service.UserService;
 
@@ -28,9 +27,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private TicketRepository ticketRepository;
 	
 	@Autowired
 	private TrainService trainService;
@@ -50,7 +46,7 @@ public class UserController {
 		return "search";
 	}
 	
-	//show search results without login
+	//show search results after login
 	@PostMapping("/search")
 	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
 		
@@ -61,12 +57,5 @@ public class UserController {
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
 				return "searchResult";
-	}
-	
-	@GetMapping("/tickets")
-	public String showUserTickets(Model model) {
-		long userId = userService.findUser().getUserId();
-		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
-		return "usertickets";
 	}
 }
