@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cmpe275.cusr.model.SearchContent;
 import com.cmpe275.cusr.service.UserService;
 
 @Controller
@@ -30,5 +31,10 @@ public class UserController {
 		
 		return "redirect:/user/tickets";
 	}
-	
+	@GetMapping()
+	public String index(Model model) {
+		SearchContent search = new SearchContent();
+		model.addAttribute("searchContent", search);
+		return "search";
+	}
 }
