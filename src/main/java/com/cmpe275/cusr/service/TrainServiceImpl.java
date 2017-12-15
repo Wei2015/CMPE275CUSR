@@ -212,11 +212,10 @@ public OneWayList searchOneWay(SearchContent content) {
 				Train train = t.getTrain();
 				
 				//check is seat on this train at this station is available
-				/*
 				TrainStatus status = trainStatusRepo.findByTrainAndDate(train, departureDate);
-				if (status.getSeatStatus().get(departure) + numberOfSeats <= train.getCapacity()) 
+				if ((status.getSeatStatus().get(departure) + numberOfSeats) > train.getCapacity()) 
 					continue;
-				*/
+				
 				String arrivalTime = null;
 				TrainSchedule arrival = scheduleRepo.findByStopAndTrain(destination,train);
 				if (arrival != null) {
