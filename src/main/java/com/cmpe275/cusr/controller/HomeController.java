@@ -25,29 +25,10 @@ import com.cmpe275.cusr.service.TrainService;
 @Controller
 public class HomeController {
 	
-	@Autowired
-	private TrainService trainService;
-
-	
 	//show home page for get request on home url.
 	@GetMapping("/")
 	public String login(Model model) {
 		return "userlogin";
-	}
-	
-	//show search results without login
-	@PostMapping("/")
-	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
-		
-				//test for trainServiceImpl
-				OneWayList dbResult = trainService.searchOneWay(search);
-				model.addAttribute("oneWayList", dbResult);
-				
-				
-				
-				//add search inquiry in the view
-				model.addAttribute("searchContent", search);
-				return "searchResult";
 	}
 	
 	@RequestMapping("/registration")
