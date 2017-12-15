@@ -86,7 +86,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	private void addRegularTrain(String direction) {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		for (int i = 6; i <= 21; i++) {
+		for (int i = 6; i < 21; i++) {
 			for (int m = 15; m < 60; m+=15) {
 				String bound;
 				//generate bound content
@@ -119,6 +119,10 @@ public class AdminServiceImpl implements AdminService {
 						oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
 						scheduleRepo.save(oneSchedule);
 					}
+					TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", regular);
+					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
+					lastOne.setArrivalTime(timeFormat.format(updatedTime));
+					scheduleRepo.save(lastOne);
 				} else {
 					for (int j = stations.length-1; j>0 ; j--) {
 						updatedTime.setTime(departTime.getTime() + 8*60*1000*(stations.length-1-j));
@@ -127,6 +131,11 @@ public class AdminServiceImpl implements AdminService {
 						oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
 						scheduleRepo.save(oneSchedule);
 					}
+					TrainSchedule lastOne = new TrainSchedule(stations[0], "", regular);
+					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
+					lastOne.setArrivalTime(timeFormat.format(updatedTime));
+					scheduleRepo.save(lastOne);
+					
 				}
 			}
 		}
@@ -163,6 +172,10 @@ public class AdminServiceImpl implements AdminService {
 					oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
 					scheduleRepo.save(oneSchedule);
 				}
+				TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", express);
+				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
+				lastOne.setArrivalTime(timeFormat.format(updatedTime));
+				scheduleRepo.save(lastOne);
 			} else {
 				for (int j = stations.length-1; j>0 ; j-=5) {
 					updatedTime.setTime(departTime.getTime() + 28*60*1000*((stations.length-1-j)/5));
@@ -171,6 +184,10 @@ public class AdminServiceImpl implements AdminService {
 					oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
 					scheduleRepo.save(oneSchedule);
 				}
+				TrainSchedule lastOne = new TrainSchedule(stations[0], "", express);
+				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
+				lastOne.setArrivalTime(timeFormat.format(updatedTime));
+				scheduleRepo.save(lastOne);
 			}
 		}
 	

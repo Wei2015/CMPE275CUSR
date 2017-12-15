@@ -137,4 +137,20 @@ public class SearchContent {
 		return result.toString();
 	}
 	
+	public SearchContent getReturnSearch() {
+		SearchContent returnSearch = new SearchContent();
+		returnSearch.setDepartureDate(this.returnDate);
+		returnSearch.setDepartureStation(this.destinationStation);
+		returnSearch.setDepartureTime(this.returnTime);
+		returnSearch.setDestinationStation(this.departureStation);
+		returnSearch.setExactTime(false);
+		returnSearch.setNumberOfSeats(this.numberOfSeats);
+		returnSearch.setRoundTrip(false);
+		returnSearch.setNumberOfConnections(this.numberOfConnections);
+		returnSearch.setTrainType(this.trainType);
+		
+		return returnSearch;
+	}
+	
+	
 }
