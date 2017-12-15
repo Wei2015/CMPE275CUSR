@@ -32,7 +32,6 @@ public class TrainServiceImpl implements TrainService {
 	private TrainStatusRepository trainStatusRepo;
 	
 	private static int NUMBER_OF_TRIP_RETURNED = 5;
-
 	private static String fullPattern = "yyyy-MM-dd HH:mm:ss";
 	private static String timePattern = "HH:mm:ss";
 	
@@ -213,11 +212,11 @@ public OneWayList searchOneWay(SearchContent content) {
 				Train train = t.getTrain();
 				
 				//check is seat on this train at this station is available
-				/*
+				
 				TrainStatus status = trainStatusRepo.findByTrainAndDate(train, departureDate);
 				if (status.getSeatStatus().get(departure) + numberOfSeats <= train.getCapacity()) 
 					continue;
-				*/
+				
 				String arrivalTime = null;
 				TrainSchedule arrival = scheduleRepo.findByStopAndTrain(destination,train);
 				if (arrival != null) {
