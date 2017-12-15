@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User getUserFromDB(String email) {
-		User userLoaded = userRepository.findByEmail(email);
+		User userLoaded = userRepository.findUserByEmail(email);
 		
 		if(userLoaded == null) {
 			userLoaded = new User();
