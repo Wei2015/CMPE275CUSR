@@ -2,12 +2,9 @@ package com.cmpe275.cusr.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,7 +32,7 @@ public class Ticket {
 	private int numOfSeats;
 	
 	@Column(name="PASSENGER", nullable=false)
-	private ArrayList<String> passenger = new ArrayList<String>();
+	private List<String> passenger = new ArrayList<String>();
 	
 	@Column (name="PRICE", nullable=false)
 	private double price;
@@ -146,7 +141,7 @@ public class Ticket {
 		return passenger;
 	}
 
-	public void setPassenger(ArrayList<String> passenger) {
+	public void setPassenger(List<String> passenger) {
 		this.passenger = passenger;
 	}
 
