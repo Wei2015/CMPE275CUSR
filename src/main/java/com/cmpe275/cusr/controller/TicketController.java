@@ -23,9 +23,6 @@ public class TicketController {
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	TicketService ticketService;
 	
 	@Autowired
 	TicketRepository ticketRepository;
