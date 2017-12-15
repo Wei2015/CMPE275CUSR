@@ -63,7 +63,7 @@ public class OneWayTrip implements Comparable<OneWayTrip>{
 		if (result != 0) {
 			return result;
 		}else {
-			return this.getConnections().get(0).getDepartureTime().compareTo(other.getConnections().get(0).getDepartureTime());
+			return other.getConnections().get(0).getDepartureTime().compareTo(this.getConnections().get(0).getDepartureTime());
 		}
 	
 	}
