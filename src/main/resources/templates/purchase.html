@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>California Ultra-Speed Rail - Ticket Purchase</title>
+<title>California Ultra-Speed Rail - Input Passenger Information</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -38,47 +38,13 @@
 			</div>
 		</div>
 	</nav>
-
-	<div th:if="${purchaseRes} == 'success'" class="container">
+	<form action="#" th:action="@{/purchase}" th:object="${booking}" method="post">
 		<div class="container">
-			<h1>Thanks for your booking!</h1>
-			<br></br>
-		</div>
-
-		<div class="container">
-			<h2>User Information:</h2>
+			<h2>Selected Ticket Information:</h2>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
-					<th>Email</th>
-					<td th:text="${email}" />
-				</tr>
-			</table>
-		</div>
-
-		<div class="container">
-			<h2>Passenger Information:</h2>
-			<br></br>
-			<table class="table table-striped">
-				<tr>
-					<th>Number of Passengers</th>
-					<td th:text="${numOfSeats}" />
-				</tr>
-			</table>
-			<table th:each="p: ${passenger}" class="table table-striped">
-				<tr>
-					<th>Passenger Name</th>
-					<td th:text="${p}" />
-				</tr>
-			</table>
-		</div>
-
-		<div class="container">
-			<h2>Ticket Information:</h2>
-			<br></br>
-			<table class="table table-striped">
-				<tr>
-					<td><strong>Departure Date</strong></td>
+					<th>Departure Date</th>
 					<td th:text="${departureDate}" />
 				</tr>
 			</table>
@@ -93,15 +59,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="dt: ${departureTrip}">
-						<td th:text="${dt.trainID}" />
-						<td th:text="${dt.departureStation}" />
-						<td th:text="${dt.departureTime}" />
-						<td th:text="${dt.arrivalStation}" />
-						<td th:text="${dt.arrivalTime}" />
+					<tr th:each="dt, stat : ${departureTrip}">
+						<td><input type="text"
+							th:name="|departureTrip[${stat.index}].trainId|"
+							th:value="${dt.getTrainId()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|departureTrip[${stat.index}].departureStation|"
+							th:value="${dt.getDepartureStation()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|departureTrip[${stat.index}].departureTime|"
+							th:value="${dt.getDepartureTime()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|departureTrip[${stat.index}].arrivalStation|"
+							th:value="${dt.getArrivalStation()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|departureTrip[${stat.index}].arrivalTime|"
+							th:value="${dt.getArrivalTime()}" readonly="readonly" /></td>
 					</tr>
 				</tbody>
-
 			</table>
 		</div>
 		<br></br>
@@ -124,20 +99,38 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="rt: ${returnTrip}">
-						<td th:text="${rt.trainID}" />
-						<td th:text="${rt.departureStation}" />
-						<td th:text="${rt.departureTime}" />
-						<td th:text="${rt.arrivalStation}" />
-						<td th:text="${rt.arrivalTime}" />
+					<tr th:each="rt, stat : ${returnTrip}">
+						<td><input type="text"
+							th:name="|returnTrip[${stat.index}].trainId|"
+							th:value="${rt.getTrainId()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|returnTrip[${stat.index}].departureStation|"
+							th:value="${rt.getDepartureStation()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|returnTrip[${stat.index}].departureTime|"
+							th:value="${rt.getDepartureTime()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|returnTrip[${stat.index}].arrivalStation|"
+							th:value="${rt.getArrivalStation()}" readonly="readonly" /></td>
+						<td><input type="text"
+							th:name="|returnTrip[${stat.index}].arrivalTime|"
+							th:value="${rt.getArrivalTime()}" readonly="readonly" /></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<br></br>
-
+		
 		<div class="container">
 			<table class="table table-striped">
+				<tr>
+					<th>Ticket Price</th>
+					<td th:text="'$' + ${price}" />
+				</tr>
+				<tr>
+					<th>Transaction Fee</th>
+					<td> $1.00 <td/>
+				</tr>
 				<tr>
 					<th>Total Price</th>
 					<td th:text="'$' + ${totalPrice}" />
@@ -145,12 +138,29 @@
 			</table>
 		</div>
 		<br></br>
-	</div>
-
-	<div th:unless="${purchaseRes} == 'fail'" class="container">
-		<h1>Sorry, we could not proceed with your booking. Please try
-			your search again!</h1>
+		
+		<div class="container">
+			<table class="table table-striped">
+				<tr>
+					<th>Number of Seats</th>
+					<td th:text="${numOfSeats}" />
+				</tr>
+			</table>
+			<br></br>
+			<h2>Please Input Passenger Name:</h2>
+			<br></br>
+		</div>
+		
+		<div th:each="p, stat : ${passenger}" class="container">
+			<label>Passenger Name: </label>
+        	<input type="text" th:name="|passenger[${stat.index}]|" th:value="${p}"/>
+		</div>
 		<br></br>
-	</div>
+		
+		<div class="container">
+			<button type="submit" value="submit" class="btn btn-success">Purchase</button>
+		</div>
+		<br></br>
+	</form>
 </body>
 </html>

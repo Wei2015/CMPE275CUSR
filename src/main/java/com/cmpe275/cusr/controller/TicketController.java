@@ -40,7 +40,7 @@ public class TicketController {
 	 * model.addAttribute("times", times); return "purchase"; }
 	 */
 	
-	/*@PostMapping("/select")
+	/*@PostMapping("/purchase")
 	public String select(Model model, @ModelAttribute Booking booking) { 
 		int numOfSeats = booking.getNumOfSeats();
 		model.addAttribute("numOfSeats", numOfSeats);
@@ -60,10 +60,10 @@ public class TicketController {
 			model.addAttribute("returnDate", returnDate);
 			model.addAttribute("returnTrip", booking.getReturnTrip());
 		}
-		return "select";
+		return "purchase";
 	}
 
-	@PostMapping("/purchase")
+	@PostMapping("/purchaseConfirm")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
@@ -82,7 +82,7 @@ public class TicketController {
 				model.addAttribute("returnTrip", booking.getReturnTrip());
 			}
 		}
-		return "purchase";
+		return "purchaseConfirm";
 	}
 
 	@PostMapping("/ticketCancel")
