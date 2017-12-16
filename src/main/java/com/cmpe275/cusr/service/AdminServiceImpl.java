@@ -41,10 +41,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TrainStatusRepository trainStatusRepo;
-	/*
+
 	@Autowired
 	private TicketRepository ticketRepository;
-	
+	/*
 	@Autowired
 	private EmailService emailService;
 	
@@ -56,8 +56,11 @@ public class AdminServiceImpl implements AdminService {
 		trainRepo.updateCapacity(capacity);
 	}
 	
-	
-	
+	//reset ticket table and status table;
+	public void reset() {
+		trainStatusRepo.deleteAll();
+		ticketRepository.deleteAll();
+	}
 	
 	//populate train status information
 	public void populateTrainStatus() {
