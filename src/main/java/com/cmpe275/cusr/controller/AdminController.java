@@ -40,8 +40,16 @@ public class AdminController {
 	@PostMapping(value ="/populateTable", params="updateCapacity")
 	public String updateTrainCapacity(Model model, @RequestParam("capacity") String capacity) {
 		adminService.updateTrainCapacity(Integer.valueOf(capacity));
-		model.addAttribute("message", "sucessfully updated train capacity as" + capacity);
+		model.addAttribute("message", "sucessfully updated train capacity as " + capacity + ".");
 		return "admin";
 	}
+	
+	@PostMapping(value ="/reset")
+	public String resetSystem(Model model) {
+		adminService.reset();
+		model.addAttribute("message", "sucessfully reset the booking system");
+		return "admin";
+	}
+	
 
 }

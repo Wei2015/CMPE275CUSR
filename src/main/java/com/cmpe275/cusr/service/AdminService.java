@@ -12,4 +12,6 @@ public interface AdminService {
 	
 	public void updateTrainCapacity(int capacity);
 	
+	public void reset();
+	
 }

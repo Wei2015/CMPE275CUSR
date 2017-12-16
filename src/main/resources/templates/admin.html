@@ -41,12 +41,17 @@
 <div class="container">
 
 	<form action="populateTable" method="post">
-		<input type="submit" name="trainScheduleTable" value="train schedule" />
+		<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
 		<br></br><br></br>
-		<input type="submit" name ="trainStatusTable" value="train status" />
+		<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
 		<br></br><br></br>
-		Train Capacity: <input type = "text" name="capacity" th:value = "*{capacity}"/>
-		<input type="submit" name = "updateCapacity" value="update train capacity"/>
+		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
+		<input type="submit" name = "updateCapacity" value="UPDATE"/>
+	</form>
+	
+	<br></br><br></br>
+	<form action="reset" method="post">
+	<input type="submit" value="Reset Booking System" />
 	</form>
 
 
