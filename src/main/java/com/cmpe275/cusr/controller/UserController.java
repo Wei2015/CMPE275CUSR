@@ -61,7 +61,7 @@ public class UserController {
 				return "searchResult";
 	}
 	
-	@PostMapping("/book")
+	@PostMapping("/selectReturn")
 	public String bookingConfirm(@ModelAttribute("oneWayList") OneWayList oneWayList, 
 								@ModelAttribute("searchContent") SearchContent search,
 								@RequestParam("Select") String selectTrip, Model model) {
