@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TrainStatusRepository trainStatusRepo;
-	
+	/*
 	@Autowired
 	private TicketRepository ticketRepository;
 	
@@ -50,7 +50,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TicketService ticketService;
-	
+	*/
 	//populate train status information
 	public void populateTrainStatus() {
 		if (!(trainRepo.count()>0))
@@ -128,30 +128,35 @@ public class AdminServiceImpl implements AdminService {
 				Date updatedTime = (Date)departTime.clone();
 				Station[] stations = Station.values();
 				if (direction.equals("SB")) {
-					for (int j = 0; j<stations.length-1; j++) {
+					for (int j = 0; j<stations.length; j++) {
 						updatedTime.setTime(departTime.getTime() + 8*60*1000*j);
 						TrainSchedule oneSchedule = new TrainSchedule(stations[j], timeFormat.format(updatedTime), regular);
 						updatedTime.setTime(updatedTime.getTime() - 3*60 *1000); //calculate arrival time
 						oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
+						adjustTimeFormat(oneSchedule);
 						scheduleRepo.save(oneSchedule);
 					}
+					/*
 					TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", regular);
 					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
 					lastOne.setArrivalTime(timeFormat.format(updatedTime));
 					scheduleRepo.save(lastOne);
+					*/
 				} else {
-					for (int j = stations.length-1; j>0 ; j--) {
+					for (int j = stations.length-1; j>=0 ; j--) {
 						updatedTime.setTime(departTime.getTime() + 8*60*1000*(stations.length-1-j));
 						TrainSchedule oneSchedule = new TrainSchedule(stations[j], timeFormat.format(updatedTime), regular);
 						updatedTime.setTime(updatedTime.getTime() - 3*60 *1000); //calculate arrival time
 						oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
+						adjustTimeFormat(oneSchedule);
 						scheduleRepo.save(oneSchedule);
 					}
+					/*
 					TrainSchedule lastOne = new TrainSchedule(stations[0], "", regular);
 					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
 					lastOne.setArrivalTime(timeFormat.format(updatedTime));
 					scheduleRepo.save(lastOne);
-					
+					*/
 				}
 			}
 		}
@@ -181,34 +186,50 @@ public class AdminServiceImpl implements AdminService {
 			Date updatedTime = (Date)departTime.clone();
 			Station[] stations = Station.values();
 			if (direction.equals("SB")) {
-				for (int j = 0; j<stations.length-1; j+=5) {
+				for (int j = 0; j<stations.length; j+=5) {
 					updatedTime.setTime(departTime.getTime() + 28*60*1000*(j/5));
 					TrainSchedule oneSchedule = new TrainSchedule(stations[j], timeFormat.format(updatedTime), express);
 					updatedTime.setTime(updatedTime.getTime() - 3*60 *1000); //calculate arrival time
 					oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
+					adjustTimeFormat(oneSchedule);
 					scheduleRepo.save(oneSchedule);
 				}
+				/*
 				TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", express);
 				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
 				lastOne.setArrivalTime(timeFormat.format(updatedTime));
 				scheduleRepo.save(lastOne);
+				*/
 			} else {
-				for (int j = stations.length-1; j>0 ; j-=5) {
+				for (int j = stations.length-1; j>=0 ; j-=5) {
 					updatedTime.setTime(departTime.getTime() + 28*60*1000*((stations.length-1-j)/5));
 					TrainSchedule oneSchedule = new TrainSchedule(stations[j], timeFormat.format(updatedTime), express);
 					updatedTime.setTime(updatedTime.getTime() - 3*60 *1000); //calculate arrival time
 					oneSchedule.setArrivalTime(timeFormat.format(updatedTime)); //add arrival time to schedule
+					adjustTimeFormat(oneSchedule);
 					scheduleRepo.save(oneSchedule);
 				}
+				/*
 				TrainSchedule lastOne = new TrainSchedule(stations[0], "", express);
 				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
 				lastOne.setArrivalTime(timeFormat.format(updatedTime));
 				scheduleRepo.save(lastOne);
+				*/
 			}
 		}
 	
 	}
 	
+	
+	private void adjustTimeFormat(TrainSchedule oneSchedule) {
+		String departTime = oneSchedule.getDepartTime();
+		String arrivalTime = oneSchedule.getArrivalTime();
+		if (departTime.startsWith("00"))
+			oneSchedule.setDepartTime(departTime.replaceFirst("00", "24"));
+		if (arrivalTime.startsWith("00"))
+			oneSchedule.setArrivalTime(arrivalTime.replaceFirst("00", "24"));
+	}
+	/*
 	@Transactional
 	public void trainCancel (String trainName, String date) {
 		//Check time.
@@ -319,4 +340,5 @@ public class AdminServiceImpl implements AdminService {
 		  ticketService.purchase(user, booking);
 		}*/
 	}
+	*/
 }

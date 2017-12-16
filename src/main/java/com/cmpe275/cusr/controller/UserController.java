@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.cmpe275.cusr.model.OneWayList;
 import com.cmpe275.cusr.model.OneWayTrip;
@@ -61,23 +62,41 @@ public class UserController {
 	@PostMapping("/selectReturn")
 	public String bookingConfirm(@ModelAttribute("oneWayList") OneWayList oneWayList, 
 								@ModelAttribute("searchContent") SearchContent search,
-								@RequestParam("Select") String selectTrip, Model model) {
+								@RequestParam("Select") String selectTrip, SessionStatus status, Model model) {
 		int tripIndexSelected = Integer.valueOf(selectTrip.substring(4, 5))-1;
 		OneWayTrip forwardTrip = oneWayList.getFirstFive().get(tripIndexSelected);
 		model.addAttribute("oneWayTrip", forwardTrip);
 		
-		
-		OneWayList returnResult = trainService.searchOneWay(search.getReturnSearch());
-		model.addAttribute("returnWayList", returnResult);
-		
-		return "selectReturn";
+		if (search.isRoundTrip()) {
+			OneWayList returnResult = trainService.searchOneWay(search.getReturnSearch());
+			model.addAttribute("returnWayList", returnResult);
+			return "selectReturn";
+		}else {
+			//fill in model
+			int numOfSeats = search.getNumberOfSeats();
+			model.addAttribute("numOfSeats", numOfSeats);
+			List<String> passenger = new ArrayList<>();
+			for (int i = 0; i < numOfSeats; ++i) {
+				passenger.add("");
+			}
+			model.addAttribute("passenger", passenger);
+			
+			double price= forwardTrip.getTicketPrice();
+			model.addAttribute("price", price);
+			model.addAttribute("totalPrice", price + 1);
+			model.addAttribute("departureDate", search.getDepartureDate());
+			model.addAttribute("departureTrip", forwardTrip.getConnections());
+			status.setComplete();
+			return "purchase";
+		}
 	}
 	
 	@PostMapping("/purchase")
 	public String select(@ModelAttribute("oneWayTrip") OneWayTrip forwardTrip, 
 						@ModelAttribute("searchContent") SearchContent search,
 						@ModelAttribute("returnWayList") OneWayList returnWayList,
-						@RequestParam("Select") String selectTrip, Model model) { 
+						@RequestParam("Select") String selectTrip, Model model,
+						SessionStatus status) { 
 		
 		//obtain return trip object
 		int tripIndexSelected = Integer.valueOf(selectTrip.substring(4, 5))-1;
@@ -104,6 +123,7 @@ public class UserController {
 			model.addAttribute("returnDate", returnDate);
 			model.addAttribute("returnTrip", returnTrip.getConnections());
 		}
+		status.setComplete();
 		return "purchase";
 	}
 	
