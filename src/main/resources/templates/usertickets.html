@@ -57,7 +57,7 @@
         <td th:text="${ticket.departStation}"></td>
         <td th:text="${ticket.arrivalStation}"></td>
         <td th:text="${ticket.passenger}"></td>
-        <td th:onclick="'javascript:openTicketModal(\'' + ${ticket.ticketId} + '\');'">Ticket Details</td>
+        <td th:onclick="'javascript:openTicketModal(\'' + ${ticket} + '\');'">Ticket Details</td>
         <td><a th:href="@{'/ticketCancel/' + {ticket.ticketId}}">Cancel Ticket</a></td>
       </tr>
     </tbody>
@@ -84,13 +84,24 @@
 
 
 <script>
-  function openTicketModal(id) {
-    $.ajax({
+  function openTicketModal(ticket) {
+    /*$.ajax({
       url: "/ticketDetails/" + id,
       success: function(data) {
         $("#ticketModal").modal("show");
       }
-    })
+    })*/
+    console.log(ticket);
+    var $table = $("<table></table>");
+    for(var key in ticket) {
+    		var $line = $("<tr></tr>");
+    		$line.append( $("<td></td>").html(key) );
+    		$line.append( $("<td></td>").html(ticket[key]) );
+    		$table.append($line);
+    }
+    
+    $(".modal-body").html($table);
+    $("#ticketModal").modal("show");
   }
 </script>
 </body>
