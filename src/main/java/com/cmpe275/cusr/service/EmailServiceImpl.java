@@ -19,36 +19,48 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
-	//Send text email.
-    /*public void sendMail(String toEmail, String subject, String text) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(toEmail);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(text);
-        javaMailSender.send(mailMessage);
-    }*/
+
+	// Send text email.
+	/*
+	 * public void sendMail(String toEmail, String subject, String text) {
+	 * SimpleMailMessage mailMessage = new SimpleMailMessage();
+	 * mailMessage.setTo(toEmail); mailMessage.setSubject(subject);
+	 * mailMessage.setText(text); javaMailSender.send(mailMessage); }
+	 */
 
 	// Send HTML email.
-	public void sendMail(String toEmail, String subject, String message) throws Exception {
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-		String htmlMsg = message;
-		mimeMessage.setContent(htmlMsg, "text/html");
-		helper.setTo(toEmail);
-		helper.setSubject(subject);
-		javaMailSender.send(mimeMessage);
+	@Override
+	public void sendMail(String toEmail, String subject, String message) {
+		try {
+			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+			String htmlMsg = message;
+			mimeMessage.setContent(htmlMsg, "text/html");
+			helper.setTo(toEmail);
+			helper.setSubject(subject);
+			javaMailSender.send(mimeMessage);
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
 	}
 
-	public String getURLSource(String url) throws IOException {
-		URL urlObject = new URL(url);
-		URLConnection urlConnection = urlObject.openConnection();
-		urlConnection.setRequestProperty("User-Agent",
-				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-		return toString(urlConnection.getInputStream());
+	@Override
+	public String getURLSource(String url) {
+		try {
+			URL urlObject = new URL(url);
+			URLConnection urlConnection;
+			urlConnection = urlObject.openConnection();
+
+			urlConnection.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+			return toString(urlConnection.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public String toString(InputStream inputStream) throws IOException {
+	private String toString(InputStream inputStream) {
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
 			String inputLine;
 			StringBuilder stringBuilder = new StringBuilder();
@@ -56,6 +68,9 @@ public class EmailServiceImpl implements EmailService {
 				stringBuilder.append(inputLine);
 			}
 			return stringBuilder.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

@@ -1,13 +1,8 @@
 package com.cmpe275.cusr.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public interface EmailService {
 
-	public void sendMail(String toEmail, String subject, String message) throws Exception;
+	public void sendMail(String toEmail, String subject, String message);
 
-	public String getURLSource(String url) throws IOException;
-
-	public String toString(InputStream inputStream) throws IOException;
+	public String getURLSource(String url);
 }
