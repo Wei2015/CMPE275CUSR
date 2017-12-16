@@ -62,7 +62,7 @@
 					<tr th:each="dt, stat : ${departureTrip}">
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].trainId|"
-							th:value="${dt.getTrainId()}" readonly="readonly" /></td>
+							th:value="${dt.getBound()}" readonly="readonly" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureStation|"
 							th:value="${dt.getDepartureStation()}" readonly="readonly" /></td>
@@ -102,7 +102,7 @@
 					<tr th:each="rt, stat : ${returnTrip}">
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].trainId|"
-							th:value="${rt.getTrainId()}" readonly="readonly" /></td>
+							th:value="${rt.getBound()}" readonly="readonly" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureStation|"
 							th:value="${rt.getDepartureStation()}" readonly="readonly" /></td>
