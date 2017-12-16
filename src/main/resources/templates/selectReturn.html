@@ -94,7 +94,7 @@
 						<th th:text="${oneWayTrip.arrivalTime}"/>
 						<td th:text="${oneWayTrip.numberOfSeats}"/>
 						<td th:text="${oneWayTrip.ticketPrice}"/>
-						<td><form th:action="@{/selectReturn}" method ="post">
+						<td><form th:action="@{/purchase}" method ="post">
 							<input type="submit" th:value="Trip + ${iterStat.count}" th:name="Select" />
 						</form></td>
 						</tr>
