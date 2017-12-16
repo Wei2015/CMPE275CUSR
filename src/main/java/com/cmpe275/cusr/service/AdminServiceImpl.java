@@ -51,6 +51,14 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private TicketService ticketService;
 	*/
+	//update train capacity
+	public void updateTrainCapacity(int capacity) {
+		trainRepo.updateCapacity(capacity);
+	}
+	
+	
+	
+	
 	//populate train status information
 	public void populateTrainStatus() {
 		if (!(trainRepo.count()>0))

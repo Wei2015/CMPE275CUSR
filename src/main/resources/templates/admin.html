@@ -43,12 +43,15 @@
 
 	<form action="populateTable" method="post">
 		<input type="submit" name="trainScheduleTable" value="train schedule" />
-	
+		<br></br><br></br>
 		<input type="submit" name ="trainStatusTable" value="train status" />
+		<br></br><br></br>
+		Train Capacity: <input type = "text" name="capacity" th:value = "*{capacity}"/>
+		<input type="submit" name = "updateCapacity" value="update train capacity"/>
 	</form>
 
 
-	<h2 th:text="${message}"></h2> 
+	<h3 th:text="${message}"></h3> 
 </div>
 
 </body>
