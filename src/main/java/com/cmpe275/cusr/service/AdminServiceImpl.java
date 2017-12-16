@@ -212,7 +212,7 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional
 	public void trainCancel (String trainName, String date) {
 		//Check time.
-		Train train = trainRepo.findByBound(trainName);
+		/*Train train = trainRepo.findByBound(trainName);
 		String startTime = train.getDepartureTime();
 		if (ticketService.timeCheck (date, startTime, 180)) {
 			return;
@@ -317,6 +317,6 @@ public class AdminServiceImpl implements AdminService {
 		  emailService.sendMail(user.getEmail(),"CUSR Train Cancellation", "The Train has been cancelled");
 		 //Re-book.
 		  ticketService.purchase(user, booking);
-		}
+		}*/
 	}
 }

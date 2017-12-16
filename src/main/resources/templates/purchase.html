@@ -25,27 +25,21 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Booking</a></li>
-					<li><a th:href="@{/adminlogin}">Admin</a></li>
-					<li><a href="#">Page 3</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/usertickets}"> <span
-							th:text="'Hello, ' + ${email} + '!'" />
-					</a></li>
+					<li><a th:href="@{/tickets}">Dashboard</a></li>
+       				<li><a th:href="@{/admin}">Admin</a></li>
+       				<li><a th:href="@{/search}">Search</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<form action="#" th:action="@{/purchase}" th:object="${booking}" method="post">
+	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}" method="post">
 		<div class="container">
 			<h2>Selected Ticket Information:</h2>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
 					<th>Departure Date</th>
-					<td th:text="${departureDate}" />
+					<td><input type="text" th:name="|departureDate|" th:value="${departureDate}" readonly="readonly"/></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -61,7 +55,7 @@
 				<tbody>
 					<tr th:each="dt, stat : ${departureTrip}">
 						<td><input type="text"
-							th:name="|departureTrip[${stat.index}].trainId|"
+							th:name="|departureTrip[${stat.index}].bound|"
 							th:value="${dt.getBound()}" readonly="readonly" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureStation|"
@@ -85,7 +79,7 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Return Date</th>
-					<td th:text="${returnDate}" />
+					<td><input type="text" th:name="|returnDate|" th:value="${returnDate}" readonly="readonly"/></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -101,7 +95,7 @@
 				<tbody>
 					<tr th:each="rt, stat : ${returnTrip}">
 						<td><input type="text"
-							th:name="|returnTrip[${stat.index}].trainId|"
+							th:name="|returnTrip[${stat.index}].bound|"
 							th:value="${rt.getBound()}" readonly="readonly" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureStation|"
@@ -125,11 +119,11 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Ticket Price</th>
-					<td th:text="'$' + ${price}" />
+					<td><input type="text" th:name="|price|" th:value="${price}" readonly="readonly"/></td>
 				</tr>
 				<tr>
 					<th>Transaction Fee</th>
-					<td> $1.00 </td>
+					<td> $1.0 </td>
 				</tr>
 				<tr>
 					<th>Total Price</th>
@@ -143,7 +137,7 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Number of Seats</th>
-					<td th:text="${numOfSeats}" />
+					<td><input type="text" th:name="|numOfSeats|" th:value="${numOfSeats}" readonly="readonly"/></td>
 				</tr>
 			</table>
 			<br></br>

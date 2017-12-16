@@ -25,13 +25,12 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Booking</a></li>
-					<li><a th:href="@{/adminlogin}">Admin</a></li>
-					<li><a href="#">Page 3</a></li>
+					<li><a th:href="@{/tickets}">Dashboard</a></li>
+       				<li><a th:href="@{/admin}">Admin</a></li>
+       				<li><a th:href="@{/search}">Search</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/usertickets}"> <span
+					<li><a th:href="@{/tickets}"> <span
 							th:text="'Hello, ' + ${email} + '!'" />
 					</a></li>
 				</ul>
@@ -39,7 +38,7 @@
 		</div>
 	</nav>
 
-	<div th:if="${purchaseRes} == 'success'" class="container">
+	<!--  <div th:if="${purchaseRes} == 'success'" class="container">-->
 		<div class="container">
 			<h1>Thanks for your booking!</h1>
 			<br></br>
@@ -94,7 +93,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="dt: ${departureTrip}">
-						<td th:text="${dt.trainID}" />
+						<td th:text="${dt.bound}" />
 						<td th:text="${dt.departureStation}" />
 						<td th:text="${dt.departureTime}" />
 						<td th:text="${dt.arrivalStation}" />
@@ -113,7 +112,7 @@
 					<td th:text="${returnDate}" />
 				</tr>
 			</table>
-			<table class="table table-striped">
+			<table  class="table table-striped">
 				<thead>
 					<tr>
 						<th>Train</th>
@@ -125,7 +124,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="rt: ${returnTrip}">
-						<td th:text="${rt.trainID}" />
+						<td th:text="${rt.bound}" />
 						<td th:text="${rt.departureStation}" />
 						<td th:text="${rt.departureTime}" />
 						<td th:text="${rt.arrivalStation}" />
@@ -145,12 +144,11 @@
 			</table>
 		</div>
 		<br></br>
-	</div>
-
-	<div th:unless="${purchaseRes} == 'fail'" class="container">
+	<!--</div>-->
+	<!--  <div th:unless="${purchaseRes} == 'fail'" class="container">
 		<h1>Sorry, we could not proceed with your booking. Please try
 			your search again!</h1>
 		<br></br>
-	</div>
+	</div>-->
 </body>
 </html>
