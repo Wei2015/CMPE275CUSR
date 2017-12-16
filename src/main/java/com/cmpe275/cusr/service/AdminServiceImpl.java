@@ -208,7 +208,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 	
 	}
-	
+	/*
 	@Transactional
 	public void trainCancel (String trainName, String date) {
 		//Check time.
@@ -319,4 +319,5 @@ public class AdminServiceImpl implements AdminService {
 		  ticketService.purchase(user, booking);
 		}
 	}
+	*/
 }

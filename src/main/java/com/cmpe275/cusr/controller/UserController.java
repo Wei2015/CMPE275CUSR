@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.cmpe275.cusr.model.OneWayList;
 import com.cmpe275.cusr.model.OneWayTrip;
@@ -77,7 +78,8 @@ public class UserController {
 	public String select(@ModelAttribute("oneWayTrip") OneWayTrip forwardTrip, 
 						@ModelAttribute("searchContent") SearchContent search,
 						@ModelAttribute("returnWayList") OneWayList returnWayList,
-						@RequestParam("Select") String selectTrip, Model model) { 
+						@RequestParam("Select") String selectTrip, Model model,
+						SessionStatus status) { 
 		
 		//obtain return trip object
 		int tripIndexSelected = Integer.valueOf(selectTrip.substring(4, 5))-1;
@@ -104,6 +106,7 @@ public class UserController {
 			model.addAttribute("returnDate", returnDate);
 			model.addAttribute("returnTrip", returnTrip.getConnections());
 		}
+		status.setComplete();
 		return "purchase";
 	}
 	
