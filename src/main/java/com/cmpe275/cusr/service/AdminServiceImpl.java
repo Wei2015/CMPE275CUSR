@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TrainStatusRepository trainStatusRepo;
-	
+	/*
 	@Autowired
 	private TicketRepository ticketRepository;
 	
@@ -50,7 +50,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TicketService ticketService;
-	
+	*/
 	//populate train status information
 	public void populateTrainStatus() {
 		if (!(trainRepo.count()>0))

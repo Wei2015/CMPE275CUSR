@@ -62,16 +62,33 @@ public class UserController {
 	@PostMapping("/selectReturn")
 	public String bookingConfirm(@ModelAttribute("oneWayList") OneWayList oneWayList, 
 								@ModelAttribute("searchContent") SearchContent search,
-								@RequestParam("Select") String selectTrip, Model model) {
+								@RequestParam("Select") String selectTrip, SessionStatus status, Model model) {
 		int tripIndexSelected = Integer.valueOf(selectTrip.substring(4, 5))-1;
 		OneWayTrip forwardTrip = oneWayList.getFirstFive().get(tripIndexSelected);
 		model.addAttribute("oneWayTrip", forwardTrip);
 		
-		
-		OneWayList returnResult = trainService.searchOneWay(search.getReturnSearch());
-		model.addAttribute("returnWayList", returnResult);
-		
-		return "selectReturn";
+		if (search.isRoundTrip()) {
+			OneWayList returnResult = trainService.searchOneWay(search.getReturnSearch());
+			model.addAttribute("returnWayList", returnResult);
+			return "selectReturn";
+		}else {
+			//fill in model
+			int numOfSeats = search.getNumberOfSeats();
+			model.addAttribute("numOfSeats", numOfSeats);
+			List<String> passenger = new ArrayList<>();
+			for (int i = 0; i < numOfSeats; ++i) {
+				passenger.add("");
+			}
+			model.addAttribute("passenger", passenger);
+			
+			double price= forwardTrip.getTicketPrice();
+			model.addAttribute("price", price);
+			model.addAttribute("totalPrice", price + 1);
+			model.addAttribute("departureDate", search.getDepartureDate());
+			model.addAttribute("departureTrip", forwardTrip.getConnections());
+			status.setComplete();
+			return "purchase";
+		}
 	}
 	
 	@PostMapping("/purchase")
