@@ -58,7 +58,7 @@
         <td th:text="${ticket.arrivalStation}"></td>
         <td th:text="${ticket.passenger}"></td>
         <td th:onclick="'javascript:openTicketModal(\'' + ${ticket.ticketId} + '\');'">Ticket Details</td>
-        <td><a th:href="@{/ticketCancel}">Cancel Ticket</a></td>
+        <td><a th:href="@{'/ticketCancel/' + {ticket.ticketId}}">Cancel Ticket</a></td>
       </tr>
     </tbody>
   </table>
