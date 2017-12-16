@@ -292,20 +292,14 @@ public class TicketServiceImpl implements TicketService {
 			if (idx1 < idx2) {
 				for (int k = idx1; k < idx2; ++k) {
 					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) + numOfSeats;
-					if (updatedNumOfSeats > train.getCapacity()) {
-						return false;
-					}
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
 					map.put(s, updatedNumOfSeats);
 					status.setSeatStatus(map);
 				} 
 			} else {
 				for (int k = idx1; k > idx2; --k) {
 					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) + numOfSeats;
-					if (updatedNumOfSeats > train.getCapacity()) {
-						return false;
-					}
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
 					map.put(s, updatedNumOfSeats);
 					status.setSeatStatus(map);
 				}
@@ -462,13 +456,24 @@ public class TicketServiceImpl implements TicketService {
 				s2 = arrivalStation;
 				break;
 			}
+			int idx1 = s1.getIndex();
+			int idx2 = s2.getIndex();
 			Map<Station, Integer> map  = status.getSeatStatus();
-			for (int k = s1.getIndex(); k < s2.getIndex(); ++k) {
-				Station s = Station.values()[k];
-				int updatedNumOfSeats = map.get(s) + numOfSeats;
-				map.put(s, updatedNumOfSeats);
-				status.setSeatStatus(map);
-			} 
+			if (idx1 < idx2) {
+				for (int k = idx1; k < idx2; ++k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				} 
+			} else {
+				for (int k = idx1; k > idx2; --k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				}
+			}
 			updatedTrainStatus.add(status);
 		}
 		for (Ticket ticket : returnTickets) {
@@ -499,13 +504,24 @@ public class TicketServiceImpl implements TicketService {
 				s2 = departStation;
 				break;
 			}
+			int idx1 = s1.getIndex();
+			int idx2 = s2.getIndex();
 			Map<Station, Integer> map  = status.getSeatStatus();
-			for (int k = s1.getIndex(); k < s2.getIndex(); ++k) {
-				Station s = Station.values()[k];
-				int updatedNumOfSeats = map.get(s) + numOfSeats;
-				map.put(s, updatedNumOfSeats);
-				status.setSeatStatus(map);
-			} 
+			if (idx1 < idx2) {
+				for (int k = idx1; k < idx2; ++k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				} 
+			} else {
+				for (int k = idx1; k > idx2; --k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				}
+			}
 			updatedTrainStatus.add(status);
 		}
 		updatedTrainStatus.forEach(t -> trainStatusRepository.save(t));
