@@ -368,7 +368,7 @@ public class AdminServiceImpl implements AdminService {
 		  Booking booking = searchTicket(ticket);
 		  //Email.
 		  User user = ticket.getUser();
-		  emailService.sendMail(user.getEmail(),"CUSR Train Cancellation", "The Train has been cancelled");
+		  emailService.sendTextMail(user.getEmail(),"CUSR Train Cancellation", "The Train has been cancelled");
 		 //Re-book.
 		  ticketService.purchase(user, booking);
 		}*/
