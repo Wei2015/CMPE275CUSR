@@ -77,8 +77,8 @@ public class TicketController {
 		}
 	}
 
-	@PostMapping("/ticketCancel")
-	public String cancel(Model model, @ModelAttribute long ticketId) {
+	@GetMapping("/ticketCancel/{id}")
+	public String cancel(@PathVariable("id") long ticketId, Model model) {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
 		if (ticketService.cancel(ticketId)) {
@@ -97,11 +97,5 @@ public class TicketController {
 		long userId = userService.findUser().getUserId();
 		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
 		return "usertickets";
-	}
-	
-	@GetMapping("/ticketDetails/{id}")
-	public String ticketDetails(@PathVariable("id") long id, Model model) {
-		model.addAttribute("ticket", ticketRepository.findOne(id));
-		return "usertickets :: modalContents";
 	}
 }

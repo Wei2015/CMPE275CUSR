@@ -17,3 +17,7 @@ h2 {
 	min-height: 200px;
 	border-right: 1px solid #ddd;
 }
+
+.clickable {
+	cursor: pointer;
+}

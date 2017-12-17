@@ -57,8 +57,16 @@
         <td th:text="${ticket.departStation}"></td>
         <td th:text="${ticket.arrivalStation}"></td>
         <td th:text="${ticket.passenger}"></td>
-        <td th:onclick="'javascript:openTicketModal(\'' + ${ticket} + '\');'">Ticket Details</td>
-        <td><a th:href="@{'/ticketCancel/' + {ticket.ticketId}}">Cancel Ticket</a></td>
+        <script type="text/javascript" th:inline="javascript">
+        		var varname = 'ticketjson' + /*[[${ticket.ticketId}]]*/;
+        		window[varname] = {
+        			ticketId: /*[[${ticket.ticketId}]]*/,
+        			departDate: /*[[${ticket.departDate}]]*/
+        		};
+        		console.log(window[varname]);
+        </script>
+        <td class="clickable" th:onclick="'javascript:openTicketModal(window[\'ticketjson' + ${ticket.ticketId} + '\']);'">Ticket Details</td>
+        <td><a th:href="@{'/ticketCancel/' + ${ticket.ticketId}}">Cancel Ticket</a></td>
       </tr>
     </tbody>
   </table>
@@ -72,8 +80,6 @@
         <h4 class="modal-title">Ticket Details</h4>
       </div>
       <div class="modal-body">
-        <p>Details...</p>
-        <!--<p th:text="${ticket.departDate}"></p>-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -85,20 +91,17 @@
 
 <script>
   function openTicketModal(ticket) {
-    /*$.ajax({
-      url: "/ticketDetails/" + id,
-      success: function(data) {
-        $("#ticketModal").modal("show");
-      }
-    })*/
     console.log(ticket);
-    var $table = $("<table></table>");
+    var $tbody = $("<tbody></tbody>");
     for(var key in ticket) {
     		var $line = $("<tr></tr>");
     		$line.append( $("<td></td>").html(key) );
     		$line.append( $("<td></td>").html(ticket[key]) );
-    		$table.append($line);
+    		$tbody.append($line);
     }
+    var $table = $("<table></table>");
+    $table.addClass("table table-striped");
+    $table.append($tbody);
     
     $(".modal-body").html($table);
     $("#ticketModal").modal("show");
