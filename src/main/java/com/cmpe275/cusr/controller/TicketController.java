@@ -84,7 +84,7 @@ public class TicketController {
 		if (ticketService.cancel(ticketId)) {
 			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelSuccess");
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Confirmation", content);
-			return "ticketCancel_sucess";
+			return "ticketCancel_success";
 		} else {
 			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelFail");
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Fail", content);
