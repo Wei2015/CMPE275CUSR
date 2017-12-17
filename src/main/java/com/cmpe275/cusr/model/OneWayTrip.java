@@ -20,7 +20,7 @@ public class OneWayTrip implements Comparable<OneWayTrip>{
 		super();
 		this.departureDate = departureDate;
 		this.numberOfSeats = numberOfSeats;
-		this.ticketPrice =0.0;
+		this.ticketPrice = 0.0;
 		this.connections = new ArrayList<Segment>();
 	}
 	public String getDepartureDate() {
@@ -44,6 +44,7 @@ public class OneWayTrip implements Comparable<OneWayTrip>{
 	}
 	public double getTicketPrice() {
 		//calculate ticketPrice based on segment info
+		ticketPrice = 0.0;
 		for (Segment s:connections) {
 			ticketPrice += s.getPrice();
 		}
