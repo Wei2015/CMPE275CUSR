@@ -1,18 +1,18 @@
 package com.cmpe275.cusr.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import com.cmpe275.cusr.model.Booking;
+import com.cmpe275.cusr.model.Ticket;
+import com.cmpe275.cusr.repository.TicketRepository;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -20,57 +20,74 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	// Send text email.
-	/*
-	 * public void sendMail(String toEmail, String subject, String text) {
-	 * SimpleMailMessage mailMessage = new SimpleMailMessage();
-	 * mailMessage.setTo(toEmail); mailMessage.setSubject(subject);
-	 * mailMessage.setText(text); javaMailSender.send(mailMessage); }
-	 */
+	@Autowired
+	private TemplateEngine templateEngine;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
 
+	// Send text email.
+	@Override
+	public void sendTextMail(String toEmail, String subject, String text) {
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(toEmail);
+		mailMessage.setSubject(subject);
+		mailMessage.setText(text);
+		javaMailSender.send(mailMessage);
+	}
+
+	
+	@Override
+	public String mailBuilder(Booking booking, String template) {
+		Context context = new Context();
+		context.setVariable("numOfSeats", booking.getNumOfSeats());
+		context.setVariable("passenger", booking.getPassenger());
+		context.setVariable("totalPrice", booking.getPrice() + 1);
+		context.setVariable("departureDate", booking.getDepartureDate());
+		context.setVariable("departureTrip", booking.getDepartureTrip());
+		String returnDate = booking.getReturnDate();
+		String isRound = (returnDate != null && !returnDate.isEmpty()) ? "Y" : "N";
+		context.setVariable("round", isRound);
+		if (isRound.equals("Y")) {
+			context.setVariable("returnDate", returnDate);
+			context.setVariable("returnTrip", booking.getReturnTrip());
+		}
+		return templateEngine.process(template, context);
+	}
+	
+	@Override
+	public String ticketMailBuilder(long ticketId, String template) {
+		Ticket ticket = ticketRepository.findOne(ticketId);
+		Context context = new Context();
+		context.setVariable("numOfSeats", ticket.getNumOfSeats());
+		context.setVariable("passenger", ticket.getPassenger());
+		context.setVariable("totoalPrice", ticket.getPrice());
+		context.setVariable("departureDate", ticket.getDepartDate());
+		context.setVariable("departureTime", ticket.getDepartSegment1DepartTime());
+		context.setVariable("departureStation", ticket.getDepartStation());
+		context.setVariable("arrivalStation", ticket.getArrivalStation());
+		String returnDate = ticket.getReturnDate();
+		String isRound = (returnDate != null && !returnDate.isEmpty()) ? "Y" : "N";
+		context.setVariable("round", isRound);
+		if (isRound.equals("Y")) {
+			context.setVariable("returnDate", returnDate);
+			context.setVariable("returnTime", ticket.getReturnSegment1DepartTime());
+		}
+		return templateEngine.process(template, context);
+	}
+	
 	// Send HTML email.
 	@Override
-	public void sendMail(String toEmail, String subject, String message) {
+	public void sendMail(String toEmail, String subject, String content) {
 		try {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-			String htmlMsg = message;
-			mimeMessage.setContent(htmlMsg, "text/html");
+			helper.setText(content, true);
 			helper.setTo(toEmail);
 			helper.setSubject(subject);
 			javaMailSender.send(mimeMessage);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
-		}
-	}
-
-	@Override
-	public String getURLSource(String url) {
-		try {
-			URL urlObject = new URL(url);
-			URLConnection urlConnection;
-			urlConnection = urlObject.openConnection();
-
-			urlConnection.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-			return toString(urlConnection.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	private String toString(InputStream inputStream) {
-		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
-			String inputLine;
-			StringBuilder stringBuilder = new StringBuilder();
-			while ((inputLine = bufferedReader.readLine()) != null) {
-				stringBuilder.append(inputLine);
-			}
-			return stringBuilder.toString();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
 		}
 	}
 }

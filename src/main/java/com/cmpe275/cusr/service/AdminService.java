@@ -8,5 +8,10 @@ public interface AdminService {
 	
 	public void populateTrainStatus();
 	
-	//public void trainCancel (String trainName, String date);
+	public void trainCancel (String trainName, String date);
+	
+	public void updateTrainCapacity(int capacity);
+	
+	public void reset();
+	
 }

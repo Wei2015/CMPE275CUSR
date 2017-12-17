@@ -41,16 +41,27 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private TrainStatusRepository trainStatusRepo;
-	/*
+
 	@Autowired
 	private TicketRepository ticketRepository;
-	
+	/*
 	@Autowired
 	private EmailService emailService;
 	
 	@Autowired
 	private TicketService ticketService;
 	*/
+	//update train capacity
+	public void updateTrainCapacity(int capacity) {
+		trainRepo.updateCapacity(capacity);
+	}
+	
+	//reset ticket table and status table;
+	public void reset() {
+		trainStatusRepo.deleteAll();
+		ticketRepository.deleteAll();
+	}
+	
 	//populate train status information
 	public void populateTrainStatus() {
 		if (!(trainRepo.count()>0))
@@ -229,11 +240,11 @@ public class AdminServiceImpl implements AdminService {
 		if (arrivalTime.startsWith("00"))
 			oneSchedule.setArrivalTime(arrivalTime.replaceFirst("00", "24"));
 	}
-	/*
+	
 	@Transactional
 	public void trainCancel (String trainName, String date) {
 		//Check time.
-		Train train = trainRepo.findByBound(trainName);
+		/*Train train = trainRepo.findByBound(trainName);
 		String startTime = train.getDepartureTime();
 		if (ticketService.timeCheck (date, startTime, 180)) {
 			return;
@@ -280,13 +291,24 @@ public class AdminServiceImpl implements AdminService {
 				s2 = arrivalStation;
 				break;
 			}
+			int idx1 = s1.getIndex();
+			int idx2 = s2.getIndex();
 			Map<Station, Integer> map  = status.getSeatStatus();
-			for (int k = s1.getIndex(); k < s2.getIndex(); ++k) {
-				Station s = Station.values()[k];
-				int updatedNumOfSeats = map.get(s) + numOfSeats;
-				map.put(s, updatedNumOfSeats);
-				status.setSeatStatus(map);
-			} 
+			if (idx1 < idx2) {
+				for (int k = idx1; k < idx2; ++k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				} 
+			} else {
+				for (int k = idx1; k > idx2; --k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				}
+			}
 			updatedTrainStatus.add(status);
 		}
 		for (Ticket ticket : returnTickets) {
@@ -317,13 +339,24 @@ public class AdminServiceImpl implements AdminService {
 				s2 = departStation;
 				break;
 			}
+			int idx1 = s1.getIndex();
+			int idx2 = s2.getIndex();
 			Map<Station, Integer> map  = status.getSeatStatus();
-			for (int k = s1.getIndex(); k < s2.getIndex(); ++k) {
-				Station s = Station.values()[k];
-				int updatedNumOfSeats = map.get(s) + numOfSeats;
-				map.put(s, updatedNumOfSeats);
-				status.setSeatStatus(map);
-			} 
+			if (idx1 < idx2) {
+				for (int k = idx1; k < idx2; ++k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				} 
+			} else {
+				for (int k = idx1; k > idx2; --k) {
+					Station s = Station.values()[k];
+					int updatedNumOfSeats = map.get(s) - numOfSeats;
+					map.put(s, updatedNumOfSeats);
+					status.setSeatStatus(map);
+				}
+			}
 			updatedTrainStatus.add(status);
 		}
 		updatedTrainStatus.forEach(t -> trainStatusRepo.save(t));
@@ -335,10 +368,10 @@ public class AdminServiceImpl implements AdminService {
 		  Booking booking = searchTicket(ticket);
 		  //Email.
 		  User user = ticket.getUser();
-		  emailService.sendMail(user.getEmail(),"CUSR Train Cancellation", "The Train has been cancelled");
+		  emailService.sendTextMail(user.getEmail(),"CUSR Train Cancellation", "The Train has been cancelled");
 		 //Re-book.
 		  ticketService.purchase(user, booking);
-		}
+		}*/
 	}
-	*/
+	
 }

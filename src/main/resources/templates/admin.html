@@ -25,10 +25,9 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="@{/home}">Home</a></li>
-        <li ><a href="#">Booking</a></li>
-        <li class="active"><a th:href="@{/admin}">Admin</a></li>
-        <li><a href="#">Page 3</a></li>
+        <li><a th:href="@{/tickets}">Dashboard</a></li>
+       	<li><a th:href="@{/admin}">Admin</a></li>
+       	<li><a th:href="@{/search}">Search</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -42,13 +41,21 @@
 <div class="container">
 
 	<form action="populateTable" method="post">
-		<input type="submit" name="trainScheduleTable" value="train schedule" />
+		<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
+		<br></br><br></br>
+		<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
+		<br></br><br></br>
+		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
+		<input type="submit" name = "updateCapacity" value="UPDATE"/>
+	</form>
 	
-		<input type="submit" name ="trainStatusTable" value="train status" />
+	<br></br><br></br>
+	<form action="reset" method="post">
+	<input type="submit" value="Reset Booking System" />
 	</form>
 
 
-	<h2 th:text="${message}"></h2> 
+	<h3 th:text="${message}"></h3> 
 </div>
 
 </body>

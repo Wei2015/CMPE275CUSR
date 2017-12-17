@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmpe275.cusr.service.AdminService;
 
@@ -35,5 +36,20 @@ public class AdminController {
 		model.addAttribute("message", "sucessfully loaded train status information for next 4 weeks.");
 		return "admin";
 	}
+	
+	@PostMapping(value ="/populateTable", params="updateCapacity")
+	public String updateTrainCapacity(Model model, @RequestParam("capacity") String capacity) {
+		adminService.updateTrainCapacity(Integer.valueOf(capacity));
+		model.addAttribute("message", "sucessfully updated train capacity as " + capacity + ".");
+		return "admin";
+	}
+	
+	@PostMapping(value ="/reset")
+	public String resetSystem(Model model) {
+		adminService.reset();
+		model.addAttribute("message", "sucessfully reset the booking system");
+		return "admin";
+	}
+	
 
 }

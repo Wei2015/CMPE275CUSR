@@ -5,7 +5,8 @@ import com.cmpe275.cusr.model.User;
 
 public interface TicketService {
 	
-	//public boolean purchase(User user, Booking booking);
-	//public boolean cancel(long ticketId);
+	public boolean purchase(User user, Booking booking);
+	public boolean cancel(long ticketId);
+	public boolean timeCheck (String date, String time, int diff); 
 	
 }
