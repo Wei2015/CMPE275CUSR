@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.thymeleaf.context.Context;
 
 import com.cmpe275.cusr.model.Booking;
+import com.cmpe275.cusr.model.Ticket;
 import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.repository.TicketRepository;
 import com.cmpe275.cusr.service.EmailService;
@@ -79,8 +81,22 @@ public class TicketController {
 
 	@GetMapping("/ticketCancel/{id}")
 	public String cancel(@PathVariable("id") long ticketId, Model model) {
+		Ticket ticket = ticketRepository.findOne(ticketId);
+		model.addAttribute("numOfSeats", ticket.getNumOfSeats());
+		model.addAttribute("passenger", ticket.getPassenger());
+		model.addAttribute("totalPrice", ticket.getPrice());
+		model.addAttribute("departureDate", ticket.getDepartDate());
+		model.addAttribute("departureTime", ticket.getDepartSegment1DepartTime());
+		model.addAttribute("departureStation", ticket.getDepartStation());
+		model.addAttribute("arrivalStation", ticket.getArrivalStation());
+		String returnDate = ticket.getReturnDate();
+		String isRound = (returnDate != null && !returnDate.isEmpty()) ? "Y" : "N";
+		model.addAttribute("round", isRound);
+		if (isRound.equals("Y")) {
+			model.addAttribute("returnDate", returnDate);
+			model.addAttribute("returnTime", ticket.getReturnSegment1DepartTime());
+		}
 		User user = userService.findUser();
-		model.addAttribute("email", user.getEmail());
 		if (ticketService.cancel(ticketId)) {
 			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelSuccess");
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Confirmation", content);

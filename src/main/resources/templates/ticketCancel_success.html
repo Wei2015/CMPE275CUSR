@@ -25,14 +25,13 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Booking</a></li>
-					<li><a th:href="@{/adminlogin}">Admin</a></li>
-					<li><a href="#">Page 3</a></li>
+					<li><a th:href="@{/tickets}">Dashboard</a></li>
+       				<li><a th:href="@{/admin}">Admin</a></li>
+       				<li><a th:href="@{/search}">Search</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/usertickets}"> <span
-							th:text="'Hello, ' + ${name} + '!'" />
+					<li><a th:href="@{/tickets}"> <span
+							th:text="'Hello, ' + ${email} + '!'" />
 					</a></li>
 				</ul>
 			</div>
@@ -40,106 +39,86 @@
 	</nav>
 
 	<div class="container">
-		<h1>
-			<span th:if="${numOfTickets} == 'mulptile'"
-				th:text="${name} + ', your tickets have been cancelled!'"/> 
-			<span th:unless="${numOftickets} == 'single'"
-				th:text="${name} + ', your ticket has been cancelled!'"/>
-		</h1>
-		<br></br>
+		<h3>The following booking has been successfully cancelled!</h3>
 	</div>
+	<br></br>
 
 	<div class="container">
-		<h2>Passenger Information</h2>
-		<br></br>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Number of Passengers</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${name}" />
-					<td th:text="${email}" />
-					<td th:text="${numOfSeats}" />
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<div class="container">
-		<h2>Ticket Information</h2>
-		<br></br>
+		<h3>Passenger Information:</h3>
 		<table class="table table-striped">
 			<tr>
-				<td><strong>Departure Date</strong></td>
+				<th>Number of Passengers</th>
+				<td th:text="${numOfSeats}" />
+			</tr>
+		</table>
+		<table th:each="p: ${passenger}" class="table table-striped">
+			<tr>
+				<th>Passenger Name</th>
+				<td th:text="${p}" />
+			</tr>
+		</table>
+	</div>
+	<br></br>
+	
+	<div class="container">
+		<h3>Ticket Information:</h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Departure Trip:</th>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>Departure Date</th>
 				<td th:text="${departureDate}" />
 			</tr>
-		</table>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Train</th>
-					<th>Departure Station</th>
-					<th>Departure Time</th>
-					<th>Arrival Station</th>
-					<th>Arrival Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="dt: ${departureTrip}">
-					<td th:text="${dt.trainID}" />
-					<td th:text="${dt.departureStation}" />
-					<td th:text="${dt.departureTime}" />
-					<td th:text="${dt.arrivalStation}" />
-					<td th:text="${dt.arrivalTime}" />
-				</tr>
-			</tbody>
-
-		</table>
-	</div>
-	<br></br>
-
-	<div th:if="${round} == 'Y'" class="container">
-		<table class="table table-striped">
 			<tr>
-				<td><strong>Return Date</strong></td>
-				<td th:text="${returnDate}" />
+				<th>Departure Time</th>
+				<td th:text="${departureTime}" />
+			</tr>
+			<tr>
+				<th>Departure Station</th>
+				<td th:text="${departureStation}" />
+			</tr>
+			<tr>
+				<th>Arrival Station</th>
+				<td th:text="${arrivalStation}" />
 			</tr>
 		</table>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Train</th>
-					<th>Departure Station</th>
-					<th>Departure Time</th>
-					<th>Arrival Station</th>
-					<th>Arrival Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="rt: ${returnTrip}">
-					<td th:text="${rt.trainID}" />
-					<td th:text="${rt.departureStation}" />
-					<td th:text="${rt.departureTime}" />
-					<td th:text="${rt.arrivalStation}" />
-					<td th:text="${rt.arrivalTime}" />
-				</tr>
-			</tbody>
+		<br></br>
+		<table th:if="${round} == 'Y'" class="table table-striped">
+			<tr>
+				<th>Departure Trip:</th>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>Departure Date</th>
+				<td th:text="${returnDate}" />
+			</tr>
+			<tr>
+				<th>Departure Time</th>
+				<td th:text="${returnTime}" />
+			</tr>
+			<tr>
+				<th>Departure Station</th>
+				<td th:text="${arrivalStation}" />
+			</tr>
+			<tr>
+				<th>Arrival Station</th>
+				<td th:text="${departureStation}" />
+			</tr>
 		</table>
 	</div>
 	<br></br>
+
 	<div class="container">
 		<table class="table table-striped">
 			<tr>
-				<td><strong>Price</strong></td>
-				<td th:text="${price}" />
+				<th>Total Price</th>
+				<td th:text="'$' + ${totalPrice}" />
 			</tr>
 		</table>
 	</div>
 	<br></br>
+	
 </body>
 </html>

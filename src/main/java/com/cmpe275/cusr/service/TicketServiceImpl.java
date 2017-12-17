@@ -368,7 +368,7 @@ public class TicketServiceImpl implements TicketService {
 		//Update ticket status.
 		ticket.setCancelled(true);
 		
-		//Store new ticket and train status information into database.
+		//Store ticket information and train status information into database.
 		ticketRepository.save(ticket);
 		updatedTrainStatus.forEach(t -> trainStatusRepository.save(t));
 		return true;

@@ -61,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
 		Context context = new Context();
 		context.setVariable("numOfSeats", ticket.getNumOfSeats());
 		context.setVariable("passenger", ticket.getPassenger());
-		context.setVariable("totoalPrice", ticket.getPrice());
+		context.setVariable("totalPrice", ticket.getPrice());
 		context.setVariable("departureDate", ticket.getDepartDate());
 		context.setVariable("departureTime", ticket.getDepartSegment1DepartTime());
 		context.setVariable("departureStation", ticket.getDepartStation());
