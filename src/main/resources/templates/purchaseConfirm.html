@@ -38,14 +38,21 @@
 		</div>
 	</nav>
 
-	<!--  <div th:if="${purchaseRes} == 'success'" class="container">-->
-		<div class="container">
+	<div  class="container">
+		<div  class="container">
 			<h1>Thanks for your booking!</h1>
 			<br></br>
 		</div>
-
+		
+		<!--  <span th:if="${purchaseRes} == 'success'" th:text="Thanks for your booking!" />
+		<sapn th:unless="${purchaseRes} == 'fail'" th:text="Sorry, we could not proceed with the booking. Please try your search again!" />-->
+		<!-- <div th:unless="${purchaseRes} == 'fail'" class="container">
+			<h1>Sorry, we could not proceed with your booking. Please try your search again!</h1>
+		<br></br>
+		</div>-->
+		
 		<div class="container">
-			<h2>User Information:</h2>
+			<h3>User Information:</h3>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
@@ -56,7 +63,7 @@
 		</div>
 
 		<div class="container">
-			<h2>Passenger Information:</h2>
+			<h3>Passenger Information:</h3>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
@@ -73,11 +80,11 @@
 		</div>
 
 		<div class="container">
-			<h2>Ticket Information:</h2>
+			<h3>Ticket Information:</h3>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
-					<td><strong>Departure Date</strong></td>
+					<th>Departure Date</th>
 					<td th:text="${departureDate}" />
 				</tr>
 			</table>
@@ -144,11 +151,7 @@
 			</table>
 		</div>
 		<br></br>
-	<!--</div>-->
-	<!--  <div th:unless="${purchaseRes} == 'fail'" class="container">
-		<h1>Sorry, we could not proceed with your booking. Please try
-			your search again!</h1>
-		<br></br>
-	</div>-->
+	</div>
+	
 </body>
 </html>

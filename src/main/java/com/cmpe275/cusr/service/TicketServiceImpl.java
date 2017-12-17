@@ -35,9 +35,6 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private TrainStatusRepository trainStatusRepository;
 	
-	@Autowired
-	private EmailService emailService;
-
 	@Transactional
 	public boolean purchase(User user, Booking booking) {
 		Ticket ticket = new Ticket();
@@ -45,7 +42,7 @@ public class TicketServiceImpl implements TicketService {
 		int numOfSeats = booking.getNumOfSeats();
 		ticket.setNumOfSeats(numOfSeats);
 		ticket.setPassenger((ArrayList<String>) booking.getPassenger());
-		double price = booking.getPrice();
+		double price = booking.getPrice() + 1;
 		ticket.setPrice(price);
 		ticket.setUser(user);
 		
@@ -226,11 +223,7 @@ public class TicketServiceImpl implements TicketService {
 		
 		//Store new ticket and train status information into database.
 		ticketRepository.save(ticket);
-		updatedTrainStatus.forEach(t -> trainStatusRepository.save(t));
-		
-		//Email service.
-		//String message = emailService.getURLSource("http://localhost:8080/");
-		//emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Confirmation", message);
+		updatedTrainStatus.forEach(t -> trainStatusRepository.save(t));		
 		return true;
 	}
 	
@@ -378,11 +371,6 @@ public class TicketServiceImpl implements TicketService {
 		//Store new ticket and train status information into database.
 		ticketRepository.save(ticket);
 		updatedTrainStatus.forEach(t -> trainStatusRepository.save(t));
-		
-		//Email service.
-		User user = ticket.getUser();
-		//String message = emailService.getURLSource("http://localhost:8080/purchase");
-		//emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Confirmation", message);
 		return true;
 	}
 	
@@ -391,7 +379,7 @@ public class TicketServiceImpl implements TicketService {
 		LocalDate localDate = LocalDate.parse(date, dateFormatter);
 		LocalDate currentDate = LocalDate.now();
 		
-		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalTime localTime = LocalTime.parse(time, timeFormatter);
 		LocalTime currentTime = LocalTime.now();
 		

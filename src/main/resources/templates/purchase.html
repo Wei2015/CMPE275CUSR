@@ -34,12 +34,12 @@
 	</nav>
 	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}" method="post">
 		<div class="container">
-			<h2>Selected Ticket Information:</h2>
+			<h3>Selected Ticket Information:</h3>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
 					<th>Departure Date</th>
-					<td><input type="text" th:name="|departureDate|" th:value="${departureDate}" readonly="readonly"/></td>
+					<td><input type="text" th:name="|departureDate|" th:value="${departureDate}" readonly="readonly" style="border: none"/></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -56,19 +56,19 @@
 					<tr th:each="dt, stat : ${departureTrip}">
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].bound|"
-							th:value="${dt.getBound()}" readonly="readonly" /></td>
+							th:value="${dt.getBound()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureStation|"
-							th:value="${dt.getDepartureStation()}" readonly="readonly" /></td>
+							th:value="${dt.getDepartureStation()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureTime|"
-							th:value="${dt.getDepartureTime()}" readonly="readonly" /></td>
+							th:value="${dt.getDepartureTime()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].arrivalStation|"
-							th:value="${dt.getArrivalStation()}" readonly="readonly" /></td>
+							th:value="${dt.getArrivalStation()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].arrivalTime|"
-							th:value="${dt.getArrivalTime()}" readonly="readonly" /></td>
+							th:value="${dt.getArrivalTime()}" readonly="readonly" style="border: none"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -79,7 +79,7 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Return Date</th>
-					<td><input type="text" th:name="|returnDate|" th:value="${returnDate}" readonly="readonly"/></td>
+					<td><input type="text" th:name="|returnDate|" th:value="${returnDate}" readonly="readonly" style="border: none"/></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -96,19 +96,19 @@
 					<tr th:each="rt, stat : ${returnTrip}">
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].bound|"
-							th:value="${rt.getBound()}" readonly="readonly" /></td>
+							th:value="${rt.getBound()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureStation|"
-							th:value="${rt.getDepartureStation()}" readonly="readonly" /></td>
+							th:value="${rt.getDepartureStation()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureTime|"
-							th:value="${rt.getDepartureTime()}" readonly="readonly" /></td>
+							th:value="${rt.getDepartureTime()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].arrivalStation|"
-							th:value="${rt.getArrivalStation()}" readonly="readonly" /></td>
+							th:value="${rt.getArrivalStation()}" readonly="readonly" style="border: none"/></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].arrivalTime|"
-							th:value="${rt.getArrivalTime()}" readonly="readonly" /></td>
+							th:value="${rt.getArrivalTime()}" readonly="readonly" style="border: none"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -119,7 +119,7 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Ticket Price</th>
-					<td><input type="text" th:name="|price|" th:value="${price}" readonly="readonly"/></td>
+					<td>$<input type="text" th:name="|price|" th:value="${price}" readonly="readonly" style="border: none"/></td>
 				</tr>
 				<tr>
 					<th>Transaction Fee</th>
@@ -137,11 +137,10 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Number of Seats</th>
-					<td><input type="text" th:name="|numOfSeats|" th:value="${numOfSeats}" readonly="readonly"/></td>
+					<td><input type="text" th:name="|numOfSeats|" th:value="${numOfSeats}" readonly="readonly" style="border: none"/></td>
 				</tr>
 			</table>
-			<br></br>
-			<h2>Please Input Passenger Name:</h2>
+			<h3>Please Input Passenger Name:</h3>
 			<br></br>
 		</div>
 		

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.cmpe275.cusr.model.Booking;
 import com.cmpe275.cusr.model.User;
 import com.cmpe275.cusr.repository.TicketRepository;
+import com.cmpe275.cusr.service.EmailService;
 import com.cmpe275.cusr.service.TicketService;
 import com.cmpe275.cusr.service.UserService;
 
@@ -18,13 +19,16 @@ import com.cmpe275.cusr.service.UserService;
 public class TicketController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	TicketRepository ticketRepository;
+	private TicketRepository ticketRepository;
 	
 	@Autowired
-	TicketService ticketService;
+	private TicketService ticketService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@PostMapping("/purchaseConfirm")
 	public String purchase(Model model, @ModelAttribute Booking booking) {
@@ -46,6 +50,8 @@ public class TicketController {
 				model.addAttribute("returnTrip", booking.getReturnTrip());
 			}
 		}
+		String content = emailService.mailBuilder(booking);
+		emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Confirmation", content);
 		return "purchaseConfirm";*/
 		if (purchaseRes) {
 			model.addAttribute("numOfSeats", booking.getNumOfSeats());
@@ -60,8 +66,13 @@ public class TicketController {
 				model.addAttribute("returnDate", returnDate);
 				model.addAttribute("returnTrip", booking.getReturnTrip());
 			}
+			//Email service.
+			String content = emailService.mailBuilder(booking, "emailTemplateBookSuccess");
+			emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Confirmation", content);
 			return "purchaseConfirm";
 		} else {
+			String content = emailService.mailBuilder(booking, "emailTemplateBookFail");
+			emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Fail", content);
 			return "puchaseFail";
 		}
 	}
@@ -71,8 +82,12 @@ public class TicketController {
 		User user = userService.findUser();
 		model.addAttribute("email", user.getEmail());
 		if (ticketService.cancel(ticketId)) {
+			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelSuccess");
+			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Confirmation", content);
 			return "ticketCancel_sucess";
 		} else {
+			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelFail");
+			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Fail", content);
 			return "ticketCancel_fail";
 		}
 	}
