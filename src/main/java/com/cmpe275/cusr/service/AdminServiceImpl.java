@@ -51,6 +51,12 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private TicketService ticketService;
 	*/
+	//show train capacity
+	public List<Train> showTrainCapacity() {
+		return trainRepo.findAll();
+	}
+	
+	
 	//update train capacity
 	public void updateTrainCapacity(int capacity) {
 		trainRepo.updateCapacity(capacity);

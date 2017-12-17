@@ -1,17 +1,25 @@
 package com.cmpe275.cusr.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.cmpe275.cusr.model.AllTrainContent;
+import com.cmpe275.cusr.model.OneWayList;
+import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.service.AdminService;
 
 
 @Controller
+@SessionAttributes(value={"trainContent"})
 public class AdminController {
 	@Autowired 
 	AdminService adminService;
@@ -19,6 +27,7 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String populateTrainInfo(Model model) {
 		model.addAttribute("message1", "Please populate train schedule table.");
+		model.addAttribute("trainContent", new AllTrainContent());
 		return "admin";
 		
 	}
@@ -39,15 +48,25 @@ public class AdminController {
 		return "admin";
 	}
 	
+	@PostMapping(value ="/populateTable", params="trainCapacity")
+	public String showTrainCapacity(Model model) {
+		List<Train> allTrains = adminService.showTrainCapacity();
+		model.addAttribute("trainContent", new AllTrainContent(allTrains));
+		return "admin";
+	}
+	
+	
+	
 	@PostMapping(value ="/populateTable", params="updateCapacity")
-	public String updateTrainCapacity(Model model, @RequestParam("capacity") String capacity) {
+	public String updateTrainCapacity(Model model, @RequestParam("capacity") String capacity,
+									@ModelAttribute("trainContent") AllTrainContent trainContent) {
 		adminService.updateTrainCapacity(Integer.valueOf(capacity));
-		model.addAttribute("message", "sucessfully updated train capacity as " + capacity + ".");
+		trainContent.setTrains(adminService.showTrainCapacity());
 		return "admin";
 	}
 	
 	@PostMapping(value ="/reset")
-	public String resetSystem(Model model) {
+	public String resetSystem(@ModelAttribute("trainContent") AllTrainContent trainContent, Model model) {
 		adminService.reset();
 		model.addAttribute("message", "sucessfully reset the booking system");
 		return "admin";

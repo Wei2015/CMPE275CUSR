@@ -55,14 +55,17 @@
 			<thead>
 				<tr>
 					<th>Train ID</th>
-					<th>Capacity</th>
-					<th>Departure Station</th>
-					<th>Destination Station</th>
 					<th>Train Type</th>
-					<th>Round or One Way Trip</th>
-					<th>Number of Passenger</th>
+					<th>Capacity</th>
 				</tr>
 			</thead>
+			<tbody>
+				<tr th:each="train:*{trains}" >
+					<td th:text="${train.bound}" />
+					<td th:text="${train.type}" />
+					<th th:text="${train.capacity}" />
+				</tr>
+			</tbody>
 		</table>
 		
 		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
