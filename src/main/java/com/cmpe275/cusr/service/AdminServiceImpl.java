@@ -66,6 +66,10 @@ public class AdminServiceImpl implements AdminService {
 	public void reset() {
 		scheduleRepo.deleteAllInBatch();
 		ticketRepository.deleteAllInBatch();
+		List<TrainStatus> statusList = trainStatusRepo.findAll();
+		for (TrainStatus t : statusList) {
+			t.setSeatStatus(null);
+		}
 		trainStatusRepo.deleteAllInBatch();
 		trainRepo.deleteAllInBatch();
 	}

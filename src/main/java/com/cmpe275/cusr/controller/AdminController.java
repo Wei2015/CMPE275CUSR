@@ -78,9 +78,9 @@ public class AdminController {
 	}
 	
 	@PostMapping(value ="/reset")
-	public String resetSystem(Model model, SessionStatus status) {
-		status.setComplete();
+	public String resetSystem(Model model, @ModelAttribute("trainContent") AllTrainContent trainContent) {
 		adminService.reset();
+		trainContent.setTrains(adminService.showTrainCapacity());
 		model.addAttribute("message", "sucessfully reset the booking system");
 		return "admin";
 	}
