@@ -1,6 +1,8 @@
 package com.cmpe275.cusr.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.cmpe275.cusr.model.AllTrainContent;
+import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.service.AdminService;
 
 
@@ -23,8 +27,14 @@ public class AdminController {
 	
 	@GetMapping("/admin")
 	public String populateTrainInfo(Model model) {
-		model.addAttribute("message1", "Please populate train schedule table.");
-		model.addAttribute("trainContent", new AllTrainContent());
+		List<Train> trains = adminService.showTrainCapacity();
+		if (trains.size()>0) {
+			model.addAttribute("trainContent", new AllTrainContent(trains));
+			model.addAttribute("message1", "You have already loaded train information");
+		}else {
+			model.addAttribute("trainContent", new AllTrainContent());
+			model.addAttribute("message1", "Please populate train schedule table.");
+		}
 		return "admin";
 		
 	}
@@ -61,8 +71,15 @@ public class AdminController {
 		return "admin";
 	}
 	
+	@PostMapping(value ="/cancelTrain")
+	public String cancelTrain(Model model, @RequestParam("trainBound") String bound, @RequestParam("cancelDate") String date) {
+		System.out.println(bound);
+		return "admin";
+	}
+	
 	@PostMapping(value ="/reset")
-	public String resetSystem(@ModelAttribute("trainContent") AllTrainContent trainContent, Model model) {
+	public String resetSystem(Model model, SessionStatus status) {
+		status.setComplete();
 		adminService.reset();
 		model.addAttribute("message", "sucessfully reset the booking system");
 		return "admin";

@@ -64,8 +64,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	//reset ticket table and status table;
 	public void reset() {
-		trainStatusRepo.deleteAll();
-		ticketRepository.deleteAll();
+		scheduleRepo.deleteAllInBatch();
+		ticketRepository.deleteAllInBatch();
+		trainStatusRepo.deleteAllInBatch();
+		trainRepo.deleteAllInBatch();
 	}
 	
 	//populate train status information

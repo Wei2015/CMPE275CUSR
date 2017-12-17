@@ -40,17 +40,29 @@
   
 <div class="container">
 
+	<div class="row">
+			
+		<form action="reset" method="post">
+			<h4> Reset CUSR booking system:     <input type="submit" value="RESET" /></h4>
+		</form>
+	</div>
+
 	<form action="populateTable" method="post">
-		<h3 th:text="${message1}"></h3> 
-		<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
+		<h2 th:text="${message1}"></h2> 
+		<br></br><br></br>
+		<div class="col-md-3 col-sm-6 form-group">
+			<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
+		</div>
+		
+		<div class="col-md-3 col-sm-6 form-group">
+			<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
+		</div>
+		<h4 th:text="${message2}"></h4> 
+		<h3 th:text="${message}"></h3> 
 		<br></br><br></br>
 		
-		<h3 th:text="${message2}"></h3> 
-		<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
-		<br></br><br></br>
+		<input type="submit" name="trainCapacity" value="Show Train Current Capacity" />
 		
-		<input type="submit" name ="trainCapacity" value="Show Current Train Capacity" />
-		<br></br><br></br>
 		<div th:object="${trainContent}" th:if="${trainContent.trains.size()} >0" class="container">
 		<table class="table table-striped"  >
 			<thead>
@@ -74,13 +86,31 @@
 	</form>
 	
 	<br></br><br></br>
-	
-	<form action="reset" method="post">
-	<input type="submit" value="Reset Booking System" />
-	</form>
+	<h3>Cancel train on selected date: </h3>
+	<div class="row">
+		<form action="cancelTrain">
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Train ID</p>
+						<select class="form-control border-radius" id="sel1" th:value="*{trainBound}">
+							<option th:each="bound : ${trainContent.trainBounds}"
+									th:value="${bound}"
+									th:text="${bound}">
+							</option>
+						</select>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right" th:value="*{cancelDate}" placeholder="YYYY-MM-DD"/>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle"></p>
+					<br></br>
+					<input  type="submit"  value="Cancel Train"/>
+			</div>
+		</form>
+	</div>
 
 
-	<h3 th:text="${message}"></h3> 
 </div>
 
 </body>
