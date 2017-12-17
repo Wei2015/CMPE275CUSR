@@ -50,12 +50,19 @@ public class UserController {
 	@PostMapping("/search")
 	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
 		
-				//test for trainServiceImpl
-				OneWayList dbResult = trainService.searchOneWay(search);
-				model.addAttribute("oneWayList", dbResult);
-				
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
+		
+				//create search result container
+				OneWayList result = new OneWayList();
+				
+				//verify input date and time
+				if (trainService.verfiyDateAndTime(search, result)) {
+					//search for forward trip 
+					trainService.searchOneWay(search, result);
+				}
+				model.addAttribute("oneWayList", result);
+				
 				return "searchResult";
 	}
 	
@@ -68,7 +75,8 @@ public class UserController {
 		model.addAttribute("oneWayTrip", forwardTrip);
 		
 		if (search.isRoundTrip()) {
-			OneWayList returnResult = trainService.searchOneWay(search.getReturnSearch());
+			OneWayList returnResult= new OneWayList();
+			trainService.searchOneWay(search.getReturnSearch(), returnResult);
 			model.addAttribute("returnWayList", returnResult);
 			return "selectReturn";
 		}else {

@@ -5,7 +5,9 @@ import com.cmpe275.cusr.model.SearchContent;
 
 public interface TrainService {
 	
-	public OneWayList searchOneWay(SearchContent content);
+	public boolean verfiyDateAndTime(SearchContent content, OneWayList result);
+	
+	public void searchOneWay(SearchContent content, OneWayList result);
 	
 	
 

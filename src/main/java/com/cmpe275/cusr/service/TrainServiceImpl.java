@@ -34,8 +34,46 @@ public class TrainServiceImpl implements TrainService {
 	private static int NUMBER_OF_TRIP_RETURNED = 5;
 	private static String fullPattern = "yyyy-MM-dd HH:mm:ss";
 	private static String timePattern = "HH:mm:ss";
+	private static String datePattern = "yyyy-MM-dd";
 	
-public OneWayList searchOneWay(SearchContent content) {
+	
+public boolean verfiyDateAndTime(SearchContent content, OneWayList result) {
+	
+	String departureDate = content.getDepartureDate();
+	String departureTime = content.getDepartureTime(); 
+	if (departureTime.length() == 4 && !departureTime.startsWith("0")) 
+		departureTime = "0" + departureTime;
+	departureTime += ":00";
+	
+	String returnDate;
+	String returnTime; 
+	
+			
+	//verify departure time no less than 5 minutes from now and date is within 4 weeks from now
+	boolean inputTimeOK= verifyDepartureTime(departureDate, departureTime);
+	boolean returnDateOK = true;
+	
+	//verify return date is within 7 days from departure date
+	if (content.isRoundTrip()) {
+		returnDate = content.getReturnDate();
+		returnTime = content.getDepartureTime(); 
+		if (returnTime.length() == 4 && !returnTime.startsWith("0")) 
+			returnTime = "0" + returnTime;
+		returnTime += ":00";
+		returnDateOK = verifyReturnDate(departureDate, returnDate);
+	}
+	
+	if (!inputTimeOK)
+		result.setMessage("Input Error: \n Departure time should be set more than 5 minutes from now. \n Departure date should be within 4 weeks");
+	else if (!returnDateOK)
+		result.setMessage("Input Error: \n Return date should be within 7 days from departure date");
+	
+	return inputTimeOK && returnDateOK;
+}
+	
+	
+	
+public void searchOneWay(SearchContent content, OneWayList result) {
 		
 		//get input parameters
 		String departureDate = content.getDepartureDate();
@@ -50,21 +88,11 @@ public OneWayList searchOneWay(SearchContent content) {
 		int numberOfSeats = content.getNumberOfSeats();
 		String trainType = content.getTrainType();
 		String numberOfConnections = content.getNumberOfConnections();
-		boolean isRoundTrip = content.isRoundTrip();
 		boolean isExactTime = content.isExactTime();
 		
 		Station[] allStations = Station.values();
 		
-		//result container
-		OneWayList result = new OneWayList();
-		
-		//verify departure date and time no less than 5 minutes 
-		boolean inputTimeOK= verifyDepartureTime(departureDate, departureTime);
-		if (!inputTimeOK) {
-			result.setMessage("Departure time is within 5 minutes from now!");
-			return result;
-		}
-			
+	
 		//find direct trip, if isExactTime == true, search only departure time is exact.
 		List<Segment> directTrips= getDirectTripSorted(departure, destination, departureDate, departureTime, isExactTime, numberOfSeats);
 		for (Segment s: directTrips) {
@@ -82,7 +110,7 @@ public OneWayList searchOneWay(SearchContent content) {
 		//return result if number of connections is None
 		if (numberOfConnections.equals("None")) {
 			sorting(result);
-			return result;
+			return;
 		}
 		
 		//adjust SB and NB iteration index
@@ -112,7 +140,7 @@ public OneWayList searchOneWay(SearchContent content) {
 		//return result if number of connections is One
 		if (numberOfConnections.equals("One")) {
 			sorting(result);
-			return result;
+			return;
 		}
 		
 		//find three segments trip
@@ -138,7 +166,6 @@ public OneWayList searchOneWay(SearchContent content) {
 		}
 		//sort all trips and return result
 		sorting(result);
-		return result;
 
 	}
 	//Search for two stops trip, verify connection time is within 2 hours
@@ -233,6 +260,8 @@ public OneWayList searchOneWay(SearchContent content) {
 	private boolean verifyDepartureTime(String departureDate, String departureTime) {
 		
 		Date current = new Date();
+		Date later = new Date();
+		later.setTime(later.getTime()+4*7*24*60*60*1000);
 		Date userInput = null;
 		SimpleDateFormat format = new SimpleDateFormat(fullPattern);
 		String updatedDepartureTime = departureDate+" "+departureTime;
@@ -242,8 +271,24 @@ public OneWayList searchOneWay(SearchContent content) {
 			e.printStackTrace();
 		}
 		userInput.setTime(userInput.getTime() - 1000*(60*5-1));
-		return current.before(userInput);
+		return current.before(userInput) && userInput.before(later);
 	}
+	
+	//verify return date is 7 days within departure date
+	private boolean verifyReturnDate(String departureDate, String returnDate) {
+		SimpleDateFormat format = new SimpleDateFormat(datePattern);
+		Date departD = null;
+		Date returnD = null;
+		try {
+			departD = format.parse(departureDate);
+			returnD = format.parse(returnDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		departD.setTime(departD.getTime() + (7*24*60*60+1)*1000);
+		return returnD.before(departD);
+	}
+	
 	
 	//verify connection is within 2 hour
 	private boolean checkConnectionTime(String arrivalTime, String departureTime) {
