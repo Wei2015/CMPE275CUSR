@@ -41,15 +41,36 @@
 <div class="container">
 
 	<form action="populateTable" method="post">
+		<h3 th:text="${message1}"></h3> 
 		<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
 		<br></br><br></br>
+		
+		<h3 th:text="${message2}"></h3> 
 		<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
 		<br></br><br></br>
+		
+		<input type="submit" name ="trainCapacity" value="Show Current Train Capacity" />
+		<br></br><br></br>
+		<table class="table table-striped" th:object="${trainContent}">
+			<thead>
+				<tr>
+					<th>Train ID</th>
+					<th>Capacity</th>
+					<th>Departure Station</th>
+					<th>Destination Station</th>
+					<th>Train Type</th>
+					<th>Round or One Way Trip</th>
+					<th>Number of Passenger</th>
+				</tr>
+			</thead>
+		</table>
+		
 		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
 		<input type="submit" name = "updateCapacity" value="UPDATE"/>
 	</form>
 	
 	<br></br><br></br>
+	
 	<form action="reset" method="post">
 	<input type="submit" value="Reset Booking System" />
 	</form>

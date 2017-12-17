@@ -48,8 +48,8 @@ public class UserController {
 	
 	//show search results after login
 	@PostMapping("/search")
-	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
-		
+	public String searchTrip(@ModelAttribute SearchContent search, Model model ) {
+				
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
 		

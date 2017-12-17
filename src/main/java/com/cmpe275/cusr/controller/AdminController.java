@@ -18,7 +18,7 @@ public class AdminController {
 	
 	@GetMapping("/admin")
 	public String populateTrainInfo(Model model) {
-		model.addAttribute("message", "Please populate train schedule table and status table.");
+		model.addAttribute("message1", "Please populate train schedule table.");
 		return "admin";
 		
 	}
@@ -26,14 +26,16 @@ public class AdminController {
 	@PostMapping(value ="/populateTable", params="trainScheduleTable")
 	public String populateTrainSchedule(Model model) {
 		adminService.populateTrainTable();
-		model.addAttribute("message", "sucessfully loaded train schedule information.");
+		model.addAttribute("message1", "Successfully loaded train schedule information.");
+		model.addAttribute("message2", "Please populate train status table.");
 		return "admin";
 	}
 	
 	@PostMapping(value ="/populateTable", params="trainStatusTable")
 	public String populateTrainStatus(Model model) {
 		adminService.populateTrainStatus();
-		model.addAttribute("message", "sucessfully loaded train status information for next 4 weeks.");
+		model.addAttribute("message1", "Successfully loaded train schedule information.");
+		model.addAttribute("message2", "Successfully loaded train status information for next 4 weeks.");
 		return "admin";
 	}
 	

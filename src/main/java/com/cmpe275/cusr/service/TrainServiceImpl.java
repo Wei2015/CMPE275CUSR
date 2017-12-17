@@ -261,7 +261,8 @@ public void searchOneWay(SearchContent content, OneWayList result) {
 		
 		Date current = new Date();
 		Date later = new Date();
-		later.setTime(later.getTime()+4*7*24*60*60*1000);
+		for (int i = 1; i < 5; i++)
+			later.setTime(later.getTime()+7*24*60*60*1000);
 		Date userInput = null;
 		SimpleDateFormat format = new SimpleDateFormat(fullPattern);
 		String updatedDepartureTime = departureDate+" "+departureTime;
