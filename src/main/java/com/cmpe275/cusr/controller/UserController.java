@@ -48,7 +48,7 @@ public class UserController {
 	
 	//show search results after login
 	@PostMapping("/search")
-	public String searchTrip(@ModelAttribute SearchContent search, Model model ) {
+	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
 				
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
@@ -69,7 +69,8 @@ public class UserController {
 	@PostMapping("/selectReturn")
 	public String bookingConfirm(@ModelAttribute("oneWayList") OneWayList oneWayList, 
 								@ModelAttribute("searchContent") SearchContent search,
-								@RequestParam("Select") String selectTrip, SessionStatus status, Model model) {
+								@RequestParam("Select") String selectTrip, 
+								SessionStatus status, Model model) {
 		int tripIndexSelected = Integer.valueOf(selectTrip.substring(4, 5))-1;
 		OneWayTrip forwardTrip = oneWayList.getFirstFive().get(tripIndexSelected);
 		model.addAttribute("oneWayTrip", forwardTrip);
