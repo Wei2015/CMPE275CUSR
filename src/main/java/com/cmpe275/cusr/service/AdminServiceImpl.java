@@ -80,15 +80,8 @@ public class AdminServiceImpl implements AdminService {
 				TrainStatus newStatus = new TrainStatus(t, currentDate, false);
 				Map<Station, Integer> map = newStatus.getSeatStatus();
 				Station[] stations = Station.values();
-				if (t.getBound().endsWith("00")) {
-					for (int j = 0; j < stations.length; j+=5) {
+				for (int j= 0; j< stations.length; j++) 
 						map.put(stations[j], 0);
-					}
-				} else {
-					for (int j= 0; j< stations.length; j++) {
-						map.put(stations[j], 0);
-					}
-				}
 				newStatus.setSeatStatus(map);
 				trainStatusRepo.save(newStatus);
 			}
