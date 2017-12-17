@@ -1,5 +1,6 @@
 package com.cmpe275.cusr.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllTrainContent {
@@ -9,6 +10,7 @@ public class AllTrainContent {
 
 	public AllTrainContent() {
 		super();
+		trains = new ArrayList<Train>();
 	}
 
 	public AllTrainContent(List<Train> trains) {

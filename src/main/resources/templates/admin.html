@@ -51,7 +51,8 @@
 		
 		<input type="submit" name ="trainCapacity" value="Show Current Train Capacity" />
 		<br></br><br></br>
-		<table class="table table-striped" th:object="${trainContent}">
+		<div th:object="${trainContent}" th:if="${trainContent.trains.size()} >0" class="container">
+		<table class="table table-striped"  >
 			<thead>
 				<tr>
 					<th>Train ID</th>
@@ -67,7 +68,7 @@
 				</tr>
 			</tbody>
 		</table>
-		
+		</div>
 		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
 		<input type="submit" name = "updateCapacity" value="UPDATE"/>
 	</form>

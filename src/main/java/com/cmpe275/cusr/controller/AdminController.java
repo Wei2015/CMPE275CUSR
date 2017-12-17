@@ -1,6 +1,5 @@
 package com.cmpe275.cusr.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmpe275.cusr.model.AllTrainContent;
-import com.cmpe275.cusr.model.OneWayList;
-import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.service.AdminService;
 
 
@@ -49,9 +46,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value ="/populateTable", params="trainCapacity")
-	public String showTrainCapacity(Model model) {
-		List<Train> allTrains = adminService.showTrainCapacity();
-		model.addAttribute("trainContent", new AllTrainContent(allTrains));
+	public String showTrainCapacity(@ModelAttribute("trainContent") AllTrainContent trainContent, Model model) {
+		trainContent.setTrains(adminService.showTrainCapacity());
 		return "admin";
 	}
 	
