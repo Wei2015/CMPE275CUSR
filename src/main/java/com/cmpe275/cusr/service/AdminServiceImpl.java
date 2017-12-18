@@ -47,10 +47,10 @@ public class AdminServiceImpl implements AdminService {
 	/*
 	@Autowired
 	private EmailService emailService;
-	
+	*/
 	@Autowired
 	private TicketService ticketService;
-	*/
+	
 	//show train capacity
 	public List<Train> showTrainCapacity() {
 		return trainRepo.findAll();
@@ -152,12 +152,7 @@ public class AdminServiceImpl implements AdminService {
 						adjustTimeFormat(oneSchedule);
 						scheduleRepo.save(oneSchedule);
 					}
-					/*
-					TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", regular);
-					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
-					lastOne.setArrivalTime(timeFormat.format(updatedTime));
-					scheduleRepo.save(lastOne);
-					*/
+					
 				} else {
 					for (int j = stations.length-1; j>=0 ; j--) {
 						updatedTime.setTime(departTime.getTime() + 8*60*1000*(stations.length-1-j));
@@ -167,12 +162,7 @@ public class AdminServiceImpl implements AdminService {
 						adjustTimeFormat(oneSchedule);
 						scheduleRepo.save(oneSchedule);
 					}
-					/*
-					TrainSchedule lastOne = new TrainSchedule(stations[0], "", regular);
-					updatedTime.setTime(updatedTime.getTime() + 8*60 *1000); //calculate arrival time
-					lastOne.setArrivalTime(timeFormat.format(updatedTime));
-					scheduleRepo.save(lastOne);
-					*/
+					
 				}
 			}
 		}
@@ -210,12 +200,7 @@ public class AdminServiceImpl implements AdminService {
 					adjustTimeFormat(oneSchedule);
 					scheduleRepo.save(oneSchedule);
 				}
-				/*
-				TrainSchedule lastOne = new TrainSchedule(stations[stations.length-1], "", express);
-				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
-				lastOne.setArrivalTime(timeFormat.format(updatedTime));
-				scheduleRepo.save(lastOne);
-				*/
+				
 			} else {
 				for (int j = stations.length-1; j>=0 ; j-=5) {
 					updatedTime.setTime(departTime.getTime() + 28*60*1000*((stations.length-1-j)/5));
@@ -225,17 +210,11 @@ public class AdminServiceImpl implements AdminService {
 					adjustTimeFormat(oneSchedule);
 					scheduleRepo.save(oneSchedule);
 				}
-				/*
-				TrainSchedule lastOne = new TrainSchedule(stations[0], "", express);
-				updatedTime.setTime(updatedTime.getTime() + 28*60 *1000); //calculate arrival time
-				lastOne.setArrivalTime(timeFormat.format(updatedTime));
-				scheduleRepo.save(lastOne);
-				*/
+				
 			}
 		}
 	
 	}
-	
 	
 	private void adjustTimeFormat(TrainSchedule oneSchedule) {
 		String departTime = oneSchedule.getDepartTime();
@@ -247,126 +226,148 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Transactional
-	public void trainCancel (String trainName, String date) {
-		//Check time.
-		/*Train train = trainRepo.findByBound(trainName);
-		String startTime = train.getDepartureTime();
-		if (ticketService.timeCheck (date, startTime, 180)) {
+	public void trainCancel (String bound, String date) {
+		
+		//check date is not more than 4 weeks from now. otherwise just return
+		if (!verifyDate(date)) 
 			return;
-		}
+		
+		Train train = trainRepo.findByBound(bound);
+		//Check train departure time is not within 3 hours. 
+		String startTime = train.getDepartureTime();
+		if (ticketService.timeCheck (date, startTime, 180))
+			return;
+		
+		//Check if the bound and date is already cancelled. 
+		TrainStatus currentStatus = trainStatusRepo.findByTrainAndDate(train, date);
+		if (currentStatus.isCancelled()) 
+			return;
 		
 		//Update train status.
-		TrainStatus status = trainStatusRepo.findByTrainAndDate(train, date);
-		status.setCancelled(true);
-		trainStatusRepo.save(status);
+		currentStatus.setCancelled(true);
 		
+		//find tickets contain the train, release seat status, and collect ticket info as a list.
+		List<Ticket> cancelledTickets = updateTickets(train, date, currentStatus);
+		
+		//rebook trip based on the information from cancelled tickets
+		
+	}
+		
+		
+	
 		//Find affected tickets.
-		List<Ticket> cancelledTickets = new ArrayList<>();
-		List<Ticket> departTickets = ticketRepository.findByDepartDate(date);
-		List<Ticket> returnTickets = ticketRepository.findByReturnDate(date);
-		List<TrainStatus> updatedTrainStatus = new ArrayList<>();
-		Station s1 = null;
-		Station s2 = null;
+		private List<Ticket> updateTickets(Train train, String date, TrainStatus status) {
+			List<Ticket> cancelledTickets = new ArrayList<>();
+			List<Ticket> departTickets = ticketRepository.findByDepartDate(date);
+			List<Ticket> returnTickets = ticketRepository.findByReturnDate(date);
+			//List<TrainStatus> updatedTrainStatus = new ArrayList<>();
+			Station s1 = null;
+			Station s2 = null;
+			
+			for (Ticket ticket : departTickets) {
+				List<Train> trains = ticket.getDepartTrains();
+				if (!trains.contains(train)) {
+					continue;
+				}
+				cancelledTickets.add(ticket);
+				ticket.setCancelled(true);
+				//Update seat status.
+				int numOfSeats = ticket.getNumOfSeats();
+				int departTripSize = trains.size();
+				Station departStation = ticket.getDepartStation();
+				Station arrivalStation = ticket.getArrivalStation();
+				Station stop1 = ticket.getStop1();
+				Station stop2 = ticket.getStop2();
+				switch (departTripSize) {
+				case 1:
+					s1 = departStation;
+					s2 = departTripSize > 1 ? stop1 : arrivalStation;
+					break;
+				case 2:
+					s1 = stop1;
+					s2 = departTripSize > 2 ? stop2 : arrivalStation;
+					break;
+				case 3:
+					s1 = stop2;
+					s2 = arrivalStation;
+					break;
+				}
+				int idx1 = s1.getIndex();
+				int idx2 = s2.getIndex();
+				Map<Station, Integer> map  = status.getSeatStatus();
+				if (idx1 < idx2) {
+					for (int k = idx1; k < idx2; ++k) {
+						Station s = Station.values()[k];
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
+						map.put(s, updatedNumOfSeats);
+						status.setSeatStatus(map);
+					} 
+				} else {
+					for (int k = idx1; k > idx2; --k) {
+						Station s = Station.values()[k];
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
+						map.put(s, updatedNumOfSeats);
+						status.setSeatStatus(map);
+					}
+				}
+				trainStatusRepo.save(status);
+				//updatedTrainStatus.add(status);
+			}
+			
+			for (Ticket ticket : returnTickets) {
+				List<Train> trains = ticket.getReturnTrains();
+				if (!trains.contains(train)) {
+					continue;
+				}
+				cancelledTickets.add(ticket);
+				ticket.setCancelled(true);
+				//Update seat status.
+				int numOfSeats = ticket.getNumOfSeats();
+				int returnTripSize = trains.size();
+				Station departStation = ticket.getArrivalStation();
+				Station arrivalStation = ticket.getDepartStation();
+				Station returnStop1 = ticket.getReturnStop1();
+				Station returnStop2 = ticket.getReturnStop2();
+				switch (returnTripSize) {
+				case 1:
+					s1 = arrivalStation;
+					s2 = returnTripSize > 1 ? returnStop1 : departStation;
+					break;
+				case 2:
+					s1 = returnStop1;
+					s2 = returnTripSize > 2 ? returnStop2 : departStation;
+					break;
+				case 3:
+					s1 = returnStop2;
+					s2 = departStation;
+					break;
+				}
+				int idx1 = s1.getIndex();
+				int idx2 = s2.getIndex();
+				Map<Station, Integer> map  = status.getSeatStatus();
+				if (idx1 < idx2) {
+					for (int k = idx1; k < idx2; ++k) {
+						Station s = Station.values()[k];
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
+						map.put(s, updatedNumOfSeats);
+						status.setSeatStatus(map);
+					} 
+				} else {
+					for (int k = idx1; k > idx2; --k) {
+						Station s = Station.values()[k];
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
+						map.put(s, updatedNumOfSeats);
+						status.setSeatStatus(map);
+					}
+				}
+				trainStatusRepo.save(status);
+				//updatedTrainStatus.add(status);
+			}
+			//updatedTrainStatus.forEach(t -> trainStatusRepo.save(t));
+			return cancelledTickets;
+		}
 		
-		for (Ticket ticket : departTickets) {
-			List<Train> trains = ticket.getDepartTrains();
-			if (!trains.contains(train)) {
-				continue;
-			}
-			cancelledTickets.add(ticket);
-			ticket.setCancelled(true);
-			//Update seat status.
-			int numOfSeats = ticket.getNumOfSeats();
-			int departTripSize = trains.size();
-			Station departStation = ticket.getDepartStation();
-			Station arrivalStation = ticket.getArrivalStation();
-			Station stop1 = ticket.getStop1();
-			Station stop2 = ticket.getStop2();
-			switch (departTripSize) {
-			case 1:
-				s1 = departStation;
-				s2 = departTripSize > 1 ? stop1 : arrivalStation;
-				break;
-			case 2:
-				s1 = stop1;
-				s2 = departTripSize > 2 ? stop2 : arrivalStation;
-				break;
-			case 3:
-				s1 = stop2;
-				s2 = arrivalStation;
-				break;
-			}
-			int idx1 = s1.getIndex();
-			int idx2 = s2.getIndex();
-			Map<Station, Integer> map  = status.getSeatStatus();
-			if (idx1 < idx2) {
-				for (int k = idx1; k < idx2; ++k) {
-					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) - numOfSeats;
-					map.put(s, updatedNumOfSeats);
-					status.setSeatStatus(map);
-				} 
-			} else {
-				for (int k = idx1; k > idx2; --k) {
-					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) - numOfSeats;
-					map.put(s, updatedNumOfSeats);
-					status.setSeatStatus(map);
-				}
-			}
-			updatedTrainStatus.add(status);
-		}
-		for (Ticket ticket : returnTickets) {
-			List<Train> trains = ticket.getReturnTrains();
-			if (!trains.contains(train)) {
-				continue;
-			}
-			cancelledTickets.add(ticket);
-			ticket.setCancelled(true);
-			//Update seat status.
-			int numOfSeats = ticket.getNumOfSeats();
-			int returnTripSize = trains.size();
-			Station departStation = ticket.getArrivalStation();
-			Station arrivalStation = ticket.getDepartStation();
-			Station returnStop1 = ticket.getReturnStop1();
-			Station returnStop2 = ticket.getReturnStop2();
-			switch (returnTripSize) {
-			case 1:
-				s1 = arrivalStation;
-				s2 = returnTripSize > 1 ? returnStop1 : departStation;
-				break;
-			case 2:
-				s1 = returnStop1;
-				s2 = returnTripSize > 2 ? returnStop2 : departStation;
-				break;
-			case 3:
-				s1 = returnStop2;
-				s2 = departStation;
-				break;
-			}
-			int idx1 = s1.getIndex();
-			int idx2 = s2.getIndex();
-			Map<Station, Integer> map  = status.getSeatStatus();
-			if (idx1 < idx2) {
-				for (int k = idx1; k < idx2; ++k) {
-					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) - numOfSeats;
-					map.put(s, updatedNumOfSeats);
-					status.setSeatStatus(map);
-				} 
-			} else {
-				for (int k = idx1; k > idx2; --k) {
-					Station s = Station.values()[k];
-					int updatedNumOfSeats = map.get(s) - numOfSeats;
-					map.put(s, updatedNumOfSeats);
-					status.setSeatStatus(map);
-				}
-			}
-			updatedTrainStatus.add(status);
-		}
-		updatedTrainStatus.forEach(t -> trainStatusRepo.save(t));
-			
-			
+		/*
 		//New search.
 		for (Ticket ticket : cancelledTickets) {
 		  // search ticket
@@ -377,6 +378,22 @@ public class AdminServiceImpl implements AdminService {
 		 //Re-book.
 		  ticketService.purchase(user, booking);
 		}*/
+	
+	
+	
+	private boolean verifyDate(String date) {
+		
+		Date later = new Date();
+		for (int i = 1; i < 5; i++)
+			later.setTime(later.getTime()+7*24*60*60*1000);
+		Date userInput = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			userInput = format.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return userInput.before(later);
 	}
 	
 }
