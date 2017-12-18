@@ -256,7 +256,7 @@ public class AdminServiceImpl implements AdminService {
 			//TO DO
 			User user = ticket.getUser();
 			ticketService.purchase(user, booking);
-			String purchaseContent = emailService.ticketMailBuilder(ticket.getTicketId(), "emailTemplateBookSuccess");
+			String purchaseContent = emailService.mailBuilder(booking, "emailTemplateBookSuccess");
 			emailService.sendMail(user.getEmail(), "CUSR Ticket Booking Confirmation", purchaseContent);
 		}
 	}
