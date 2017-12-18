@@ -318,7 +318,7 @@ public class TicketServiceImpl implements TicketService {
 			//Update train status.
 			for (int i = 0; i < returnTripSize; i++) {
 				Train train = returnTrains.get(i);
-				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, departDate);
+				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, returnDate);
 				if (status.isCancelled()) {
 					return false;
 				}
