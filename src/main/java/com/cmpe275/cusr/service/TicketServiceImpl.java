@@ -342,7 +342,7 @@ public class TicketServiceImpl implements TicketService {
 				if (idx1 < idx2) {
 					for (int k = idx1; k < idx2; ++k) {
 						Station s = Station.values()[k];
-						int updatedNumOfSeats = map.get(s) + numOfSeats;
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
 						if (updatedNumOfSeats > train.getCapacity()) {
 							return false;
 						}
@@ -352,7 +352,7 @@ public class TicketServiceImpl implements TicketService {
 				} else {
 					for (int k = idx1; k > idx2; --k) {
 						Station s = Station.values()[k];
-						int updatedNumOfSeats = map.get(s) + numOfSeats;
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
 						if (updatedNumOfSeats > train.getCapacity()) {
 							return false;
 						}
