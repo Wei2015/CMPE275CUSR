@@ -262,9 +262,9 @@ public class TicketServiceImpl implements TicketService {
 		for (int i = 0; i < departTripSize; i++) {
 			Train train = departTrains.get(i);
 			TrainStatus status = trainStatusRepository.findByTrainAndDate(train, departDate);
-			/*if (status.isCancelled()) {
+			if (status.isCancelled()) {
 				return false;
-			}*/
+			}
 			switch (i) {
 			case 0:
 				s1 = departStation;
@@ -319,9 +319,9 @@ public class TicketServiceImpl implements TicketService {
 			for (int i = 0; i < returnTripSize; i++) {
 				Train train = returnTrains.get(i);
 				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, departDate);
-				/*if (status.isCancelled()) {
+				if (status.isCancelled()) {
 					return false;
-				}*/
+				}
 				switch (i) {
 				case 0:
 					s1 = arrivalStation;
