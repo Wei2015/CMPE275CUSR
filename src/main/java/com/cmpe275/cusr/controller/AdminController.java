@@ -70,7 +70,7 @@ public class AdminController {
 	}
 	
 	@PostMapping(value ="/cancelTrain")
-	public String cancelTrain(Model model, @RequestParam("trainBound") String bound, @RequestParam("cancelDate") String date) {
+	public String cancelTrain(Model model,@RequestParam("trainBound") String bound, @RequestParam("cancelDate") String date) {
 		System.out.println(bound);
 		return "admin";
 	}

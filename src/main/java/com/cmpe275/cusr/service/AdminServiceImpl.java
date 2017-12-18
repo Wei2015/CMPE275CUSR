@@ -249,6 +249,7 @@ public class AdminServiceImpl implements AdminService {
 
 		// Update train status.
 		currentStatus.setCancelled(true);
+		trainStatusRepo.save(currentStatus);
 
 		//find tickets contain the train, release seat status, and collect ticket info as a list.
 		List<Ticket> cancelledTickets = cancelTickets(train, date);
