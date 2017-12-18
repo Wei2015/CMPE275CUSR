@@ -27,14 +27,14 @@ public class EmailServiceImpl implements EmailService {
 	private TicketRepository ticketRepository;
 
 	// Send text email.
-	@Override
+	/*@Override
 	public void sendTextMail(String toEmail, String subject, String text) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(toEmail);
 		mailMessage.setSubject(subject);
 		mailMessage.setText(text);
 		javaMailSender.send(mailMessage);
-	}
+	}*/
 
 	
 	@Override
