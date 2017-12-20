@@ -262,9 +262,9 @@ public class TicketServiceImpl implements TicketService {
 		for (int i = 0; i < departTripSize; i++) {
 			Train train = departTrains.get(i);
 			TrainStatus status = trainStatusRepository.findByTrainAndDate(train, departDate);
-			/*if (status.isCancelled()) {
+			if (status.isCancelled()) {
 				return false;
-			}*/
+			}
 			switch (i) {
 			case 0:
 				s1 = departStation;
@@ -318,10 +318,10 @@ public class TicketServiceImpl implements TicketService {
 			//Update train status.
 			for (int i = 0; i < returnTripSize; i++) {
 				Train train = returnTrains.get(i);
-				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, departDate);
-				/*if (status.isCancelled()) {
+				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, returnDate);
+				if (status.isCancelled()) {
 					return false;
-				}*/
+				}
 				switch (i) {
 				case 0:
 					s1 = arrivalStation;
@@ -342,7 +342,7 @@ public class TicketServiceImpl implements TicketService {
 				if (idx1 < idx2) {
 					for (int k = idx1; k < idx2; ++k) {
 						Station s = Station.values()[k];
-						int updatedNumOfSeats = map.get(s) + numOfSeats;
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
 						if (updatedNumOfSeats > train.getCapacity()) {
 							return false;
 						}
@@ -352,7 +352,7 @@ public class TicketServiceImpl implements TicketService {
 				} else {
 					for (int k = idx1; k > idx2; --k) {
 						Station s = Station.values()[k];
-						int updatedNumOfSeats = map.get(s) + numOfSeats;
+						int updatedNumOfSeats = map.get(s) - numOfSeats;
 						if (updatedNumOfSeats > train.getCapacity()) {
 							return false;
 						}

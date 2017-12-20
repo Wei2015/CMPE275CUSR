@@ -236,6 +236,7 @@ public class AdminServiceImpl implements AdminService {
 			return;
 
 		Train train = trainRepo.findByBound(bound);
+		
 		// Check train departure time is not within 3 hours.
 		String startTime = train.getDepartureTime();
 		
@@ -252,6 +253,7 @@ public class AdminServiceImpl implements AdminService {
 
 		// Update train status.
 		currentStatus.setCancelled(true);
+		trainStatusRepo.save(currentStatus);
 
 		//find tickets contain the train, release seat status, and collect ticket info as a list.
 		List<Ticket> cancelledTickets = cancelTickets(train, date);
@@ -287,8 +289,7 @@ public class AdminServiceImpl implements AdminService {
 			newBook.setPrice(newBook.getPrice()+returnTrip.getTicketPrice() + 1.0);
 		}
 		return newBook;
-	}
-		
+	}	
 		
 	//create a new SearchContent object based on one ticket information
 	private SearchContent createNewSearch(Ticket t) {
@@ -311,25 +312,30 @@ public class AdminServiceImpl implements AdminService {
 		return newSearch;
 	}
 	
-	// Find affected tickets.
+	// Find affected tickets, cancel tickets and update seat status.
 	private List<Ticket> cancelTickets(Train train, String date) {
 		List<Ticket> cancelledTickets = new ArrayList<>();
 		List<Ticket> departTickets = ticketRepository.findByDepartDate(date);
 		List<Ticket> returnTickets = ticketRepository.findByReturnDate(date);
-
-		departTickets.addAll(returnTickets);
-
 		for (Ticket ticket : departTickets) {
 			List<Train> departTrains = ticket.getDepartTrains();
-			List<Train> returnTrains = ticket.getReturnTrains();
-			if ((!departTrains.contains(train)) && (!returnTrains.contains(train))) { // don't know if is the same 
+			if (!departTrains.contains(train)) {
 				continue;
 			}
 			cancelledTickets.add(ticket);
 			ticketService.cancel(ticket.getTicketId());
-			User user = ticket.getUser();
 			String content = emailService.ticketMailBuilder(ticket.getTicketId(), "emailTemplateTrainCancel");
-			emailService.sendMail(user.getEmail(), "CUSR Train Cancellation", content);
+			emailService.sendMail(ticket.getUser().getEmail(), "CUSR Train Cancellation", content);
+		}
+		for (Ticket ticket : returnTickets) {
+			List<Train> returnTrains = ticket.getReturnTrains();
+			if (!returnTrains.contains(train)) {
+				continue;
+			}
+			cancelledTickets.add(ticket);
+			ticketService.cancel(ticket.getTicketId());
+			String content = emailService.ticketMailBuilder(ticket.getTicketId(), "emailTemplateTrainCancel");
+			emailService.sendMail(ticket.getUser().getEmail(), "CUSR Train Cancellation", content);
 		}
 		return cancelledTickets;
 	}
