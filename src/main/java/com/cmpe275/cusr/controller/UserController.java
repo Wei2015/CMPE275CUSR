@@ -3,6 +3,8 @@ package com.cmpe275.cusr.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -56,10 +58,13 @@ public class UserController {
 	
 	//show search results after login
 	@PostMapping("/search")
-	public String searchTrip(@ModelAttribute SearchContent search, Model model) {
+	public String searchTrip(@ModelAttribute SearchContent search, HttpServletRequest request,
+			Model model) {
 				
 				//add search inquiry in the view
 				model.addAttribute("searchContent", search);
+				
+				request.setAttribute("numberOfConnections", search.getNumberOfConnections());
 		
 				//create search result container
 				OneWayList result = new OneWayList();

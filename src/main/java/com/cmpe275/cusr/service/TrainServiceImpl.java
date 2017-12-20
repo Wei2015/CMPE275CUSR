@@ -53,10 +53,6 @@ public boolean verfiyDateAndTime(SearchContent content, OneWayList result) {
 	String returnDate;
 	String returnTime; 
 	
-	//update Request Table in DB 
-	addRequestInDB(content.getNumberOfConnections());
-	
-			
 	//verify departure time no less than 5 minutes from now and date is within 4 weeks from now
 	boolean inputTimeOK= verifyDepartureTime(departureDate, departureTime);
 	boolean returnDateOK = true;
@@ -332,7 +328,7 @@ public void searchOneWay(SearchContent content, OneWayList result) {
 			return false;
 		return true;
 	}
-	
+	//sort based on arrival time for the trips.
 	private void sorting(OneWayList result) {
 		if (result.getFirstFive().size() != 0)  {
 			Collections.sort(result.getFirstFive());
@@ -342,17 +338,6 @@ public void searchOneWay(SearchContent content, OneWayList result) {
 		}else {
 			result.setMessage("No bookable trip found!");
 		}
-	}
-	
-	
-	//add request information (date and numberOfConnections) into REQUEST table
-	private void addRequestInDB(String numberOfConnections){
-		SimpleDateFormat format = new SimpleDateFormat(datePattern);
-		Date current = new Date();
-		String currentDate = format.format(current);
-		requestRepo.save(new Request(numberOfConnections,currentDate));
-		
-		
 	}
 	
 }

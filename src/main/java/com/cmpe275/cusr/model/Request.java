@@ -32,10 +32,11 @@ public class Request {
 		super();
 	}
 	
-	public Request(String numberOfConnections, String date) {
+	public Request(String numberOfConnections, String date, long timeCost) {
 		super();
 		this.numberOfConnections = numberOfConnections;
 		this.date = date;
+		this.timeCost = timeCost;
 	}
 
 	public void setTimeCost(long timeCost) {
