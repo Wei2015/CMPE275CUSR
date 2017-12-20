@@ -7,7 +7,7 @@ import com.cmpe275.cusr.model.Request;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
 	
-	@Query("SELECT COUNT(*) from Request r WHERE r.connectionType = ?1")
+	@Query("SELECT COUNT(REQUEST_ID) from Request r WHERE r.numberOfConnections = ?1")
 	int getCountOnType(String connectionType);
 
 }

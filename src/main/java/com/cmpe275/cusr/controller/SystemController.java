@@ -35,7 +35,7 @@ public class SystemController {
 	@Autowired
 	SystemService systemService;
 	
-	@GetMapping("/system")
+	@GetMapping("/systemreports")
 	public String populateTrainInfo(Model model) {
 		List<Train> trains = adminService.showTrainCapacity();
 		
