@@ -116,5 +116,24 @@
 	</div>
 </div>
 
+<div class="container">
+ <h3>Daily Ticket Reservation Statistics: </h3>
+	<div class="row">
+		<form action="trainReservation" method ="post">
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right" name="reserveDate" th:value="*{reserveDate}" placeholder="YYYY-MM-DD"/>
+			</div>
+			
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle"></p>
+					<br></br>
+					<input  type="submit" name = "reserve" value="Show Statistics"/>
+			</div>
+		</form>
+	</div>
+	<h4 th:text="*{numberOfTotalSearch}"></h4>
+</div>
+
 </body>
 </html>

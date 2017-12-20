@@ -1,10 +1,9 @@
 package com.cmpe275.cusr.controller;
 
-import java.text.DecimalFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -72,6 +71,16 @@ public class SystemController {
 		
 		return "system";
 	}
+	
+	@PostMapping(value ="/trainReservation", params = "reserve")
+	public String showStatistic(@ModelAttribute("trainContent") AllTrainContent Alltrain,
+								@RequestParam("reserveDate") String reserveDate,
+								Model model) {
+		int numOfSearch = systemService.getTotalSearchNumber(reserveDate);
+		model.addAttribute("numberOfTotalSearch", "Total Number of Search on " + reserveDate +"  is: " + numOfSearch);
+		return "system";
+	}
+	
 	
 	
 	private String[] getDays(String startDate, String endDate) {

@@ -10,6 +10,8 @@ public interface SystemService {
 	
 	public String getDailyPercent(List<Train> trains, String date);
 	
+	public int getTotalSearchNumber(String date);
+	
 	
 
 }

@@ -1,6 +1,5 @@
 package com.cmpe275.cusr.model;
 
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,11 +20,9 @@ public class Request {
 	@Column(name="numberOfConnections")
 	private String numberOfConnections;
 	
-	@Column(name="TimeBeforeReq")
-	private Date timeBeforeReq;
+	@Column(name="Date")
+	private String date;
 	
-	@Column(name="TimeAfterReq")
-	private Date timeAfterReq;
 	
 	@Column(name="TimeCost")
 	private long timeCost;
@@ -35,12 +32,28 @@ public class Request {
 		super();
 	}
 	
+	public Request(String numberOfConnections, String date) {
+		super();
+		this.numberOfConnections = numberOfConnections;
+		this.date = date;
+	}
+
 	public void setTimeCost(long timeCost) {
 		this.timeCost = timeCost;
 	}
 
+	
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	public long getTimeCost() {
-		return timeAfterReq.getTime()-timeBeforeReq.getTime();
+		return timeCost;
 	}
 
 	public String getNumberOfConnections() {
@@ -51,21 +64,7 @@ public class Request {
 		this.numberOfConnections = numberOfConnections;
 	}
 
-	public Date getTimeBeforeReq() {
-		return timeBeforeReq;
-	}
 
-	public void setTimeBeforeReq(Date timeBeforeReq) {
-		this.timeBeforeReq = timeBeforeReq;
-	}
-
-	public Date getTimeAfterReq() {
-		return timeAfterReq;
-	}
-
-	public void setTimeAfterReq(Date timeAfterReq) {
-		this.timeAfterReq = timeAfterReq;
-	}
 	
 	
 	

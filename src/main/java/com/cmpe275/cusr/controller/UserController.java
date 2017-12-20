@@ -31,6 +31,7 @@ public class UserController {
 	@Autowired
 	private TrainService trainService;
 	
+	
 	@GetMapping("/signin")
 	public String signinSuccessGet(Model model, @RequestParam(value="firebaseToken", required=true) String firebaseToken) {
 		
