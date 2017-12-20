@@ -8,6 +8,7 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -16,17 +17,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">CUSR</a>
+      <a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a th:href="@{/tickets}">Dashboard</a></li>
-        <li><a th:href="@{/admin}">Admin</a></li>
-        <li class="active"><a th:href="@{/search}">Search</a></li>
+        <li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
+        <li><a th:href="@{/search}">Search</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/registration}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a th:href="@{/signout}"><span class="glyphicon glyphicon-user"></span> Sign out</a></li>
       </ul>
     </div>
   </div>
