@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>California Ultra-Speed Rail -Admin</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" href="/css/main.css" />
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" th:href="@{/}">CUSR</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a th:href="@{/tickets}">Dashboard</a></li>
+       	<li><a th:href="@{/admin}">Admin</a></li>
+       	<li><a th:href="@{/system}">System Report</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+  
+<div class="container">
+	<h3>Per Train Ticket Reservation Rate: </h3>
+	<div class="row">
+		<form action="trainReservation" method ="post">
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Train ID</p>
+						<select class="form-control border-radius" name ="trainBound" th:value="*{trainBound}">
+							<option th:each="bound : ${trainContent.trainBounds}"
+									th:value="${bound}"
+									th:text="${bound}">
+							</option>
+						</select>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right" name="trainDate" th:value="*{trainDate}" placeholder="YYYY-MM-DD"/>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle"></p>
+					<br></br>
+					<input  type="submit" name = "trainPerDay" value="Check Rate"/>
+			</div>
+		</form>
+		
+		<table class="table table-striped" th:if="${percent!=null}">
+			<thead>
+				<tr>
+					<th>Train ID</th>
+					<th>Selected Date</th>
+					<th>Ticket Reservation Rate</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${trainBound}"/>
+					<td th:text="${trainDate}"/>
+					<td th:text="${percent}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="container">
+ <h3>Daily Ticket Reservation Rate for All Trains: </h3>
+	<div class="row">
+		<form action="trainReservation" method ="post">
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right" name="startDate" th:value="*{startDate}" placeholder="YYYY-MM-DD"/>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right" name="endDate" th:value="*{endDate}" placeholder="YYYY-MM-DD"/>
+			</div>
+			<div class="col-md-3 col-sm-6 form-group">
+					<p class = "fill-in box subtitle"></p>
+					<br></br>
+					<input  type="submit" name = "dateRange" value="Show Rate"/>
+			</div>
+		</form>
+		<table class="table table-striped" th:if="${results!=null}">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Ticket Reservation Rate</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr th:each="date:*{results.keySet()}" >
+					<td th:text="${date}"/>
+					<td th:text="${results.get(date)}"/>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</body>
+</html>
