@@ -39,6 +39,13 @@ public class UserController {
 		return "redirect:/tickets";
 	}
 	
+	@GetMapping("/signout")
+	public String signout(Model model) {
+		userService.signout();
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/search")
 	public String index(Model model) {
 		SearchContent search = new SearchContent();

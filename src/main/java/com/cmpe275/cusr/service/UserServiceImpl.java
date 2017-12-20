@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
+	public void signout() {
+		SecurityContextHolder.clearContext();
+	}
+	
 	public User getUserFromDB(String email) {
 		User userLoaded = userRepository.findUserByEmail(email);
 		

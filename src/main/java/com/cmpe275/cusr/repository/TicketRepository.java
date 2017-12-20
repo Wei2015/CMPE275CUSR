@@ -12,7 +12,7 @@ import com.cmpe275.cusr.model.Train;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-	@Query("SELECT t from Ticket t WHERE t.user.userId = ?1")
+	@Query("SELECT t from Ticket t WHERE t.user.userId = ?1 AND is_cancelled = false")
 	ArrayList<Ticket> findTicketsByUserId(long ID);
 	
 	List<Ticket> findByDepartDate(String date);

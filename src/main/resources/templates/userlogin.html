@@ -35,7 +35,10 @@
       <ul class="nav navbar-nav">
         <li><a th:href="@{/}">Home</a></li>
        	<li><a th:href="@{/admin}">Admin</a></li>
-       	<li><a>Booking</a></li>
+       	<li><a th:href="@{/systemreports}">System Reports</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/}"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
       </ul>
     </div>
   </div>
@@ -135,6 +138,7 @@
 		    });
 		}).catch(function(error) {
 			console.log(error.code);
+			alert(error.message)l
 		});
 	});
 
@@ -147,6 +151,7 @@
 			});
 		}).catch(function(error) {
 			console.log(error.code);
+			alert(error.message);
 		});
 	});
 </script>

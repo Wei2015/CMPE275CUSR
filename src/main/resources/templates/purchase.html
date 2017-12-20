@@ -13,31 +13,30 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
-					<li><a th:href="@{/search}">Search</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/signout}"><span
-							class="glyphicon glyphicon-user"></span> Sign out</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	
-	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}"
-		method="post">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
+        <li><a th:href="@{/search}">Search</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/signout}"><span class="glyphicon glyphicon-user"></span> Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}" method="post">
 		<div class="container">
 			<h3>Selected Ticket Information:</h3>
 			<br></br>
