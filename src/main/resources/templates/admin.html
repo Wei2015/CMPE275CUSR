@@ -88,10 +88,10 @@
 	<br></br><br></br>
 	<h3>Cancel train on selected date: </h3>
 	<div class="row">
-		<form action="cancelTrain">
+		<form action="cancelTrain" method ="post">
 			<div class="col-md-3 col-sm-6 form-group">
 					<p class = "fill-in box subtitle">Train ID</p>
-						<select class="form-control border-radius" id="sel1" th:value="*{trainBound}">
+						<select class="form-control border-radius" name ="trainBound" th:value="*{trainBound}">
 							<option th:each="bound : ${trainContent.trainBounds}"
 									th:value="${bound}"
 									th:text="${bound}">
@@ -100,12 +100,12 @@
 			</div>
 			<div class="col-md-3 col-sm-6 form-group">
 					<p class = "fill-in box subtitle">Select Date</p>
-					<input type="date" class="form-control border-radius border-right" th:value="*{cancelDate}" placeholder="YYYY-MM-DD"/>
+					<input type="date" class="form-control border-radius border-right" name="cancelDate" th:value="*{cancelDate}" placeholder="YYYY-MM-DD"/>
 			</div>
 			<div class="col-md-3 col-sm-6 form-group">
 					<p class = "fill-in box subtitle"></p>
 					<br></br>
-					<input  type="submit"  value="Cancel Train"/>
+					<input  type="submit" name = "cancelTrain" value="Cancel Train"/>
 			</div>
 		</form>
 	</div>

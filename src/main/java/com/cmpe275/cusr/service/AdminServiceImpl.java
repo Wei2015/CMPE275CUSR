@@ -238,6 +238,10 @@ public class AdminServiceImpl implements AdminService {
 		Train train = trainRepo.findByBound(bound);
 		// Check train departure time is not within 3 hours.
 		String startTime = train.getDepartureTime();
+		
+		if (startTime.length() < 8) 
+			startTime = "0" + startTime;
+		
 		if (ticketService.timeCheck(date, startTime, 180))
 			return;
 

@@ -69,9 +69,10 @@ public class AdminController {
 		return "admin";
 	}
 	
-	@PostMapping(value ="/cancelTrain")
-	public String cancelTrain(Model model, @RequestParam("trainBound") String bound, @RequestParam("cancelDate") String date) {
-		System.out.println(bound);
+	@PostMapping(value ="/cancelTrain", params = "cancelTrain")
+	public String cancelTrain(Model model, @RequestParam("trainBound") String trainBound, @RequestParam("cancelDate") String cancelDate) {
+		adminService.trainCancel(trainBound, cancelDate);
+		model.addAttribute("message", "Sucessfully canelled train " + trainBound + "and rebook associated tickets.");
 		return "admin";
 	}
 	
@@ -79,7 +80,7 @@ public class AdminController {
 	public String resetSystem(Model model, @ModelAttribute("trainContent") AllTrainContent trainContent) {
 		adminService.reset();
 		trainContent.setTrains(adminService.showTrainCapacity());
-		model.addAttribute("message", "sucessfully reset the booking system");
+		model.addAttribute("message", "Sucessfully reset the booking system");
 		return "admin";
 	}
 	
