@@ -243,7 +243,7 @@ public class AdminServiceImpl implements AdminService {
 		if (startTime.length() < 8) 
 			startTime = "0" + startTime;
 		
-		if (ticketService.timeCheck(date, startTime, 180))
+		if (!ticketService.timeCheck(date, startTime, 180))
 			return;
 
 		// Check if the bound and date is already cancelled.

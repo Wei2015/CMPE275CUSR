@@ -10,6 +10,6 @@ public interface EmailService {
 	
 	public String ticketMailBuilder(long ticketId, String template, String msg);
 	
-	public void sendMail(String toEmail, String subject, String message);
+	public void sendMail(String toEmail, String subject, String content);
 	
 }
