@@ -47,6 +47,7 @@
 					<th>Departure Station</th>
 					<th>Destination Station</th>
 					<th>Train Type</th>
+					<th>Number of Connections</th>
 					<th>Round or One Way Trip</th>
 					<th>Number of Passenger</th>
 				</tr>
@@ -55,9 +56,10 @@
 				<tr>
 					<td th:text="*{departureDate}"/>
 					<td th:text="*{departureTime}"/>
-					<td th:text="*{departureStation}" />
-					<td th:text="*{destinationStation}" />
+					<td th:text="*{departureStation}"/>
+					<td th:text="*{destinationStation}"/>
 					<td th:text="*{trainType}" />
+					<td th:text="*{numberOfConnections}"/>
 					<td>
 						<span th:if="*{roundTrip}" th:text="Round"></span>
 						<span th:unless="*{roundTrip}" th:text="OneWay"></span>
