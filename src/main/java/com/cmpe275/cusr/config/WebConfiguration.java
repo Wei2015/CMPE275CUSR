@@ -13,7 +13,6 @@ import com.cmpe275.cusr.controller.MeasurementInterceptor;
 
 
 @Configuration
-@EnableWebMvc
 @ComponentScan("com.cmpe275.cusr.controller")
 public class WebConfiguration extends WebMvcConfigurerAdapter{
 	@Override
@@ -25,12 +24,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter{
 	return new MeasurementInterceptor();
 	}
 	
-	@Bean
-	public ViewResolver internalResourceViewResolver() {
-	InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-	viewResolver.setPrefix("/WEB-INF/jsp/");
-	viewResolver.setSuffix(".jsp");
-	return viewResolver;
-	}
+
 
 }
