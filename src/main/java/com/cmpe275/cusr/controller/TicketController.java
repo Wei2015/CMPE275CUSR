@@ -1,5 +1,7 @@
 package com.cmpe275.cusr.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,7 +117,13 @@ public class TicketController {
 	@GetMapping("/tickets")
 	public String showUserTickets(Model model) {
 		long userId = userService.findUser().getUserId();
-		model.addAttribute("ticketList", ticketRepository.findTicketsByUserId(userId));
+		ArrayList<Ticket> qRes = ticketRepository.findTicketsByUserId(userId);
+		ArrayList<Ticket> ticketList = new ArrayList<>();
+		for(Ticket ticket : qRes) {
+			if(ticketService.timeCheck(ticket.getDepartDate(), ticket.getDepartSegment1ArrivalTime(), 0))
+				ticketList.add(ticket);
+		}
+		model.addAttribute("ticketList", ticketList);
 		return "usertickets";
 	}
 }
