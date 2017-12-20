@@ -63,10 +63,12 @@
         <script type="text/javascript" th:inline="javascript">
         		var varname = 'ticketjson' + /*[[${ticket.ticketId}]]*/;
         		window[varname] = {
-        			ticketId: /*[[${ticket.ticketId}]]*/,
-        			departDate: /*[[${ticket.departDate}]]*/
+        			Train: /*[[${ticket.departTrains[0].bound}]]*/,
+        			Date: /*[[${ticket.departDate}]]*/,
+        			DepartTime: /*[[${ticket.departSegment1DepartTime}]]*/,
+        			DepartStation: /*[[${ticket.departStation.name()}]]*/,
+        			ArrivalStation: /*[[${ticket.arrivalStation.name()}]]*/
         		};
-        		console.log(window[varname]);
         </script>
         <td class="clickable" th:onclick="'javascript:openTicketModal(window[\'ticketjson' + ${ticket.ticketId} + '\']);'">Ticket Details</td>
         <td><a th:href="@{'/ticketCancel/' + ${ticket.ticketId}}">Cancel Ticket</a></td>
