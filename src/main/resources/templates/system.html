@@ -133,8 +133,8 @@
 		</form>
 	</div>
 	<h4 th:text="*{numberOfTotalSearch}"></h4>
-	<!-- 
-	<table class="table table-striped" th:if="${!=null}">
+	
+	<table class="table table-striped" th:if="${report!=null}">
 			<thead>
 				<tr>
 					<th>Number of Connections</th>
@@ -143,13 +143,14 @@
 				</tr>
 			</thead>
 			<tbody>
-					<tr>
-					<td th:text="${}"/>
-					<td th:text="${}"/>
+					<tr th:each ="eachOption: *{report}">
+					<td th:text="${eachOption.numberOfConnections}"/>
+					<td th:text="${eachOption.rate}"/>
+					<td th:text="${eachOption.timeCost}"/>
 					</tr>
 			</tbody>
 	</table>
-	-->
+	
 </div>
 
 </body>

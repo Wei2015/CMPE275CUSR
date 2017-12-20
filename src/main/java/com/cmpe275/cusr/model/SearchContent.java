@@ -16,9 +16,9 @@ public class SearchContent {
 	private String numberOfConnections;
 	
 	private Station[] allStations = Station.values();
-	private final int[] seats = {1,2,3,4,5}; 
-	private final String[] connectionOptions= {"Any", "None", "One"};
-	private final String[] trainTypeOptions= {"Any", "Regular","Express"};
+	private static final int[] seats = {1,2,3,4,5}; 
+	public static final String[] connectionOptions= {"Any", "None", "One"};
+	private static final String[] trainTypeOptions= {"Any", "Regular","Express"};
 	
 
 	

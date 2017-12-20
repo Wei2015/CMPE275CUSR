@@ -7,7 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cmpe275.cusr.model.SearchContent;
 import com.cmpe275.cusr.model.Station;
+import com.cmpe275.cusr.model.SystemStat;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.model.TrainStatus;
 import com.cmpe275.cusr.repository.RequestRepository;
@@ -26,6 +28,8 @@ public class SystemServiceImpl implements SystemService{
 	
 	@Autowired
 	private RequestRepository requestRepo;
+	
+	private static DecimalFormat df = new DecimalFormat("#%");
 	
 	public String getTrainReservationPercent(String bound, String date) {
 		Train train = trainRepo.findByBound(bound);
@@ -54,13 +58,38 @@ public class SystemServiceImpl implements SystemService{
 			totalPercent += getReservationPercent(train, date);
 		}
 		double dailyPercent = totalPercent/trains.size();
-		DecimalFormat df = new DecimalFormat("#%");
 		String percentString = df.format(dailyPercent);
 		return percentString;
 	}
 	
 	public int getTotalSearchNumber(String date) {
-		return requestRepo.getTotalCount(date);
+		int connectionOptions = SearchContent.connectionOptions.length;
+		SystemStat[] result = new SystemStat[connectionOptions];
+		int totalCount = 0;
+		for (int i = 0; i < connectionOptions; i++) {
+			String connectionOption = SearchContent.connectionOptions[i];
+			totalCount += requestRepo.getCountOnConnectionTypeAndDate(connectionOption, date);
+		}
+		return totalCount;
+	}
+	
+	public SystemStat[] getRequestStat(String date) {
+		int connectionOptions = SearchContent.connectionOptions.length;
+		SystemStat[] result = new SystemStat[connectionOptions];
+		
+		//Calculate search percentage of each different number of connection 
+		int totalSearch = getTotalSearchNumber(date);
+
+		for (int i = 0; i < connectionOptions; i++) {
+			String connectionOption = SearchContent.connectionOptions[i];
+			int count = requestRepo.getCountOnConnectionTypeAndDate(connectionOption, date);
+			double countD= (double)count/totalSearch;
+			String countPercent = df.format(countD);
+			long eachTotalTime = requestRepo.getEachSearchTime(connectionOption, date);
+			long avgTime = eachTotalTime/count;
+			result[i] = new SystemStat(connectionOption, countPercent, avgTime);
+		}
+		return result;
 	}
 	
 	

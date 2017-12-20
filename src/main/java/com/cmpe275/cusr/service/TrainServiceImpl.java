@@ -9,17 +9,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cmpe275.cusr.model.OneWayList;
 import com.cmpe275.cusr.model.OneWayTrip;
-import com.cmpe275.cusr.model.Request;
 import com.cmpe275.cusr.model.SearchContent;
 import com.cmpe275.cusr.model.Segment;
 import com.cmpe275.cusr.model.Station;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.model.TrainSchedule;
 import com.cmpe275.cusr.model.TrainStatus;
-import com.cmpe275.cusr.repository.RequestRepository;
 import com.cmpe275.cusr.repository.ScheduleRepository;
 import com.cmpe275.cusr.repository.TrainStatusRepository;
 
@@ -33,8 +30,6 @@ public class TrainServiceImpl implements TrainService {
 	@Autowired 
 	private TrainStatusRepository trainStatusRepo;
 	
-	@Autowired
-	private RequestRepository requestRepo;
 	
 	private static int NUMBER_OF_TRIP_RETURNED = 5;
 	private static String fullPattern = "yyyy-MM-dd HH:mm:ss";

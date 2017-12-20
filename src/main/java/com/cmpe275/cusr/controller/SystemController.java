@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cmpe275.cusr.model.AllTrainContent;
+import com.cmpe275.cusr.model.SystemStat;
 import com.cmpe275.cusr.model.Train;
 import com.cmpe275.cusr.service.AdminService;
 import com.cmpe275.cusr.service.SystemService;
@@ -78,6 +79,11 @@ public class SystemController {
 								Model model) {
 		int numOfSearch = systemService.getTotalSearchNumber(reserveDate);
 		model.addAttribute("numberOfTotalSearch", "Total Number of Search on " + reserveDate +"  is: " + numOfSearch);
+		
+		if (numOfSearch != 0) {
+			SystemStat[] report = systemService.getRequestStat(reserveDate);
+			model.addAttribute("report", report);
+		}
 		return "system";
 	}
 	
