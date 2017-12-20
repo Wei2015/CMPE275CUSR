@@ -21,36 +21,34 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">CUSR</a>
+				<a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a th:href="@{/tickets}">Dashboard</a></li>
-       				<li><a th:href="@{/admin}">Admin</a></li>
-       				<li><a th:href="@{/search}">Search</a></li>
+					<li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
+					<li><a th:href="@{/search}">Search</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/tickets}"> <span
-							th:text="'Hello, ' + ${email} + '!'" />
-					</a></li>
+					<li><a th:href="@{/signout}"><span
+							class="glyphicon glyphicon-user"></span> Sign out</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div  class="container">
-		<div  class="container">
+	<div class="container">
+		<div class="container">
 			<h1>Thanks for your booking!</h1>
 			<br></br>
 		</div>
-		
+
 		<!--  <span th:if="${purchaseRes} == 'success'" th:text="Thanks for your booking!" />
 		<sapn th:unless="${purchaseRes} == 'fail'" th:text="Sorry, we could not proceed with the booking. Please try your search again!" />-->
 		<!-- <div th:unless="${purchaseRes} == 'fail'" class="container">
 			<h1>Sorry, we could not proceed with your booking. Please try your search again!</h1>
 		<br></br>
 		</div>-->
-		
+
 		<div class="container">
 			<h3>User Information:</h3>
 			<br></br>
@@ -119,7 +117,7 @@
 					<td th:text="${returnDate}" />
 				</tr>
 			</table>
-			<table  class="table table-striped">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>Train</th>
@@ -152,6 +150,6 @@
 		</div>
 		<br></br>
 	</div>
-	
+
 </body>
 </html>

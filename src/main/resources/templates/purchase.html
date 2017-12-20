@@ -21,25 +21,32 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">CUSR</a>
+				<a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a th:href="@{/tickets}">Dashboard</a></li>
-       				<li><a th:href="@{/admin}">Admin</a></li>
-       				<li><a th:href="@{/search}">Search</a></li>
+					<li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
+					<li><a th:href="@{/search}">Search</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/signout}"><span
+							class="glyphicon glyphicon-user"></span> Sign out</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}" method="post">
+	
+	<form action="#" th:action="@{/purchaseConfirm}" th:object="${booking}"
+		method="post">
 		<div class="container">
 			<h3>Selected Ticket Information:</h3>
 			<br></br>
 			<table class="table table-striped">
 				<tr>
 					<th>Departure Date</th>
-					<td><input type="text" th:name="|departureDate|" th:value="${departureDate}" readonly="readonly" style="border: none"/></td>
+					<td><input type="text" th:name="|departureDate|"
+						th:value="${departureDate}" readonly="readonly"
+						style="border: none" /></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -56,19 +63,24 @@
 					<tr th:each="dt, stat : ${departureTrip}">
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].bound|"
-							th:value="${dt.getBound()}" readonly="readonly" style="border: none"/></td>
+							th:value="${dt.getBound()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureStation|"
-							th:value="${dt.getDepartureStation()}" readonly="readonly" style="border: none"/></td>
+							th:value="${dt.getDepartureStation()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].departureTime|"
-							th:value="${dt.getDepartureTime()}" readonly="readonly" style="border: none"/></td>
+							th:value="${dt.getDepartureTime()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].arrivalStation|"
-							th:value="${dt.getArrivalStation()}" readonly="readonly" style="border: none"/></td>
+							th:value="${dt.getArrivalStation()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|departureTrip[${stat.index}].arrivalTime|"
-							th:value="${dt.getArrivalTime()}" readonly="readonly" style="border: none"/></td>
+							th:value="${dt.getArrivalTime()}" readonly="readonly"
+							style="border: none" /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -79,7 +91,8 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Return Date</th>
-					<td><input type="text" th:name="|returnDate|" th:value="${returnDate}" readonly="readonly" style="border: none"/></td>
+					<td><input type="text" th:name="|returnDate|"
+						th:value="${returnDate}" readonly="readonly" style="border: none" /></td>
 				</tr>
 			</table>
 			<table class="table table-striped">
@@ -96,34 +109,40 @@
 					<tr th:each="rt, stat : ${returnTrip}">
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].bound|"
-							th:value="${rt.getBound()}" readonly="readonly" style="border: none"/></td>
+							th:value="${rt.getBound()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureStation|"
-							th:value="${rt.getDepartureStation()}" readonly="readonly" style="border: none"/></td>
+							th:value="${rt.getDepartureStation()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].departureTime|"
-							th:value="${rt.getDepartureTime()}" readonly="readonly" style="border: none"/></td>
+							th:value="${rt.getDepartureTime()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].arrivalStation|"
-							th:value="${rt.getArrivalStation()}" readonly="readonly" style="border: none"/></td>
+							th:value="${rt.getArrivalStation()}" readonly="readonly"
+							style="border: none" /></td>
 						<td><input type="text"
 							th:name="|returnTrip[${stat.index}].arrivalTime|"
-							th:value="${rt.getArrivalTime()}" readonly="readonly" style="border: none"/></td>
+							th:value="${rt.getArrivalTime()}" readonly="readonly"
+							style="border: none" /></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<br></br>
-		
+
 		<div class="container">
 			<table class="table table-striped">
 				<tr>
 					<th>Ticket Price</th>
-					<td>$<input type="text" th:name="|price|" th:value="${price}" readonly="readonly" style="border: none"/></td>
+					<td>$<input type="text" th:name="|price|" th:value="${price}"
+						readonly="readonly" style="border: none" /></td>
 				</tr>
 				<tr>
 					<th>Transaction Fee</th>
-					<td> $1.0 </td>
+					<td>$1.0</td>
 				</tr>
 				<tr>
 					<th>Total Price</th>
@@ -132,26 +151,27 @@
 			</table>
 		</div>
 		<br></br>
-		
+
 		<div class="container">
 			<table class="table table-striped">
 				<tr>
 					<th>Number of Seats</th>
-					<td><input type="text" th:name="|numOfSeats|" th:value="${numOfSeats}" readonly="readonly" style="border: none"/></td>
+					<td><input type="text" th:name="|numOfSeats|"
+						th:value="${numOfSeats}" readonly="readonly" style="border: none" /></td>
 				</tr>
 			</table>
 			<h3>Please Input Passenger Name:</h3>
 			<br></br>
 		</div>
-		
+
 		<div th:each="p, stat : ${passenger}" class="container">
-			<label>Passenger Name: </label>
-        	<input type="text" th:name="|passenger[${stat.index}]|" th:value="${p}"/>
+			<label>Passenger Name: </label> <input type="text"
+				th:name="|passenger[${stat.index}]|" th:value="${p}" />
 		</div>
 		<br></br>
-		
+
 		<div class="container">
-			<button type="submit" value="submit" class="btn btn-success">Purchase</button>
+			<button type="submit" value="submit" class="btn btn-success">Book</button>
 		</div>
 		<br></br>
 	</form>

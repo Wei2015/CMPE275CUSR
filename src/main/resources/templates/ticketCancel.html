@@ -21,25 +21,23 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">CUSR</a>
+				<a class="navbar-brand" th:href="@{/tickets}">CUSR</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a th:href="@{/tickets}">Dashboard</a></li>
-       				<li><a th:href="@{/admin}">Admin</a></li>
-       				<li><a th:href="@{/search}">Search</a></li>
+					<li class="active"><a th:href="@{/tickets}">Dashboard</a></li>
+					<li><a th:href="@{/search}">Search</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/tickets}"> <span
-							th:text="'Hello, ' + ${email} + '!'" />
-					</a></li>
+					<li><a th:href="@{/signout}"><span
+							class="glyphicon glyphicon-user"></span> Sign out</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 	<div class="container">
-		<h3>The following booking has been successfully cancelled!</h3>
+		<h3 th:text="${message}"></h3>
 	</div>
 	<br></br>
 
@@ -59,7 +57,7 @@
 		</table>
 	</div>
 	<br></br>
-	
+
 	<div class="container">
 		<h3>Ticket Information:</h3>
 		<table class="table table-striped">
@@ -119,6 +117,6 @@
 		</table>
 	</div>
 	<br></br>
-	
+
 </body>
 </html>

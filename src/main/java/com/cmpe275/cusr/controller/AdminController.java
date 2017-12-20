@@ -73,8 +73,7 @@ public class AdminController {
 	@PostMapping(value ="/cancelTrain", params = "cancelTrain")
 	public String cancelTrain(Model model, @RequestParam("trainBound") String trainBound, @RequestParam("cancelDate") String cancelDate) {
 		adminService.trainCancel(trainBound, cancelDate);
-		model.addAttribute("message", "Sucessfully canelled train " + trainBound + "and rebook associated tickets.");
-
+		model.addAttribute("messageCancel", "Sucessfully cancelled train " + trainBound + " on " + cancelDate + ", and rebooked associated tickets.");
 		return "admin";
 	}
 	

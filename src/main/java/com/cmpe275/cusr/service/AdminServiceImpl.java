@@ -262,9 +262,15 @@ public class AdminServiceImpl implements AdminService {
 		for (Ticket t : cancelledTickets) {
 			Booking booking = searchTicket(t);
 			User user = t.getUser();
+			if (booking == null) {
+				String msg = "Sorry, a train in your following booking has been cancelled, and there is no ticket meeting your original searching criteria.Please try your search again!";
+				String cancelContent = emailService.ticketMailBuilder(t.getTicketId(), "emailTemplateCancel", msg);
+				emailService.sendMail(user.getEmail(), "CUSR Train Cancellation", cancelContent);
+			}
 			ticketService.purchase(user, booking);
-			String purchaseContent = emailService.mailBuilder(booking, "emailTemplateBookSuccess");
-			emailService.sendMail(user.getEmail(), "CUSR Ticket Booking Confirmation", purchaseContent);
+			String msg = "Your booking has been re-processed due to train cancellation. Here is the ticket details:";
+			String purchaseContent = emailService.bookingMailBuilder(booking, "emailTemplateBook", msg);
+			emailService.sendMail(user.getEmail(), "CUSR Ticket Re-Booking Confirmation", purchaseContent);
 		}
 	}
 
@@ -324,8 +330,6 @@ public class AdminServiceImpl implements AdminService {
 			}
 			cancelledTickets.add(ticket);
 			ticketService.cancel(ticket.getTicketId());
-			String content = emailService.ticketMailBuilder(ticket.getTicketId(), "emailTemplateTrainCancel");
-			emailService.sendMail(ticket.getUser().getEmail(), "CUSR Train Cancellation", content);
 		}
 		for (Ticket ticket : returnTickets) {
 			List<Train> returnTrains = ticket.getReturnTrains();
@@ -334,8 +338,6 @@ public class AdminServiceImpl implements AdminService {
 			}
 			cancelledTickets.add(ticket);
 			ticketService.cancel(ticket.getTicketId());
-			String content = emailService.ticketMailBuilder(ticket.getTicketId(), "emailTemplateTrainCancel");
-			emailService.sendMail(ticket.getUser().getEmail(), "CUSR Train Cancellation", content);
 		}
 		return cancelledTickets;
 	}

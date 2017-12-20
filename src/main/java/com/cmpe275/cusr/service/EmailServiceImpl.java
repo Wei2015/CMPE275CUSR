@@ -38,8 +38,9 @@ public class EmailServiceImpl implements EmailService {
 
 	
 	@Override
-	public String mailBuilder(Booking booking, String template) {
+	public String bookingMailBuilder(Booking booking, String template, String msg) {
 		Context context = new Context();
+		context.setVariable("message", msg);
 		context.setVariable("numOfSeats", booking.getNumOfSeats());
 		context.setVariable("passenger", booking.getPassenger());
 		context.setVariable("totalPrice", booking.getPrice() + 1);
@@ -56,9 +57,10 @@ public class EmailServiceImpl implements EmailService {
 	}
 	
 	@Override
-	public String ticketMailBuilder(long ticketId, String template) {
+	public String ticketMailBuilder(long ticketId, String template, String msg) {
 		Ticket ticket = ticketRepository.findOne(ticketId);
 		Context context = new Context();
+		context.setVariable("message", msg);
 		context.setVariable("numOfSeats", ticket.getNumOfSeats());
 		context.setVariable("passenger", ticket.getPassenger());
 		context.setVariable("totalPrice", ticket.getPrice());

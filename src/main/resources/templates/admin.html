@@ -7,111 +7,120 @@
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link rel="stylesheet" href="/css/main.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/css/main.css" />
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" th:href="@{/}">CUSR</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a th:href="@{/tickets}">Dashboard</a></li>
-       	<li><a th:href="@{/admin}">Admin</a></li>
-       	<li><a th:href="@{/search}">Search</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-  
-<div class="container">
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" th:href="@{/}">CUSR</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/}">Home</a></li>
+					<li><a th:href="@{/admin}">Admin</a></li>
+					<li><a th:href="@{/systemreports}">System Reports</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/}"><span
+							class="glyphicon glyphicon-user"></span> Sign in</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-	<div class="row">
-			
-		<form action="reset" method="post">
-			<h4> Reset CUSR booking system:     <input type="submit" value="RESET" /></h4>
+
+	<div class="container">
+
+		<div class="row">
+
+			<form action="reset" method="post">
+				<h4>
+					Reset CUSR booking system: <input type="submit" value="RESET" />
+				</h4>
+			</form>
+		</div>
+
+		<form action="populateTable" method="post">
+			<h2 th:text="${message1}"></h2>
+			<br></br> <br></br>
+			<div class="col-md-3 col-sm-6 form-group">
+				<input type="submit" name="trainScheduleTable"
+					value="Populate Train Schedule" />
+			</div>
+
+			<div class="col-md-3 col-sm-6 form-group">
+				<input type="submit" name="trainStatusTable"
+					value="Populate Train Initial Status" />
+			</div>
+			<h4 th:text="${message2}"></h4>
+			<h3 th:text="${message}"></h3>
+			<br></br> <br></br> <input type="submit" name="trainCapacity"
+				value="Show Train Current Capacity" />
+
+			<div th:object="${trainContent}"
+				th:if="${trainContent.trains.size()} >0" class="container">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Train ID</th>
+							<th>Train Type</th>
+							<th>Capacity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="train:*{trains}">
+							<td th:text="${train.bound}" />
+							<td th:text="${train.type}" />
+							<th th:text="${train.capacity}" />
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			Update Train Capacity (seat per train): <input type="text"
+				name="capacity" th:value="*{capacity}" /> <input type="submit"
+				name="updateCapacity" value="UPDATE" />
 		</form>
+
+		<br></br> <br></br>
+		<h3>Cancel train on selected date:</h3>
+		<div class="row">
+			<form action="cancelTrain" method="post">
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class="fill-in box subtitle">Train ID</p>
+					<select class="form-control border-radius" name="trainBound"
+						th:value="*{trainBound}">
+						<option th:each="bound : ${trainContent.trainBounds}"
+							th:value="${bound}" th:text="${bound}"></option>
+					</select>
+				</div>
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class="fill-in box subtitle">Select Date</p>
+					<input type="date" class="form-control border-radius border-right"
+						name="cancelDate" th:value="*{cancelDate}"
+						placeholder="YYYY-MM-DD" />
+				</div>
+				<div class="col-md-3 col-sm-6 form-group">
+					<p class="fill-in box subtitle"></p>
+					<br></br> <input type="submit" name="cancelTrain"
+						value="Cancel Train" />
+				</div>
+			</form>
+			<div class="container">
+				<h3 th:text="${messageCancel}"></h3>
+			</div>
+			<br></br>
+		</div>
 	</div>
-
-	<form action="populateTable" method="post">
-		<h2 th:text="${message1}"></h2> 
-		<br></br><br></br>
-		<div class="col-md-3 col-sm-6 form-group">
-			<input type="submit" name="trainScheduleTable" value="Populate Train Schedule" />
-		</div>
-		
-		<div class="col-md-3 col-sm-6 form-group">
-			<input type="submit" name ="trainStatusTable" value="Populate Train Initial Status" />
-		</div>
-		<h4 th:text="${message2}"></h4> 
-		<h3 th:text="${message}"></h3> 
-		<br></br><br></br>
-		
-		<input type="submit" name="trainCapacity" value="Show Train Current Capacity" />
-		
-		<div th:object="${trainContent}" th:if="${trainContent.trains.size()} >0" class="container">
-		<table class="table table-striped"  >
-			<thead>
-				<tr>
-					<th>Train ID</th>
-					<th>Train Type</th>
-					<th>Capacity</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="train:*{trains}" >
-					<td th:text="${train.bound}" />
-					<td th:text="${train.type}" />
-					<th th:text="${train.capacity}" />
-				</tr>
-			</tbody>
-		</table>
-		</div>
-		Update Train Capacity (seat per train): <input type = "text" name="capacity" th:value = "*{capacity}"/>
-		<input type="submit" name = "updateCapacity" value="UPDATE"/>
-	</form>
-	
-	<br></br><br></br>
-	<h3>Cancel train on selected date: </h3>
-	<div class="row">
-		<form action="cancelTrain" method ="post">
-			<div class="col-md-3 col-sm-6 form-group">
-					<p class = "fill-in box subtitle">Train ID</p>
-						<select class="form-control border-radius" name ="trainBound" th:value="*{trainBound}">
-							<option th:each="bound : ${trainContent.trainBounds}"
-									th:value="${bound}"
-									th:text="${bound}">
-							</option>
-						</select>
-			</div>
-			<div class="col-md-3 col-sm-6 form-group">
-					<p class = "fill-in box subtitle">Select Date</p>
-					<input type="date" class="form-control border-radius border-right" name="cancelDate" th:value="*{cancelDate}" placeholder="YYYY-MM-DD"/>
-			</div>
-			<div class="col-md-3 col-sm-6 form-group">
-					<p class = "fill-in box subtitle"></p>
-					<br></br>
-					<input  type="submit" name = "cancelTrain" value="Cancel Train"/>
-			</div>
-		</form>
-	</div>
-
-
-</div>
-
 </body>
 </html>

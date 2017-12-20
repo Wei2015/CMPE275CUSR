@@ -68,12 +68,13 @@ public class TicketController {
 				model.addAttribute("returnDate", returnDate);
 				model.addAttribute("returnTrip", booking.getReturnTrip());
 			}
-			//Email service.
-			String content = emailService.mailBuilder(booking, "emailTemplateBookSuccess");
+			String msg = "Thanks for your booking! Here is the ticket details:";
+			String content = emailService.bookingMailBuilder(booking, "emailTemplateBook", msg);
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Confirmation", content);
 			return "purchaseConfirm";
 		} else {
-			String content = emailService.mailBuilder(booking, "emailTemplateBookFail");
+			String msg = "Sorry, we could not proceed with the following booking. Please try your search again!";
+			String content = emailService.bookingMailBuilder(booking, "emailTemplateBook", msg);
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Booking Fail", content);
 			return "puchaseFail";
 		}
@@ -98,14 +99,17 @@ public class TicketController {
 		}
 		User user = userService.findUser();
 		if (ticketService.cancel(ticketId)) {
-			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelSuccess");
+			String msg = "The following booking has been successfully cancelled!";
+			model.addAttribute("message", msg);
+			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancel", msg);
 			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Confirmation", content);
-			return "ticketCancel_success";
 		} else {
-			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancelFail");
-			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Fail", content);
-			return "ticketCancel_fail";
+			String msg = "The following booking cannot be cancelled. Please cancel your ticket(s) earlier.";
+			model.addAttribute("message", msg);
+			String content = emailService.ticketMailBuilder(ticketId, "emailTemplateCancel", msg);
+			emailService.sendMail(user.getEmail(),"CUSR Ticket Cancellation Fail", content);			
 		}
+		return "ticketCancel";
 	}
 	
 	@GetMapping("/tickets")
