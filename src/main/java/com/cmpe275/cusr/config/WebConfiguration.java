@@ -17,7 +17,7 @@ import com.cmpe275.cusr.controller.MeasurementInterceptor;
 public class WebConfiguration extends WebMvcConfigurerAdapter{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(measurementInterceptor()).addPathPatterns("/search*");
+		registry.addInterceptor(measurementInterceptor()).addPathPatterns("/search");
 	}
 	@Bean
 	public MeasurementInterceptor measurementInterceptor() {
