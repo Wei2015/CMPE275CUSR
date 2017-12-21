@@ -15,9 +15,9 @@ JPA
 
 MySQL
 
-Thymeleaf (To replace JSP)
+Thymeleaf
 
-Bootstrap (UI Presentation)
+Bootstrap
 
 Eclipse/STS
 
