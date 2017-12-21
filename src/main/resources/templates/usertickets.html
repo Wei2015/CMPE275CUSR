@@ -72,7 +72,7 @@
         		};
         </script>
         <td><a href="#" th:onclick="'javascript:openTicketModal(window[\'ticketjson' + ${ticket.ticketId} + '\']);'">Ticket Details</a></td>
-        <td><a th:href="@{'/ticketCancel/' + ${ticket.ticketId}}">Cancel Ticket</a></td>
+        <td><a th:href="@{'/ticketCancel?id=' + ${ticket.ticketId}}">Cancel Ticket</a></td>
       </tr>
     </tbody>
   </table>

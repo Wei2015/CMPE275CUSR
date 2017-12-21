@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.context.Context;
 
 import com.cmpe275.cusr.model.Booking;
@@ -82,8 +83,8 @@ public class TicketController {
 		}
 	}
 
-	@GetMapping("/ticketCancel/{id}")
-	public String cancel(@PathVariable("id") long ticketId, Model model) {
+	@GetMapping("/ticketCancel")
+	public String cancel(@RequestParam("id") long ticketId, Model model) {
 		Ticket ticket = ticketRepository.findOne(ticketId);
 		model.addAttribute("numOfSeats", ticket.getNumOfSeats());
 		model.addAttribute("passenger", ticket.getPassenger());
