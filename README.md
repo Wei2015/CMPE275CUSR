@@ -13,6 +13,8 @@ Spring DATA
 
 JPA
 
+Firebase
+
 MySQL
 
 Thymeleaf
