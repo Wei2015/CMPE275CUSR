@@ -29,12 +29,11 @@ public class SystemServiceImpl implements SystemService{
 	@Autowired
 	private RequestRepository requestRepo;
 	
-	private static DecimalFormat df = new DecimalFormat("#%");
+	private static DecimalFormat df = new DecimalFormat("#.##%");
 	
 	public String getTrainReservationPercent(String bound, String date) {
 		Train train = trainRepo.findByBound(bound);
 		double percent = getReservationPercent(train,date);
-		DecimalFormat df = new DecimalFormat("#%");
 		String percentString = df.format(percent);
 		return percentString;
 	}
