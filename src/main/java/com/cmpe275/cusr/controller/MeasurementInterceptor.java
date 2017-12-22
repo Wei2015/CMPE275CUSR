@@ -24,7 +24,7 @@ public class MeasurementInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle (HttpServletRequest request, 
 					HttpServletResponse response, Object handler) throws Exception {
-		long startTime = System.currentTimeMillis();
+		long startTime =  new Date().getTime();
 		request.setAttribute("startTime", startTime);
 		return true;
 	}
@@ -35,7 +35,7 @@ public class MeasurementInterceptor implements HandlerInterceptor {
 		long startTime = (Long)request.getAttribute("startTime");
 		request.removeAttribute("startTime");
 		
-		long endTime = System.currentTimeMillis();
+		long endTime = new Date().getTime();
 		long timeCost = endTime - startTime;
 		
 		String numberOfConnections = (String)request.getAttribute("numberOfConnections");

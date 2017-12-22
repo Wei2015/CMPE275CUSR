@@ -48,7 +48,7 @@ public class SystemServiceImpl implements SystemService{
 		for (Station s : seats.keySet()) {
 			totalSeats+=seats.get(s);
 		}
-		double percent = (double) totalSeats/(Station.values().length-1);
+		double percent = (double) totalSeats/((Station.values().length-1)*train.getCapacity());
 		return percent;
 	}
 	
@@ -64,7 +64,6 @@ public class SystemServiceImpl implements SystemService{
 	
 	public int getTotalSearchNumber(String date) {
 		int connectionOptions = SearchContent.connectionOptions.length;
-		SystemStat[] result = new SystemStat[connectionOptions];
 		int totalCount = 0;
 		for (int i = 0; i < connectionOptions; i++) {
 			String connectionOption = SearchContent.connectionOptions[i];
@@ -85,8 +84,11 @@ public class SystemServiceImpl implements SystemService{
 			int count = requestRepo.getCountOnConnectionTypeAndDate(connectionOption, date);
 			double countD= (double)count/totalSearch;
 			String countPercent = df.format(countD);
-			long eachTotalTime = requestRepo.getEachSearchTime(connectionOption, date);
-			long avgTime = eachTotalTime/count;
+			long avgTime = 0;
+			if (count != 0) {
+				long eachTotalTime = requestRepo.getEachSearchTime(connectionOption, date);
+				avgTime = eachTotalTime/count;
+			}
 			result[i] = new SystemStat(connectionOption, countPercent, avgTime);
 		}
 		return result;
