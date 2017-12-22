@@ -236,10 +236,10 @@ public class AdminServiceImpl implements AdminService {
 			return;
 
 		Train train = trainRepo.findByBound(bound);
-		
+
 		// Check train departure time is not within 3 hours.
 		String startTime = train.getDepartureTime();
-		
+
 		if (startTime.length() < 8) 
 			startTime = "0" + startTime;
 		
@@ -257,7 +257,7 @@ public class AdminServiceImpl implements AdminService {
 
 		//find tickets contain the train, release seat status, and collect ticket info as a list.
 		List<Ticket> cancelledTickets = cancelTickets(train, date);
-		
+
 		//search trip and purchase new ticket based on the information from cancelled tickets
 		for (Ticket t : cancelledTickets) {
 			Booking booking = searchTicket(t);
@@ -323,9 +323,13 @@ public class AdminServiceImpl implements AdminService {
 		List<Ticket> cancelledTickets = new ArrayList<>();
 		List<Ticket> departTickets = ticketRepository.findByDepartDate(date);
 		List<Ticket> returnTickets = ticketRepository.findByReturnDate(date);
+
 		for (Ticket ticket : departTickets) {
 			List<Train> departTrains = ticket.getDepartTrains();
 			if (!departTrains.contains(train)) {
+				continue;
+			}
+			if (ticket.isCancelled()) {
 				continue;
 			}
 			cancelledTickets.add(ticket);
@@ -334,6 +338,9 @@ public class AdminServiceImpl implements AdminService {
 		for (Ticket ticket : returnTickets) {
 			List<Train> returnTrains = ticket.getReturnTrains();
 			if (!returnTrains.contains(train)) {
+				continue;
+			}
+			if (ticket.isCancelled()) {
 				continue;
 			}
 			cancelledTickets.add(ticket);

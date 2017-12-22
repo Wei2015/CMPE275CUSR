@@ -166,7 +166,7 @@ public class TicketServiceImpl implements TicketService {
 			}
 			//Train and TrainStatus.
 			for (int i = 0; i < returnTripSize; i++) {
-				Train train = trainRepository.findByBound(booking.getDepartureTrip().get(i).getBound());
+				Train train = trainRepository.findByBound(booking.getReturnTrip().get(i).getBound());
 				returnTrains.add(train);
 				TrainStatus status = trainStatusRepository.findByTrainAndDate(train, returnDate);
 				if (status.isCancelled()) {
@@ -175,14 +175,14 @@ public class TicketServiceImpl implements TicketService {
 				switch (i) {
 				case 0:
 					s1 = arrivalStation;
-					s2 = departTripSize > 1 ? returnStop1 : departStation;
+					s2 = returnTripSize > 1 ? returnStop1 : departStation;
 					break;
 				case 1:
-					s1 = stop1;
-					s2 = departTripSize > 2 ? returnStop2 : departStation;
+					s1 = returnStop1;
+					s2 = returnTripSize > 2 ? returnStop2 : departStation;
 					break;
 				case 2:
-					s1 = stop2;
+					s1 = returnStop2;
 					s2 = departStation;
 					break;
 				}
@@ -309,10 +309,10 @@ public class TicketServiceImpl implements TicketService {
 			int returnTripSize = returnTrains.size();
 			Station returnStop1 = null;
 			Station returnStop2 = null;
-			if (departTripSize > 1) {
+			if (returnTripSize > 1) {
 				returnStop1 = ticket.getReturnStop1();
 			}
-			if (departTripSize > 2) {
+			if (returnTripSize > 2) {
 				returnStop2 = ticket.getReturnStop2();
 			}
 			//Update train status.

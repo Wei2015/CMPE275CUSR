@@ -110,7 +110,7 @@
 			var token = result.credential.accessToken;
 			var user = result.user;
 			user.getIdToken().then(function(data) {
-		      window.location = "http://ec2-52-37-119-135.us-west-2.compute.amazonaws.com:8080/signin?firebaseToken="+data;
+		      window.location = "/signin?firebaseToken="+data;
 		    });
 		}).catch(function(error) {
 			console.log(error.code);
@@ -122,7 +122,7 @@
 			var token = result.credential.accessToken;
 			var user = result.user;
 			user.getIdToken().then(function(data) {
-		      window.location = "http://ec2-52-37-119-135.us-west-2.compute.amazonaws.com:8080/signin?firebaseToken="+data;
+		      window.location = "/signin?firebaseToken="+data;
 		    });
 		}).catch(function(error) {
 			console.log(error.code);
@@ -134,7 +134,7 @@
 		var pwd = $("#login-pwd").val();
 		firebase.auth().signInWithEmailAndPassword(email, pwd).then(function(result){
 			result.getIdToken().then(function(data) {
-		      window.location = "http://ec2-52-37-119-135.us-west-2.compute.amazonaws.com:8080/signin?firebaseToken="+data;
+		      window.location = "/signin?firebaseToken="+data;
 		    });
 		}).catch(function(error) {
 			console.log(error.code);
@@ -147,7 +147,7 @@
 		var pwd = $("#reg-pwd").val();
 		firebase.auth().createUserWithEmailAndPassword(email, pwd).then(function(result){
 			result.getIdToken().then(function(data) {
-				window.location = "http://ec2-52-37-119-135.us-west-2.compute.amazonaws.com:8080/signin?firebaseToken="+data;
+				window.location = "/signin?firebaseToken="+data;
 			});
 		}).catch(function(error) {
 			console.log(error.code);
